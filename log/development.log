@@ -58,3 +58,30 @@ Migrating to CreateItemReviews (20150717173701)
   [1m[36mRestaurant Load (0.6ms)[0m  [1mSELECT  "restaurants".* FROM "restaurants" WHERE "restaurants"."id" = ? LIMIT 1[0m  [["id", 1]]
   [1m[35mRestaurant Load (0.4ms)[0m  SELECT  "restaurants".* FROM "restaurants"  ORDER BY "restaurants"."id" ASC LIMIT 1
   [1m[36mMenuItem Load (7.9ms)[0m  [1mSELECT "menu_items".* FROM "menu_items" WHERE "menu_items"."restaurant_id" = ?[0m  [["restaurant_id", 1]]
+
+
+Started GET "/" for ::1 at 2015-07-17 10:53:57 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-07-17 10:53:58 -0700
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-07-17 10:54:57 -0700
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-07-17 10:57:03 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2015-07-17 10:57:05 -0700
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms)
