@@ -14,8 +14,6 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <!-- STYLESHEETS -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
   <script src="js/vendor/modernizr-2.8.3.min.js"></script>
   <!-- JQUERY -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -24,7 +22,7 @@
 
   <!-- SEMANTIC -->
   <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-  <script src="semantic/dist/semantic.min.js"></script>
+  <script src="semantic/dist/semantic.js"></script>
 
   <!-- REACT -->
   <script src="https://fb.me/react-with-addons-0.13.3.js"></script>
@@ -36,17 +34,65 @@
 
 <body>
 
+  <div id="container"></div>
+  <script type="text/jsx">
+  React.render(
+    <div>
+    <p></p>
+    <div className="ui red segment">
+    <h1>Hello, world!</h1>
+    </div>
+    </div>,
+    document.getElementById('container')
+    );
+  </script>
+
+  <div id="demo"></div>
+
   <div class="ui raised very padded text container segment">
     <div class="ui icon button" data-animation="flip" data-direction="right" title="Flip Right"><i class="right long arrow icon"></i></div>
     <div class="ui people shape">
       <div class="sides">
-        <div class="side">This starts visible.</div>
-        <div class="side">This is yet another side</div>
-        <div class="side">This is the last side</div>
         <div class="side active">
+          <div class="ui card orange">
+            <div class="content">
+              <div class="header">Project Timeline</div>
+            </div>
+            <div class="content">
+              <h4 class="ui sub header">Activity</h4>
+              <div class="ui small feed">
+                <div class="event">
+                  <div class="content">
+                    <div class="summary">
+                       <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
+                    </div>
+                  </div>
+                </div>
+                <div class="event">
+                  <div class="content">
+                    <div class="summary">
+                       <a>Stevie Feliciano</a> was added as an <a>Administrator</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="event">
+                  <div class="content">
+                    <div class="summary">
+                       <a>Helen Troy</a> added two pictures
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="extra content">
+              <button class="ui button">Join Project</button>
+            </div>
+          </div>
+        </div>
+        <div class="side">
           <div class="ui card">
             <div class="image">
-              <img src="">
+              <img src="https://robohash.org/bk">
             </div>
             <div class="content">
               <div class="header">BK</div>
@@ -68,7 +114,7 @@
         <div class="side">
           <div class="ui card">
             <div class="image">
-              <img src="">
+              <img src="https://robohash.org/kg">
             </div>
             <div class="content">
               <a class="header">KG</a>
@@ -90,21 +136,6 @@
       </div>
     </div>
   </div>
-  <div id="container"></div>
-  <script type="text/jsx">
-  React.render(
-    <div>
-    <p></p>
-    <div className="ui red segment">
-    <h1>Hello, world!</h1>
-    </div>
-    </div>,
-    document.getElementById('container')
-    );
-  </script>
-
-  <div id="demo"></div>
-
 
 </body>
 </html>
