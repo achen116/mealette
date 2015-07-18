@@ -6,7 +6,7 @@ gem 'rails', '4.2.3'
 gem 'rails-api'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'yelp', require: 'yelp'
-gem 'sqlite3' #needs to be changed to postgres!
+gem 'pg'
 gem 'dotenv-rails', :groups => [:development, :test]
 
 # To use ActiveModel has_secure_password
