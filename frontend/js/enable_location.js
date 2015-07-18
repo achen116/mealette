@@ -27,12 +27,22 @@ var EnableLocation = React.createClass({
         for (var i = 0; i < response.length; i ++) {
           $('body').append("<p style='font-weight:bold;'>" + response[i].hash.name + " <span style='font-weight:normal;font-style:italic;color: red'>" + response[i].hash.rating + "</span></p>");
         }
-        debugger
-        var latlon = position.coords.latitude + "," + position.coords.longitude;
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+        latlon = new google.maps.LatLng(lat, lon)
+        mapholder = document.getElementById('container')
+        mapholder.style.height = '250px';
+        mapholder.style.width = '500px';
 
-          var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false";
+        var myOptions = {
+        center:latlon,zoom:15,
+        mapTypeId:google.maps.MapTypeId.ROADMAP,
+        mapTypeControl:true,
+        navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+        }
 
-          document.getElementById("container").innerHTML = "<img src='"+img_url+"'>";
+        var map = new google.maps.Map(document.getElementById("container"), myOptions);
+        var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
       });
 
       request.fail(function(errors) {
