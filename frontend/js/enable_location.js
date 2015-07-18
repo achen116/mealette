@@ -1,11 +1,12 @@
 var EnableLocation = React.createClass({
   componentDidMount: function() {
-    var x = document.getElementById("demo");
-    debugger
+    // var x = document.getElementById("demo");
+    // debugger
     this.getLocation();
   },
 
   getLocation: function() {
+    var x = document.getElementById("demo");
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
       } else {
@@ -14,6 +15,7 @@ var EnableLocation = React.createClass({
   },
 
   showPosition: function(position) {
+    var x = document.getElementById("demo");
       var request = $.ajax({
         url: "http://localhost:3000/api",
         method: "get",
@@ -36,6 +38,7 @@ var EnableLocation = React.createClass({
   },
 
   showError: function(error) {
+    var x = document.getElementById("demo");
       switch(error.code) {
         case error.PERMISSION_DENIED:
           x.innerHTML = "User denied the request for Geolocation."
@@ -62,4 +65,4 @@ var EnableLocation = React.createClass({
   }
 });
 
-React.render(<EnableLocation />, document.getElementById('container'));
+React.render(<EnableLocation message="Yo yo hey" />, document.getElementById('container'));
