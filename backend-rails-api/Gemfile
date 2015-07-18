@@ -1,19 +1,12 @@
 source 'https://rubygems.org'
-#add ruby version 2.1.6 (most stable for it)
 
-
+ruby '2.1.6'
 
 gem 'rails', '4.2.3'
-
 gem 'rails-api'
-
 gem 'rack-cors', :require => 'rack/cors'
-
 gem 'yelp', require: 'yelp'
-
 gem 'sqlite3' #needs to be changed to postgres!
-
-
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
