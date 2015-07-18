@@ -2,18 +2,19 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-require 'yelp'
-
-Yelp.client.configure do |config|
-  config.consumer_key = 'nCCuLDWc51hRdMDUNfiTYQ'
-  config.consumer_secret = 'swfOpG7lRxffY2jrm5P0SWSoQek'
-  config.token = 'HeMi74xEWxJIe91qIM0MUhb7QQvZoosM'
-  config.token_secret = 'YFJ3tg_17_yRXYQ-oeqH0lBybCo'
-end
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+Dotenv::Railtie.load
+
+require 'yelp'
+
+Yelp.client.configure do |config|
+  config.consumer_key = ENV['YELP_CONSUMER_KEY']
+  config.consumer_secret = ENV['YELP_CONSUMER_SECRET']
+  config.token = ENV['YELP_TOKEN_KEY']
+  config.token_secret = ENV['YELP_TOKEN_SECRET']
+end
 
 module MealetteBackend
   class Application < Rails::Application
