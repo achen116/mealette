@@ -115,3 +115,6 @@ DEPENDENCIES
   rails-api
   sqlite3
   yelp
+
+BUNDLED WITH
+   1.10.4
