@@ -456,3 +456,9 @@ Started GET "/api?lat=37.7848251&lon=-122.3978471" for ::1 at 2015-07-17 21:10:2
 Processing by ApiController#index as HTML
   Parameters: {"lat"=>"37.7848251", "lon"=>"-122.3978471"}
 Completed 200 OK in 1394ms (Views: 27.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/api?lat=37.7848435&lon=-122.3977563" for ::1 at 2015-07-17 21:26:34 -0700
+Processing by ApiController#index as HTML
+  Parameters: {"lat"=>"37.7848435", "lon"=>"-122.3977563"}
+Completed 200 OK in 1481ms (Views: 8.3ms | ActiveRecord: 0.0ms)
