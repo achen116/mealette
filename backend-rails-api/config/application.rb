@@ -2,12 +2,27 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+require 'yelp'
+
+Yelp.client.configure do |config|
+  config.consumer_key = 'nCCuLDWc51hRdMDUNfiTYQ'
+  config.consumer_secret = 'swfOpG7lRxffY2jrm5P0SWSoQek'
+  config.token = 'HeMi74xEWxJIe91qIM0MUhb7QQvZoosM'
+  config.token_secret = 'YFJ3tg_17_yRXYQ-oeqH0lBybCo'
+end
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
 module MealetteBackend
   class Application < Rails::Application
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
