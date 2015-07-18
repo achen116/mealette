@@ -29,11 +29,19 @@ $(document).on("ready", function() {
     request.fail(function(errors) {
       console.error(errors);
     });
-    
+
     x.innerHTML = "Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude;
   }
 
   getLocation();
 
+  // Cube transitions
+  $('.shape').shape();
+  $('div[title="Flip Right"]').on('click', function(e){
+      $('.shape').shape('flip right');
+  });
+
 });
+
+
