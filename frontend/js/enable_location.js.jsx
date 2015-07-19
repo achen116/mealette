@@ -10,18 +10,92 @@ var ShowRestaurants = React.createClass({
 })
 
 var ShowError = React.createClass({
+  getInitialState: function() {
+    return {
+      restaurants: [],
+      user_location: false
+    }
+  },
+
+  componentDidMount: function() {
+    google.maps.event.addDomListener(window, 'load', this.initialize);
+  },
+
+  initialize: function() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(37.7833, -122.4167);
+    var mapOptions = {
+      zoom: 14,
+      center: latlng
+    }
+
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  }, // ends initialize
+
+  codeAddress: function() {
+    var address = document.getElementById('address').value;
+    var esto = this;
+
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+
+        var lat = results[0].geometry.location.A
+        var lon = results[0].geometry.location.F
+
+        var request = $.ajax({
+          url: "http://localhost:3000/api",
+          method: "get",
+          dataType: "json",
+          data: {lat: lat, lon: lon}
+        })
+
+        request.done(function(response){
+          var newRestaurantState = []
+          for (var i = 0; i < response.length; i++) {
+            newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );
+          }
+          esto.setState({ restaurants: newRestaurantState, user_location: true });
+
+        })
+        request.fail(function(error) {
+          console.error(error)
+        })
+      }
+      else {
+        return alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }, //ends codeAddress
+
   render: function() {
+    var restaurants = this.state.restaurants.map(function(restaurant) {
+      return (
+        <li>{restaurant.name} - {restaurant.rating}</li>
+      );
+    });
+
+    var showOrNoShow;
+    var enableLocation = this.state.user_location;
+    if (enableLocation) {
+      showOrNoShow = <ShowRestaurants name={restaurants}/>;
+    }
+
     return (
-      <div className="ui search">
-        <div className="ui icon input">
-          <input className="prompt" type="text" placeholder="Enter Location" />
-          <i className="search icon"></i>
-        </div>
-        <div className="results"></div>
+      <div>
+        <p>Hi Manual Search</p>
+        <input id="address" type="textbox" placeholder="Enter your location" />
+        <input id="searchButton" type="button" value="Geocode" onClick={this.codeAddress} />
+        <div>{showOrNoShow}</div>
       </div>
-    )
+    );
   }
-})
+
+}) // ends ShowError
 
 var EnableLocation = React.createClass({
   getInitialState: function() {
@@ -42,7 +116,7 @@ var EnableLocation = React.createClass({
       } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
       }
-  },//ends getLocation
+  }, // ends getLocation
 
   showPosition: function(position) {
     var x = document.getElementById("demo");
@@ -85,7 +159,7 @@ var EnableLocation = React.createClass({
 
       x.innerHTML = "Latitude: " + position.coords.latitude +
       "<br>Longitude: " + position.coords.longitude;
-  },//ends show position
+  }, // ends show position
 
   showError: function(error) {
     var x = document.getElementById("demo");
@@ -103,7 +177,7 @@ var EnableLocation = React.createClass({
           x.innerHTML = "An unknown error occurred."
           break;
       }
-  },//ends showError
+  }, // ends showError
 
   render: function() {
     var restaurants = this.state.restaurants.map(function(restaurant) {
@@ -115,7 +189,6 @@ var EnableLocation = React.createClass({
     var showOrNoShow;
     var enableLocation = this.state.user_location;
     if (enableLocation) {
-      debugger
       showOrNoShow = <ShowRestaurants name={restaurants}/>;
     } else {
       showOrNoShow = <ShowError />;
@@ -126,7 +199,7 @@ var EnableLocation = React.createClass({
         {showOrNoShow}
       </div>
     );
-  } //ends render
-});// ends EnableLocation
+  }
+}); // ends EnableLocation
 
 React.render(<EnableLocation />, document.getElementById('restaurants'));
