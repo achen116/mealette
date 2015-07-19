@@ -49,7 +49,7 @@ var ShowError = React.createClass({
         var lon = results[0].geometry.location.F
 
         var request = $.ajax({
-          url: "http://localhost:3000/api",
+          url: "https://mealette-backend.herokuapp.com/api",
           method: "get",
           dataType: "json",
           data: {lat: lat, lon: lon}
@@ -123,7 +123,7 @@ var EnableLocation = React.createClass({
     var x = document.getElementById("demo");
       var esto = this;
       var request = $.ajax({
-        url: "http://localhost:3000/api",
+        url: "https://mealette-backend.herokuapp.com/api",
         method: "get",
         data: {lat: position.coords.latitude, lon: position.coords.longitude},
         dataType: "JSON"

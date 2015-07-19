@@ -112,7 +112,7 @@
 	    var x = document.getElementById("demo");
 	    var esto = this;
 	    var request = $.ajax({
-	      url: "http://localhost:3000/api",
+	      url: "https://mealette-backend.herokuapp.com/api",
 	      method: "get",
 	      data: { lat: position.coords.latitude, lon: position.coords.longitude },
 	      dataType: "JSON"
