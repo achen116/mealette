@@ -1,3 +1,25 @@
+var ShowRestaurants = React.createClass({
+  render: function() {
+    return (
+      <p>Show Restaurants</p>
+    )
+  }
+})
+
+var ShowError = React.createClass({
+  render: function() {
+    return (
+      <div className="ui search">
+        <div className="ui icon input">
+          <input className="prompt" type="text" placeholder="Enter Location" />
+          <i className="search icon"></i>
+        </div>
+        <div className="results"></div>
+      </div>
+    )
+  }
+})
+
 var EnableLocation = React.createClass({
   getInitialState: function() {
     return {
@@ -17,7 +39,7 @@ var EnableLocation = React.createClass({
       } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
       }
-  },
+  },//ends getLocation
 
   showPosition: function(position) {
     var x = document.getElementById("demo");
@@ -60,25 +82,25 @@ var EnableLocation = React.createClass({
 
       x.innerHTML = "Latitude: " + position.coords.latitude +
       "<br>Longitude: " + position.coords.longitude;
-  },
+  },//ends show position
 
   showError: function(error) {
     var x = document.getElementById("demo");
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          x.innerHTML = "User denied the request for Geolocation."
+          x.innerHTML = "Please provide your address."
           break;
         case error.POSITION_UNAVAILABLE:
           x.innerHTML = "Location information is unavailable."
           break;
         case error.TIMEOUT:
-          x.innerHTML = "The request to get user location timed out."
+          x.innerHTML = "The request to get location timed out."
           break;
         case error.UNKNOWN_ERROR:
           x.innerHTML = "An unknown error occurred."
           break;
       }
-  },
+  },//ends showError
 
   render: function() {
     var restaurants = this.state.restaurants.map(function(restaurant) {
@@ -86,27 +108,21 @@ var EnableLocation = React.createClass({
         <li>{restaurant.name} - {restaurant.rating}</li>
       );
     });
-    debugger
-    var denied = "User denied the request for Geolocation.";
 
-    if (this.state.user_location) {
-      restaurantList = restaurants;
+    var showOrNoShow;
+    var enableLocation = this.state.user_location;
+    if (enableLocation) {
+      showOrNoShow = <ShowRestaurants />;
     } else {
-      restaurantList = denied;
+      showOrNoShow = <ShowError />;
     }
 
     return (
       <div>
-        <p>{restaurantList}</p>
-        <ul>Restaurants: {restaurantList}</ul>
-        <p>User Location: (nothing shows, but confirmed it works) {this.state.user_location}</p>
-        <div>Enable Location Working!</div>
+        {showOrNoShow}
       </div>
     );
-  }
-});
-
-
-
+  } //ends render
+});// ends EnableLocation
 
 React.render(<EnableLocation />, document.getElementById('restaurants'));
