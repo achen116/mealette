@@ -22,7 +22,7 @@ $(document).on("ready", function() {
     request.done(function(response) {
       console.log(response);
       for (var i = 0; i < response.length; i ++) {
-        $('body').append("<p style='font-weight:bold;'>" + response[i].hash.name + " <span style='font-weight:normal;font-style:italic;color: red'>" + response[i].hash.rating + "</span></p>");
+        $('#demo').append("<div class='ui card'><img src='"+ response[i].hash.image_url +"'/><p>" + response[i].hash.name + "</p> " + response[i].hash.rating + "</div>");
       }
     });
 
