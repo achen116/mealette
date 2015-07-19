@@ -55,6 +55,7 @@ var EnableLocation = React.createClass({
       });
 
       request.done(function(response) {
+        console.log(response);
         var newRestaurantState = []
         for (var i = 0; i < response.length; i++) {
           newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );

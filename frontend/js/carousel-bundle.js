@@ -44,10 +44,10 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var MainView = __webpack_require__(1);
+	var MainCarousel = __webpack_require__(1);
 
 	React.render(
-	    React.createElement(MainView,null),
+	    React.createElement(MainCarousel,null),
 	    document.getElementById('content')
 	);
 
@@ -62,14 +62,14 @@
 
 	var Carousel = __webpack_require__(2);
 	var Ease = __webpack_require__(7);
-	var images = __webpack_require__(8);
+	var cards = __webpack_require__(8);
 
-	var MainView = React.createClass({
-	    displayName: 'MainView',
+	var MainCarousel = React.createClass({
+	    displayName: 'MainCarousel',
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            images: images.slice(0, 6),
+	            cards: cards.slice(0, 5),
 	            width: 400,
 	            layout: 'prism',
 	            ease: 'bounceOut',
@@ -78,7 +78,7 @@
 	    },
 	    componentWillMount: function componentWillMount() {
 	        this.onSides = (function (event) {
-	            this.setState({ images: images.slice(0, event.target.value) });
+	            this.setState({ cards: cards.slice(0, event.target.value) });
 	        }).bind(this);
 	        this.onLayout = (function (event) {
 	            this.setState({ layout: event.target.value });
@@ -102,122 +102,15 @@
 	            'div',
 	            null,
 	            React.createElement(Carousel, { width: this.state.width,
-	                images: this.state.images,
+	                cards: this.state.cards,
 	                ease: this.state.ease,
 	                duration: this.state.duration,
-	                layout: this.state.layout }),
-	            React.createElement(
-	                'table',
-	                null,
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(
-	                            'label',
-	                            { htmlFor: 'panel-count' },
-	                            'Panels'
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement('input', { type: 'range', id: 'panel-count',
-	                            value: this.state.images.length, min: '3', max: '20',
-	                            onChange: this.onSides })
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(
-	                            'span',
-	                            null,
-	                            this.state.sides
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        'Layout'
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(
-	                            'select',
-	                            { onChange: this.onLayout, value: this.state.layout },
-	                            React.createElement(
-	                                'option',
-	                                { value: 'prism' },
-	                                'prism'
-	                            ),
-	                            React.createElement(
-	                                'option',
-	                                { value: 'classic' },
-	                                'classic'
-	                            )
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(
-	                            'label',
-	                            { htmlFor: 'duration' },
-	                            'Duration'
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement('input', { type: 'range', id: 'duration',
-	                            value: this.state.duration, min: '0', step: '250', max: '1500',
-	                            onChange: this.onDuration })
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(
-	                            'span',
-	                            null,
-	                            this.state.duration
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        'Ease'
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(
-	                            'select',
-	                            { onChange: this.onEase, value: this.state.ease },
-	                            easeList
-	                        )
-	                    )
-	                )
-	            )
+	                layout: this.state.layout })
 	        );
 	    }
 	});
 
-	module.exports = MainView;
+	module.exports = MainCarousel;
 
 /***/ },
 /* 2 */
@@ -230,48 +123,63 @@
 	var Layout = __webpack_require__(5);
 	var Depot = __webpack_require__(6);
 
-	var Carousel = React.createClass({
-	    displayName: 'Carousel',
-
-	    getInitialState: function getInitialState() {
+	var Carousel = React.createClass({displayName: "Carousel",
+	    getInitialState: function () {
 	        return {
-	            images: this.props.images,
-	            figures: Layout[this.props.layout].figures(this.props.width, this.props.images, 0),
+	            cards: this.props.cards,
+	            figures: Layout[this.props.layout].figures(this.props.width, this.props.cards, 0),
 	            rotationY: 0
 	        };
 	    },
-	    componentWillMount: function componentWillMount() {
+	    componentWillMount: function () {
 	        this.depot = Depot(this.getInitialState(), this.props, this.setState.bind(this));
 	        this.onRotate = this.depot.onRotate.bind(this);
 	    },
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    componentWillReceiveProps: function (nextProps) {
 	        this.depot.onNextProps(nextProps);
 	    },
-	    render: function render() {
-	        var angle = 2 * Math.PI / this.state.figures.length;
-	        var translateZ = -Layout[this.props.layout].distance(this.props.width, this.state.figures.length);
+	    render: function () {
+	        var angle = (2 * Math.PI) / this.state.figures.length;
+	        var translateZ = -Layout[this.props.layout].distance(this.props.width,
+	            this.state.figures.length);
 	        var figures = this.state.figures.map(function (d, i) {
-	            return React.createElement(
-	                'figure',
-	                { key: i, style: Util.figureStyle(d) },
-	                React.createElement('img', { src: d.image, alt: i, height: '100%', width: '100%' })
-	            );
+	            return (React.createElement("figure", {key: i, style: Util.figureStyle(d)},
+	               React.createElement("div", {className: "ui card"},
+	                 React.createElement("div", {className: "image"},
+	                   React.createElement("img", {src: d.card.image})
+	                 ),
+	                 React.createElement("div", {className: "content"},
+	                   React.createElement("a", {className: "header"}, d.card.name),
+	                   React.createElement("div", {className: "meta"},
+	                   React.createElement("span", {className: "date"}, "Joined in 2013")
+	                   ),
+	                   React.createElement("div", {className: "description"},
+	                     d.card.description
+	                   )
+	                 ),
+	                 React.createElement("div", {className: "extra content"},
+	                   React.createElement("a", null,
+	                   React.createElement("i", {className: "user icon"}),
+	                   d.card.rating
+	                   )
+	                 )
+	               )
+	               ));
 	        });
-	        return React.createElement(
-	            'section',
-	            { className: 'react-3d-carousel' },
-	            React.createElement(
-	                'div',
-	                { className: 'carousel',
-	                    style: { transform: 'translateZ(' + translateZ + 'px)' } },
-	                figures
+	        return (
+	            React.createElement("section", {className: "react-3d-carousel"},
+	            React.createElement("div", {className: "carousel",
+	            style: {transform: "translateZ("+translateZ+"px)"}},
+	            figures
 	            ),
-	            React.createElement('div', { className: 'prev', onClick: Util.partial(this.onRotate, +angle) }),
-	            React.createElement('div', { className: 'next', onClick: Util.partial(this.onRotate, -angle) })
-	        );
+	            React.createElement("div", {className: "prev", onClick: Util.partial(this.onRotate,+angle)}),
+	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
+	            )
+	            );
 	    }
 	});
 	module.exports = Carousel;
+
 
 /***/ },
 /* 3 */
@@ -372,8 +280,8 @@
 	    distance: function apothem(width, sides) {
 	        return Math.ceil(width / (2 * Math.tan(Math.PI / sides)));
 	    },
-	    figures: function figures(width, images, initial) {
-	        var sides = images.length;
+	    figures: function figures(width, cards, initial) {
+	        var sides = cards.length;
 	        var angle = 2 * Math.PI / sides;
 	        var acceptable = Math.round(initial / angle) * angle;
 	        return Util.range(0, sides).map(function (d) {
@@ -384,7 +292,7 @@
 	                opacity: 1,
 	                present: true,
 	                key: d,
-	                image: images[d]
+	                card: cards[d]
 	            };
 	        });
 	    }
@@ -393,8 +301,8 @@
 	    distance: function distance(width, sides) {
 	        return Math.round(width * Math.log(sides));
 	    },
-	    figures: function figures(width, images, initial) {
-	        var sides = images.length;
+	    figures: function figures(width, cards, initial) {
+	        var sides = cards.length;
 	        var angle = 2 * Math.PI / sides;
 	        var distance = _exports.classic.distance(width, sides);
 	        var acceptable = Math.round(initial / angle) * angle;
@@ -407,11 +315,12 @@
 	                opacity: 1,
 	                present: true,
 	                key: d,
-	                image: images[d]
+	                card: cards[d]
 	            };
 	        });
 	    }
 	};
+
 
 /***/ },
 /* 6 */
@@ -430,9 +339,9 @@
 	    var requestID;
 
 	    res.onNextProps = function onNextProps(nextProps) {
-	        if (props.layout != nextProps.layout || props.images != nextProps.images) {
+	        if (props.layout != nextProps.layout || props.cards != nextProps.cards) {
 	            props = nextProps;
-	            var to = Layout[props.layout].figures(props.width, props.images, state.rotationY);
+	            var to = Layout[props.layout].figures(props.width, props.cards, state.rotationY);
 	            var bounds = transitionFigures(state.figures, to, Ease[props.ease], props.duration);
 	            var stepper = transit(bounds, to, props.duration);
 	            playAnimation(state, to, stepper, callback);
@@ -440,7 +349,7 @@
 	        props = nextProps;
 	    };
 	    res.onRotate = function (angle) {
-	        var to = Layout[props.layout].figures(props.width, props.images, state.rotationY + angle);
+	        var to = Layout[props.layout].figures(props.width, props.cards, state.rotationY + angle);
 	        state.rotationY += angle;
 	        var bounds = transitionFigures(state.figures, to, Ease[props.ease], props.duration);
 	        var stepper = transit(bounds, to, props.duration);
@@ -553,6 +462,7 @@
 	    return now && !then ? Util.merge(now, { present: false, opacity: 0 }) // leaves
 	    : Util.merge(then, { present: true, opacity: 1 });
 	}
+
 
 /***/ },
 /* 7 */
@@ -756,27 +666,50 @@
 
 	// Sample images used in the demo
 	module.exports = [
-	    'http://s7.postimg.org/dbamgegu3/zen8.jpg',
-	    'http://s21.postimg.org/er8b066p3/zen2.jpg',
-	    'http://s4.postimg.org/6mbbcgmwd/zen1.jpg',
-	    'http://s30.postimg.org/x3cgpdtgx/zen3.jpg',
-	    'http://s21.postimg.org/h1estw95z/zen4.jpg',
-	    'http://s8.postimg.org/upypfrk8l/zen5.jpg',
-	    'http://s7.postimg.org/goiv34aez/zen6.jpg',
-	    'http://s30.postimg.org/n9zuqbgq9/zen7.jpg',
-	    'http://s12.postimg.org/9kw5b42d9/zen9.jpg',
-	    'http://s13.postimg.org/vwf92qbl3/zen10.jpg',
-	    'http://s4.postimg.org/anf2w9rzh/zen11.jpg',
-	    'http://s17.postimg.org/gpbiwdsu7/zen12.jpg',
-	    'http://s9.postimg.org/n5uuedw3z/zen13.jpg',
-	    'http://s9.postimg.org/x6zonp973/zen14.jpg',
-	    'http://s2.postimg.org/r0vsbv8op/zen15.jpg',
-	    'http://s21.postimg.org/szu5d0h2f/zen16.jpg',
-	    'http://s15.postimg.org/xi59nxox7/zen17.jpg',
-	    'http://s8.postimg.org/zexjdajw5/zen18.jpg',
-	    'http://s24.postimg.org/st2ukrfz9/zen19.jpg',
-	    'http://s15.postimg.org/40kb5u63v/zen20.jpg'
+	    {
+	        'image': 'http://s3-media2.fl.yelpcdn.com/bphoto/DyOUghkftKcOcXvD34kjTw/ls.jpg',
+	        'name': 'Buca Di Bepo',
+	        'rating': '4.5',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    },
+	    {
+	        'image': 'http://robohash.org/423432',
+	        'name': 'Osha Thai',
+	        'rating': '3.5',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    },
+	    {
+	        'image': 'http://robohash.org/ewerwre',
+	        'name': 'Chipotle',
+	        'rating': '4',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    },
+	    {
+	        'image': 'http://s3-media2.fl.yelpcdn.com/bphoto/jlzz6k3zJX0ypKpOwXn6iQ/ls.jpg',
+	        'name': 'Five Guys',
+	        'rating': '4.5',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    },
+	    {
+	        'image': 'http://robohash.org/cccc',
+	        'name': 'Specialtys',
+	        'rating': '1',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    },
+	    {
+	        'image': 'http://robohash.org/ccvvvddcc',
+	        'name': 'Again',
+	        'rating': '1',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    },
+	    {
+	        'image': 'http://robohash.org/cccaaddc',
+	        'name': 'More',
+	        'rating': '1',
+	        'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
+	    }
 	];
+
 
 /***/ }
 /******/ ]);

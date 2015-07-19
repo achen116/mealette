@@ -1,8 +1,6 @@
-var MainView = require('./MainView');
+var MainCarousel = require('./MainCarousel');
 
 React.render(
-    React.createElement(MainView,null),
+    React.createElement(MainCarousel,null),
     document.getElementById('content')
 );
-
-

@@ -2,7 +2,7 @@ var Carousel = require('react-3d-carousel');
 var Ease = require('ease-functions');
 var cards = require('./cards');
 
-var MainView = React.createClass({
+var MainCarousel = React.createClass({
     getInitialState: function () {
         return {
             cards: cards.slice(0, 5),
@@ -42,4 +42,4 @@ var MainView = React.createClass({
     }
 });
 
-module.exports = MainView;
+module.exports = MainCarousel;
