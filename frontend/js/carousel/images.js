@@ -1,7 +1,8 @@
 // Sample images used in the demo
 module.exports = [
-    'http://s7.postimg.org/dbamgegu3/zen8.jpg',
-    'http://s21.postimg.org/er8b066p3/zen2.jpg',
+    'http://robohash.org/whateva',
+    'http://robohash.org/whateva1',
+    'http://robohash.org/whateva2',
     'http://s4.postimg.org/6mbbcgmwd/zen1.jpg',
     'http://s30.postimg.org/x3cgpdtgx/zen3.jpg',
     'http://s21.postimg.org/h1estw95z/zen4.jpg',

@@ -1,8 +1,8 @@
 module.exports = {
-  entry: "./carousel/index.js",
+  entry: "./js/carousel/index.js",
   output: {
     path: __dirname,
-    filename: "carousel-bundle.js"
+    filename: "./js/carousel-bundle.js"
   },
   module: {
     loaders: [

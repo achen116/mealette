@@ -72,7 +72,7 @@
 	            images: images.slice(0, 6),
 	            width: 400,
 	            layout: 'prism',
-	            ease: 'linear',
+	            ease: 'bounceOut',
 	            duration: 400
 	        };
 	    },
