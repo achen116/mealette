@@ -1,7 +1,12 @@
 var EnableLocation = React.createClass({
+  getInitialState: function() {
+    return {
+      restaurants: [],
+      user_location: false
+    }
+  },
+
   componentDidMount: function() {
-    // var x = document.getElementById("demo");
-    // debugger
     this.getLocation();
   },
 
@@ -16,6 +21,7 @@ var EnableLocation = React.createClass({
 
   showPosition: function(position) {
     var x = document.getElementById("demo");
+      var esto = this;
       var request = $.ajax({
         url: "http://localhost:3000/api",
         method: "get",
@@ -24,9 +30,12 @@ var EnableLocation = React.createClass({
       });
 
       request.done(function(response) {
-        for (var i = 0; i < response.length; i ++) {
-          $('body').append("<p style='font-weight:bold;'>" + response[i].hash.name + " <span style='font-weight:normal;font-style:italic;color: red'>" + response[i].hash.rating + "</span></p>");
+        var newRestaurantState = []
+        for (var i = 0; i < response.length; i++) {
+          newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );
         }
+        esto.setState({ restaurants: newRestaurantState, user_location: true });
+
         lat = position.coords.latitude;
         lon = position.coords.longitude;
         latlon = new google.maps.LatLng(lat, lon)
@@ -39,7 +48,7 @@ var EnableLocation = React.createClass({
         mapTypeId:google.maps.MapTypeId.ROADMAP,
         mapTypeControl:true,
         navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-        }
+        };
 
         var map = new google.maps.Map(document.getElementById("container"), myOptions);
         var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
@@ -72,13 +81,20 @@ var EnableLocation = React.createClass({
   },
 
   render: function() {
+    var restaurantList = this.state.restaurants.map(function(restaurant) {
+      return (
+        <li>{restaurant.name} - {restaurant.rating}</li>
+      );
+    });
+
     return (
       <div>
+        <ul>Restaurants: {restaurantList}</ul>
+        <p>User Location: (nothing shows, but confirmed it works) {this.state.user_location}</p>
         <div>Enable Location Working!</div>
-        <div>{this.props.message}</div>
       </div>
     );
   }
 });
 
-React.render(<EnableLocation message="Yo yo hey" />, document.getElementById('container'));
+React.render(<EnableLocation />, document.getElementById('restaurants'));
