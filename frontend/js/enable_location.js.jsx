@@ -9,27 +9,21 @@ var ShowRestaurants = React.createClass({
   }
 })
 
+// var ShowError = React.createClass({
+//   render: function() {
+//     return (
+//       <div className="ui search">
+//         <div className="ui icon input">
+//           <input className="prompt" type="text" placeholder="Enter Location" />
+//           <i className="search icon"></i>
+//         </div>
+//         <div className="results"></div>
+//       </div>
+//     )
+//   }
+// })
+
 var ShowError = React.createClass({
-  render: function() {
-    return (
-      <div className="ui search">
-        <div className="ui icon input">
-          <input className="prompt" type="text" placeholder="Enter Location" />
-          <i className="search icon"></i>
-        </div>
-        <div className="results"></div>
-      </div>
-    )
-  }
-})
-
-var ManualSearch = React.createClass({
-  getInitialState: function() {
-    return {
-      coordinates: ""
-    }
-  },
-
   componentDidMount: function() {
     google.maps.event.addDomListener(window, 'load', this.initialize);
   },
@@ -46,7 +40,6 @@ var ManualSearch = React.createClass({
   },
 
   codeAddress: function() {
-    debugger
     var address = document.getElementById('address').value;
 
     geocoder.geocode( { 'address': address}, function(results, status) {
@@ -198,4 +191,4 @@ var EnableLocation = React.createClass({
   } //ends render
 });// ends EnableLocation
 
-React.render(<ManualSearch />, document.getElementById('restaurants'));
+React.render(<EnableLocation />, document.getElementById('restaurants'));
