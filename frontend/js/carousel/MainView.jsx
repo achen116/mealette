@@ -1,11 +1,11 @@
 var Carousel = require('react-3d-carousel');
 var Ease = require('ease-functions');
-var images = require('./images');
+var cards = require('./cards');
 
 var MainView = React.createClass({
     getInitialState: function () {
         return {
-            images: images.slice(0, 5),
+            cards: cards.slice(0, 5),
             width: 400,
             layout: 'prism',
             ease: 'bounceOut',
@@ -14,7 +14,7 @@ var MainView = React.createClass({
     },
     componentWillMount: function () {
         this.onSides = function (event) {
-            this.setState( {images: images.slice(0, event.target.value) });
+            this.setState( {cards: cards.slice(0, event.target.value) });
         }.bind(this);
         this.onLayout = function (event) {
             this.setState({layout: event.target.value});
@@ -33,7 +33,7 @@ var MainView = React.createClass({
         return (
             <div>
                 <Carousel width={this.state.width}
-                          images={this.state.images}
+                          cards={this.state.cards}
                           ease={this.state.ease}
                           duration={this.state.duration}
                           layout={this.state.layout}/>
