@@ -22,18 +22,29 @@ $(document).on("ready", function() {
     request.done(function(response) {
       console.log(response);
       for (var i = 0; i < response.length; i ++) {
-        $('body').append("<p style='font-weight:bold;'>" + response[i].hash.name + " <span style='font-weight:normal;font-style:italic;color: red'>" + response[i].hash.rating + "</span></p>");
+        $('#demo').append("<div class='ui card'><img src='"+ response[i].hash.image_url +"'/><p>" + response[i].hash.name + "</p> " + response[i].hash.rating + "</div>");
       }
     });
 
     request.fail(function(errors) {
       console.error(errors);
     });
-    
+
     x.innerHTML = "Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude;
-  }
+  };
 
   getLocation();
+
+  // Cube transitions
+  $('.shape').shape();
+  $('div[title="Flip Right"]').on('click', function(e){
+      $('.shape').shape('flip right');
+  });
+
+  $('.card').hover(function(e){
+    // $(this).addClass('active')
+    $(this).transition('pulse')
+  });
 
 });
