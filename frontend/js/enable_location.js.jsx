@@ -1,3 +1,4 @@
+(function(){
 var ShowRestaurants = React.createClass({
   render: function() {
     return (
@@ -204,3 +205,4 @@ var EnableLocation = React.createClass({
 }); // ends EnableLocation
 
 React.render(<EnableLocation />, document.getElementById('restaurants'));
+})()
