@@ -2,7 +2,7 @@
 module.exports = [
     {
         'image': 'http://s3-media2.fl.yelpcdn.com/bphoto/DyOUghkftKcOcXvD34kjTw/ls.jpg',
-        'name': 'Buca Di Bepo',
+        'name': 'McDonalds',
         'rating': '4.5',
         'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.'
     },
