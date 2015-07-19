@@ -81,14 +81,23 @@ var EnableLocation = React.createClass({
   },
 
   render: function() {
-    var restaurantList = this.state.restaurants.map(function(restaurant) {
+    var restaurants = this.state.restaurants.map(function(restaurant) {
       return (
         <li>{restaurant.name} - {restaurant.rating}</li>
       );
     });
+    debugger
+    var denied = "User denied the request for Geolocation.";
+
+    if (this.state.user_location) {
+      restaurantList = restaurants;
+    } else {
+      restaurantList = denied;
+    }
 
     return (
       <div>
+        <p>{restaurantList}</p>
         <ul>Restaurants: {restaurantList}</ul>
         <p>User Location: (nothing shows, but confirmed it works) {this.state.user_location}</p>
         <div>Enable Location Working!</div>
@@ -96,5 +105,8 @@ var EnableLocation = React.createClass({
     );
   }
 });
+
+
+
 
 React.render(<EnableLocation />, document.getElementById('restaurants'));
