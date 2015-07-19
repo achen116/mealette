@@ -32,7 +32,7 @@ $(document).on("ready", function() {
 
     x.innerHTML = "Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude;
-  }
+  };
 
   getLocation();
 
@@ -40,6 +40,11 @@ $(document).on("ready", function() {
   $('.shape').shape();
   $('div[title="Flip Right"]').on('click', function(e){
       $('.shape').shape('flip right');
+  });
+
+  $('.card').hover(function(e){
+    // $(this).addClass('active')
+    $(this).transition('pulse')
   });
 
 });

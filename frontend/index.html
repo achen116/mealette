@@ -19,7 +19,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
   <script src="js/plugins.js"></script>
-
+  <link rel="stylesheet" type="text/css" href="css/application.css">
   <!-- SEMANTIC -->
   <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
   <script src="semantic/dist/semantic.js"></script>
@@ -48,96 +48,102 @@
   </script>
 
   <div id="demo"></div>
-
-  <div class="ui raised very padded text container piled segment">
-    <div class="ui icon button" data-animation="flip" data-direction="right" title="Flip Right"><i class="right long arrow icon"></i></div>
-    <div class="ui people shape">
-      <div class="sides">
-        <div class="side active">
-          <div class="ui card orange">
-            <div class="content">
-              <div class="header">Project Timeline</div>
-            </div>
-            <div class="content">
-              <h4 class="ui sub header">Activity</h4>
-              <div class="ui small feed">
-                <div class="event">
-                  <div class="content">
-                    <div class="summary">
-                       <a>Elliot Fu</a> added <a>Jenny Hess</a> to the project
-                    </div>
-                  </div>
-                </div>
-                <div class="event">
-                  <div class="content">
-                    <div class="summary">
-                       <a>Stevie Feliciano</a> was added as an <a>Administrator</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="event">
-                  <div class="content">
-                    <div class="summary">
-                       <a>Helen Troy</a> added two pictures
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="extra content">
-              <button class="ui button">Join Project</button>
-            </div>
+  <div class="ui three column grid container">
+    <div class="ui link cards">
+      <div class="card carousel-item-inactive">
+        <div class="image">
+          <img src="http://robohash.org/matthew.png">
+        </div>
+        <div class="content">
+          <div class="header">Matt Giampietro</div>
+          <div class="meta">
+            <a>Friends</a>
+          </div>
+          <div class="description">
+            Matthew is an interior designer living in New York.
           </div>
         </div>
-        <div class="side">
-          <div class="ui card">
-            <div class="image">
-              <img src="https://robohash.org/bk">
-            </div>
-            <div class="content">
-              <div class="header">BK</div>
-              <div class="meta">
-                <a>Acquaintances</a>
-              </div>
-              <div class="description">
-                Steve Jobes is a fictional character designed to resemble someone familiar to readers.
-              </div>
-            </div>
-            <div class="extra content">
-              <span>
-                <i class="user icon"></i>
-                151 Friends
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="side">
-          <div class="ui card">
-            <div class="image">
-              <img src="https://robohash.org/kg">
-            </div>
-            <div class="content">
-              <a class="header">KG</a>
-              <div class="meta">
-                <span class="date">Joined in 2014</span>
-              </div>
-              <div class="description">
-                Stevie Feliciano is a library scientist living in New York City. She likes to spend her time reading, running, and writing.
-              </div>
-            </div>
-            <div class="extra content">
-              <a>
-                <i class="user icon"></i>
-                22 Friends
-              </a>
-            </div>
-          </div>
+        <div class="extra content">
+          <span class="right floated">
+            Joined in 2013
+          </span>
+          <span>
+            <i class="user icon"></i>
+            75 Friends
+          </span>
         </div>
       </div>
+      <div class="card">
+        <div class="image">
+          <img src="http://robohash.org/molly.png">
+        </div>
+        <div class="content">
+          <div class="header">Molly</div>
+          <div class="meta">
+            <span class="date">Coworker</span>
+          </div>
+          <div class="description">
+            Molly is a personal assistant living in Paris.
+          </div>
+        </div>
+        <div class="extra content">
+          <span class="right floated">
+            Joined in 2011
+          </span>
+          <span>
+            <i class="user icon"></i>
+            35 Friends
+          </span>
+        </div>
+      </div>
+      <div class="card carousel-item-inactive">
+        <div class="image">
+          <img src="http://robohash.org/elyse.png">
+        </div>
+        <div class="content">
+          <div class="header">Elyse</div>
+          <div class="meta">
+            <a>Coworker</a>
+          </div>
+          <div class="description">
+            Elyse is a copywriter working in New York.
+          </div>
+        </div>
+        <div class="extra content">
+          <span class="right floated">
+            Joined in 2014
+          </span>
+          <span>
+            <i class="user icon"></i>
+            151 Friends
+          </span>
+          </div>
+      </div>
+<!--   <div class="card">
+    <div class="image">
+      <img src="http://robohash.org/Hunter.png">
+    </div>
+    <div class="content">
+      <div class="header">Hunter</div>
+      <div class="meta">
+        <a>Instructor @DBC</a>
+      </div>
+      <div class="description">
+        Hunter is a copywriter working in New York.
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        Joined in 2014
+      </span>
+      <span>
+        <i class="user icon"></i>
+        151 Friends
+      </span>
+    </div>
+  </div> -->
     </div>
   </div>
-
-
 
 
 </body>
