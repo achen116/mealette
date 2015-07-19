@@ -115,7 +115,6 @@ var EnableLocation = React.createClass({
     var showOrNoShow;
     var enableLocation = this.state.user_location;
     if (enableLocation) {
-      debugger
       showOrNoShow = <ShowRestaurants name={restaurants}/>;
     } else {
       showOrNoShow = <ShowError />;
