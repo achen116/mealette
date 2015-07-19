@@ -1,7 +1,10 @@
 var ShowRestaurants = React.createClass({
   render: function() {
     return (
-      <p>Show Restaurants</p>
+      <div>
+        <h2>Restaurants: </h2>
+        <p>{this.props.name}</p>
+      </div>
     )
   }
 })
@@ -112,7 +115,8 @@ var EnableLocation = React.createClass({
     var showOrNoShow;
     var enableLocation = this.state.user_location;
     if (enableLocation) {
-      showOrNoShow = <ShowRestaurants />;
+      debugger
+      showOrNoShow = <ShowRestaurants name={restaurants}/>;
     } else {
       showOrNoShow = <ShowError />;
     }
