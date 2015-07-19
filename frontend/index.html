@@ -27,28 +27,24 @@
   <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
 
   <!-- Google Maps API -->
-  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-
+  <!-- look in shit file for previously used google maps scrip *123-->
+  <script src="http://maps.googleapis.com/maps/api/js"></script>
 
 </head>
 
 <body>
-  <div class="ui segment">
-    <script type="text/jsx;harmony=true" src="/js/enable_location.js"></script>
-    <div>
-      <div id="container"></div>
-      <div id="restaurants"></div>
-      <div id="demo"></div>
-
-      <div id="content"></div>
-
-    </div>
-
-    <div class="ui active dimmer">
-      <div class="content">
-        <div class="top">
-          <img src="./img/Mealette-logo.png"/>
-        </div>
+  <script type="text/jsx;harmony=true" src="/js/enable_location.js.jsx"></script>
+  <div class="ui raised padded container segment">
+    <div id="container"></div>
+    <div id="restaurants"></div>
+    <div id="demo"></div>
+    <div id="panel"></div>
+    <div id="map-canvas"></div>
+  </div>
+  <div class="ui active dimmer">
+    <div class="content">
+      <div class="center">
+        <img src="./img/Mealette-logo.png"/>
       </div>
     </div>
   </div>
@@ -66,7 +62,7 @@
 
   });
   </script>
-    <!-- Carousel JSX -->
-    <script src="/js/carousel-bundle.js"></script>
+  <!-- Carousel JSX -->
+  <script src="/js/carousel-bundle.js"></script>
 </body>
 </html>
