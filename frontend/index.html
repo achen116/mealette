@@ -12,15 +12,14 @@
   <!-- Place favicon.ico in the root directory -->
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <!-- STYLESHEETS -->
-  <script src="js/vendor/modernizr-2.8.3.min.js"></script>
   <!-- JQUERY -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
   <script src="js/plugins.js"></script>
   <link rel="stylesheet" type="text/css" href="css/application.css">
+  <link rel="stylesheet" type="text/css" href="css/carousel.css">
   <!-- SEMANTIC -->
-  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
   <script src="semantic/dist/semantic.min.js"></script>
 
   <!-- REACT -->
@@ -31,24 +30,20 @@
   <!-- look in shit file for previously used google maps scrip *123-->
   <script src="http://maps.googleapis.com/maps/api/js"></script>
 
-  <!-- MAIN JS -->
-  <script src="js/main.js"></script>
 </head>
 
 <body>
-
   <script type="text/jsx;harmony=true" src="/js/enable_location.js.jsx"></script>
   <div class="ui raised padded container segment">
     <div id="container"></div>
     <div id="restaurants"></div>
     <div id="demo"></div>
-    <div id="panel">
-<!--       <input id="address" type="textbox" value="Sydney, NSW">
-      <input id="searchButton" type="button" value="Geocode" onClick="onSubmit()"> -->
-    </div>
+    <div id="panel"></div>
     <div id="map-canvas"></div>
+    <div id="content"></div>
   </div>
 
-
+  <!-- Carousel JSX -->
+  <script src="/js/carousel-bundle.js"></script>
 </body>
 </html>

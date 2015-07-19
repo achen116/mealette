@@ -1,0 +1,25 @@
+{
+  "name": "Mealette",
+  "version": "0.0.1",
+  "description": "Randomly find a restaurant in your area",
+  "main": "enable_location.js",
+  "dependencies": {
+    "react": "^0.13.x",
+    "ease-functions": "*",
+    "react-3d-carousel": "*"
+  },
+  "peerDependencies": {
+    "react": ">=0.13.x < 1.0.0"
+  },
+  "prepublish": "babel ./src --out-dir ./js",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.3.1",
+    "babel-core": "^5.3.1",
+    "babel-loader": "^5.3.2",
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.10.1"
+  }
+}

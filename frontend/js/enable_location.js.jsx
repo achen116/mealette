@@ -1,3 +1,4 @@
+(function(){
 var ShowRestaurants = React.createClass({
   render: function() {
     return (
@@ -129,6 +130,7 @@ var EnableLocation = React.createClass({
       });
 
       request.done(function(response) {
+        console.log(response);
         var newRestaurantState = []
         for (var i = 0; i < response.length; i++) {
           newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );
@@ -203,3 +205,4 @@ var EnableLocation = React.createClass({
 }); // ends EnableLocation
 
 React.render(<EnableLocation />, document.getElementById('restaurants'));
+})()
