@@ -198,6 +198,7 @@ var EnableLocation = React.createClass({
 
     return (
       <div>
+      <h1>Mealette</h1>
         {showOrNoShow}
       </div>
     );
