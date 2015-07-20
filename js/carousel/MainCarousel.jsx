@@ -6,7 +6,7 @@ var Ease = require('ease-functions');
 var MainCarousel = React.createClass({
     getInitialState: function () {
         return {
-            cards: [],
+            cards: this.props.cardData,
             width: 400,
             layout: 'prism',
             ease: 'bounceOut',
