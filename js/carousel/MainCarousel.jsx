@@ -1,16 +1,21 @@
 var Carousel = require('react-3d-carousel');
 var Ease = require('ease-functions');
-var cards = require('./cards');
+// var cards = require('./cards');
+
 
 var MainCarousel = React.createClass({
     getInitialState: function () {
         return {
-            cards: cards.slice(0, 5),
+            cards: [],
             width: 400,
             layout: 'prism',
             ease: 'bounceOut',
             duration: 400
         };
+    },
+    componentDidMount: function(){
+        console.log("Inside of Carousel props:");
+        console.log(this.props.cardData);
     },
     componentWillMount: function () {
         this.onSides = function (event) {

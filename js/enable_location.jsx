@@ -1,10 +1,14 @@
 (function(){
+  // var ReactCarousel = require('./carousel/index.js');
+  var MainCarousel = require('./carousel/MainCarousel.jsx');
 
   // ENABLE/DISABLE LOCATION COMPONENT ===============================================
+
   var EnableOrDenyLocation = React.createClass({
     getInitialState: function() {
       return {
         restaurants: [],
+        restaurant_objects: [],
         user_location: false
       }
     },
@@ -39,7 +43,7 @@
           newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );
         }
 
-        esto.setState({ restaurants: newRestaurantState, user_location: true });
+        esto.setState({ restaurants: newRestaurantState, restaurant_objects: response, user_location: true });
 
         lat = position.coords.latitude;
         lon = position.coords.longitude;
@@ -86,17 +90,12 @@
     }, // ends showError
 
     render: function() {
-      var restaurants = this.state.restaurants.map(function(restaurant) {
-        return (
-          <li>{restaurant.name} - {restaurant.rating}</li>
-        );
-      });
 
       var showOrNoShow;
       var enableLocation = this.state.user_location;
 
       if (enableLocation) {
-        showOrNoShow = <DisplayRestaurants name={restaurants}/>;
+        showOrNoShow = <MainCarousel cardData={this.state.restaurant_objects} />;
       } else {
         showOrNoShow = <DisplaySearchBar />;
       }
@@ -109,16 +108,15 @@
     }
   }); // ends EnableOrDenyLocation
 
-
   // DISPLAY RESTAURANTS COMPONENT ===================================================
   var DisplayRestaurants = React.createClass({
     render: function() {
       return (
         <div>
-          <h2>Restaurants: </h2>
-          <p>{this.props.name}</p>
+        <h2>Restaurants: </h2>
+        <p>{this.props.name}</p>
         </div>
-      );
+        );
     }
   });
 
@@ -156,8 +154,8 @@
         if (status == google.maps.GeocoderStatus.OK) {
           map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location
+            map: map,
+            position: results[0].geometry.location
           });
 
           var lat = results[0].geometry.location.A
@@ -195,7 +193,7 @@
       var restaurants = this.state.restaurants.map(function(restaurant) {
         return (
           <li>{restaurant.name} - {restaurant.rating}</li>
-        );
+          );
       })
 
       var showOrNoShow;
@@ -206,15 +204,17 @@
 
       return (
         <div>
-          <input id="address" type="textbox" placeholder="Enter your location" />
-          <input id="search-button" type="button" value="Geocode" onClick={this.codeAddress} />
-          <div>{showOrNoShow}</div>
+        <input id="address" type="textbox" placeholder="Enter your location" />
+        <input id="search-button" type="button" value="Geocode" onClick={this.codeAddress} />
+        <div>{showOrNoShow}</div>
         </div>
-      );
+        );
     }
   }); // ends DisplaySearchBar
 
-  
   // RENDER REACT COMPONENTS =========================================================
-  React.render(<EnableOrDenyLocation />, document.getElementById('restaurants'));
+  React.render(
+    React.createElement(EnableOrDenyLocation,null),
+    document.getElementById('restaurants')
+    );
 })();
