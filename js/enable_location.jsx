@@ -7,7 +7,6 @@
   var EnableOrDenyLocation = React.createClass({
     getInitialState: function() {
       return {
-        restaurants: [],
         restaurant_objects: [],
         user_location: false
       }
@@ -38,29 +37,24 @@
       });
 
       request.done(function(response) {
-        var newRestaurantState = []
-        for (var i = 0; i < response.length; i++) {
-          newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );
-        }
+        esto.setState({ restaurant_objects: response, user_location: true });
 
-        esto.setState({ restaurants: newRestaurantState, restaurant_objects: response, user_location: true });
+        // lat = position.coords.latitude;
+        // lon = position.coords.longitude;
+        // latlon = new google.maps.LatLng(lat, lon)
+        // mapholder = document.getElementById('google-map')
+        // mapholder.style.height = '250px';
+        // mapholder.style.width = '500px';
 
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
-        latlon = new google.maps.LatLng(lat, lon)
-        mapholder = document.getElementById('google-map')
-        mapholder.style.height = '250px';
-        mapholder.style.width = '500px';
+        // var myOptions = {
+        // center:latlon,zoom:15,
+        // mapTypeId:google.maps.MapTypeId.ROADMAP,
+        // mapTypeControl:true,
+        // navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
+        // };
 
-        var myOptions = {
-        center:latlon,zoom:15,
-        mapTypeId:google.maps.MapTypeId.ROADMAP,
-        mapTypeControl:true,
-        navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-        };
-
-        var map = new google.maps.Map(document.getElementById("google-map"), myOptions);
-        var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
+        // var map = new google.maps.Map(document.getElementById("google-map"), myOptions);
+        // var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
       });
 
       request.fail(function(errors) {
@@ -97,7 +91,7 @@
       if (enableLocation) {
         showOrNoShow = <MainCarousel cardData={this.state.restaurant_objects} />;
       } else {
-        showOrNoShow = <DisplaySearchBar />;
+        showOrNoShow = <SearchBar />;
       }
 
       return (
@@ -108,24 +102,12 @@
     }
   }); // ends EnableOrDenyLocation
 
-  // DISPLAY RESTAURANTS COMPONENT ===================================================
-  var DisplayRestaurants = React.createClass({
-    render: function() {
-      return (
-        <div>
-        <h2>Restaurants: </h2>
-        <p>{this.props.name}</p>
-        </div>
-        );
-    }
-  });
-
 
   // DISPLAY SEARCH BAR COMPONENT ====================================================
-  var DisplaySearchBar = React.createClass({
+  var SearchBar = React.createClass({
     getInitialState: function() {
       return {
-        restaurants: [],
+        restaurant_objects: [],
         user_location: false
       }
     }, // ends getInitialState
@@ -135,20 +117,23 @@
       google.maps.event.addDomListener(searchButton, 'click', this.initialize);
     }, // ends componentDidMount
 
-    initialize: function() {
-      geocoder = new google.maps.Geocoder();
+    // initialize: function() {
+
+
+
+    // }, // ends initialize
+
+    codeAddress: function() {
+      var address = document.getElementById('address').value;
+      var esto = this;
+
+      var geocoder = new google.maps.Geocoder();
       var latlng = new google.maps.LatLng(37.7833, -122.4167);
       var mapOptions = {
         zoom: 14,
         center: latlng
       }
-
-      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    }, // ends initialize
-
-    codeAddress: function() {
-      var address = document.getElementById('address').value;
-      var esto = this;
+      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
       geocoder.geocode({'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -171,12 +156,7 @@
           request.done(function(response){
             $('#map-canvas').show();
 
-            var newRestaurantState = []
-            for (var i = 0; i < response.length; i++) {
-              newRestaurantState.push({name: response[i].hash.name, rating: response[i].hash.rating});
-            }
-
-            esto.setState({restaurants: newRestaurantState, user_location: true});
+            esto.setState({ restaurant_objects: response, user_location: true });
           })
 
           request.fail(function(error) {
@@ -190,16 +170,10 @@
     }, // ends codeAddress
 
     render: function() {
-      var restaurants = this.state.restaurants.map(function(restaurant) {
-        return (
-          <li>{restaurant.name} - {restaurant.rating}</li>
-          );
-      })
-
       var showOrNoShow;
       var enableLocation = this.state.user_location;
       if (enableLocation) {
-        showOrNoShow = <DisplayRestaurants name={restaurants}/>;
+        showOrNoShow = <MainCarousel cardData={this.state.restaurant_objects} />;
       }
 
       return (
@@ -210,7 +184,7 @@
         </div>
         );
     }
-  }); // ends DisplaySearchBar
+  }); // ends SearchBar
 
   // RENDER REACT COMPONENTS =========================================================
   React.render(
