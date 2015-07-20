@@ -135,7 +135,6 @@
     componentDidMount: function() {
       var searchButton = document.getElementById('search-button')
       google.maps.event.addDomListener(searchButton, 'click', this.initialize);
-      // google.maps.event.addDomListener(window, 'load', this.initialize);
     }, // ends componentDidMount
 
     initialize: function() {
