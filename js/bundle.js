@@ -88,23 +88,6 @@
 
 	      request.done(function (response) {
 	        esto.setState({ restaurant_objects: response, user_location: true });
-
-	        // lat = position.coords.latitude;
-	        // lon = position.coords.longitude;
-	        // latlon = new google.maps.LatLng(lat, lon)
-	        // mapholder = document.getElementById('google-map')
-	        // mapholder.style.height = '250px';
-	        // mapholder.style.width = '500px';
-
-	        // var myOptions = {
-	        // center:latlon,zoom:15,
-	        // mapTypeId:google.maps.MapTypeId.ROADMAP,
-	        // mapTypeControl:true,
-	        // navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-	        // };
-
-	        // var map = new google.maps.Map(document.getElementById("google-map"), myOptions);
-	        // var marker = new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
 	      });
 
 	      request.fail(function (errors) {
@@ -162,59 +145,32 @@
 	      };
 	    }, // ends getInitialState
 
-	    componentDidMount: function componentDidMount() {}, // ends componentDidMount
-
-	    // initialize: function() {
-
-	    // }, // ends initialize
-
-	    codeAddress: function codeAddress() {
-	      var address = document.getElementById("address").value;
+	    codeAddress: function codeAddress(e) {
+	      e.preventDefault();
+	      var address = React.findDOMNode(this.refs.address).value.trim();
+	      // When someone hits enter or clicks geocode, we call this function
+	      // This function sends the plain text to mealette-backend/geocode
+	      // Backend picks up the text, runs a geocode on it for coordinates
+	      // Backend then sends coordinates to /api for a new call
+	      // Backend returns the result like normal
+	      console.log(address);
 	      var esto = this;
 
-	      var geocoder = new google.maps.Geocoder();
-	      // var latlng = new google.maps.LatLng(37.7833, -122.4167);
-	      // var mapOptions = {
-	      //   zoom: 14,
-	      //   center: latlng
-	      // };
+	      var request = $.ajax({
+	        url: "https://localhost:3000/geocode",
+	        // url: "https://mealette-backend.herokuapp.com/geocode",
+	        method: "get",
+	        dataType: "json",
+	        data: address
+	      });
 
-	      geocoder.geocode({ "address": address }, function (results, status) {
-	        if (status == google.maps.GeocoderStatus.OK) {
-	          var mapOptions = {
-	            zoom: 14,
-	            center: results[0].geometry.location
-	          };
-	          var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	      request.done(function (response) {
+	        console.log(response);
+	        esto.setState({ restaurant_objects: response, user_location: true });
+	      });
 
-	          // map.setCenter(results[0].geometry.location);
-	          var marker = new google.maps.Marker({
-	            map: map,
-	            position: results[0].geometry.location
-	          });
-
-	          var lat = results[0].geometry.location.A;
-	          var lon = results[0].geometry.location.F;
-
-	          var request = $.ajax({
-	            url: "https://mealette-backend.herokuapp.com/api",
-	            method: "get",
-	            dataType: "json",
-	            data: { lat: lat, lon: lon }
-	          });
-
-	          request.done(function (response) {
-	            // $('#map-canvas').show();
-
-	            esto.setState({ restaurant_objects: response, user_location: true });
-	          });
-
-	          request.fail(function (error) {
-	            console.error(error);
-	          });
-	        } else {
-	          return alert("Geocode was not successful for the following reason: " + status);
-	        }
+	      request.fail(function (error) {
+	        console.error(error);
 	      });
 	    }, // ends codeAddress
 
@@ -228,8 +184,12 @@
 	      return React.createElement(
 	        "div",
 	        null,
-	        React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location" }),
-	        React.createElement("input", { id: "search-button", type: "button", value: "Geocode", onClick: this.codeAddress }),
+	        React.createElement(
+	          "form",
+	          { onSubmit: this.codeAddress },
+	          React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location", ref: "address" }),
+	          React.createElement("input", { id: "search-button", type: "submit", value: "Geocode" })
+	        ),
 	        React.createElement(
 	          "div",
 	          null,
@@ -242,9 +202,6 @@
 	  // RENDER REACT COMPONENTS =========================================================
 	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("restaurants"));
 	})();
-
-	// var searchButton = document.getElementById('search-button')
-	// google.maps.event.addDomListener(searchButton, 'click', this.codeAddress);
 
 /***/ },
 /* 1 */

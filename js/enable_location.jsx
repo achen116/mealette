@@ -18,11 +18,11 @@
 
     getLocation: function() {
       var x = document.getElementById("enable-location-request");
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
-        } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
     }, // ends getLocation
 
     showPosition: function(position) {
@@ -50,20 +50,20 @@
 
     showError: function(error) {
       var x = document.getElementById("enable-location-request");
-        switch(error.code) {
-          case error.PERMISSION_DENIED:
-            x.innerHTML = "Please provide your address."
-            break;
-          case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
-            break;
-          case error.TIMEOUT:
-            x.innerHTML = "The request to get location timed out."
-            break;
-          case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
-            break;
-        }
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+        x.innerHTML = "Please provide your address."
+        break;
+        case error.POSITION_UNAVAILABLE:
+        x.innerHTML = "Location information is unavailable."
+        break;
+        case error.TIMEOUT:
+        x.innerHTML = "The request to get location timed out."
+        break;
+        case error.UNKNOWN_ERROR:
+        x.innerHTML = "An unknown error occurred."
+        break;
+      }
     }, // ends showError
 
     render: function() {
@@ -79,9 +79,9 @@
 
       return (
         <div>
-          {showOrNoShow}
+        {showOrNoShow}
         </div>
-      );
+        );
     }
   }); // ends EnableOrDenyLocation
 
@@ -95,37 +95,34 @@
       }
     }, // ends getInitialState
 
-    codeAddress: function() {
-      var address = document.getElementById('address').value;
+    codeAddress: function(e) {
+      e.preventDefault();
+      var address = React.findDOMNode(this.refs.address).value.trim();
+      // When someone hits enter or clicks geocode, we call this function
+      // This function sends the plain text to mealette-backend/geocode
+      // Backend picks up the text, runs a geocode on it for coordinates
+      // Backend then sends coordinates to /api for a new call
+      // Backend returns the result like normal
+      console.log(address);
       var esto = this;
 
-      var geocoder = new google.maps.Geocoder();
-
-      geocoder.geocode({'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-
-          var lat = results[0].geometry.location.A;
-          var lon = results[0].geometry.location.F;
-
-          var request = $.ajax({
-            url: "https://mealette-backend.herokuapp.com/api",
-            method: "get",
-            dataType: "json",
-            data: {lat: lat, lon: lon}
-          })
-
-          request.done(function(response){
-            esto.setState({ restaurant_objects: response, user_location: true });
-          })
-
-          request.fail(function(error) {
-            console.error(error);
-          })
-        }
-        else {
-          return alert('Geocode was not successful for the following reason: ' + status);
-        }
+      var request = $.ajax({
+        url: "https://localhost:3000/geocode",
+        // url: "https://mealette-backend.herokuapp.com/geocode",
+        method: "get",
+        dataType: "json",
+        data: address
       });
+
+      request.done(function(response){
+        console.log(response)
+        esto.setState({ restaurant_objects: response, user_location: true });
+      });
+
+      request.fail(function(error) {
+        console.error(error);
+      });
+
     }, // ends codeAddress
 
     render: function() {
@@ -137,8 +134,10 @@
 
       return (
         <div>
-        <input id="address" type="textbox" placeholder="Enter your location" />
-        <input id="search-button" type="button" value="Geocode" onClick={this.codeAddress} />
+        <form onSubmit={this.codeAddress}>
+          <input id="address" type="textbox" placeholder="Enter your location" ref="address" />
+          <input id="search-button" type="submit" value="Geocode" />
+        </form>
         <div>{showOrNoShow}</div>
         </div>
         );
