@@ -107,11 +107,11 @@
       var esto = this;
 
       var request = $.ajax({
-        url: "https://localhost:3000/geocode",
+        url: "http://localhost:3000/api",
         // url: "https://mealette-backend.herokuapp.com/geocode",
         method: "get",
         dataType: "json",
-        data: address
+        data: {address: address}
       });
 
       request.done(function(response){
