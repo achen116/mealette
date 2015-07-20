@@ -113,8 +113,8 @@
     }, // ends getInitialState
 
     componentDidMount: function() {
-      var searchButton = document.getElementById('search-button')
-      google.maps.event.addDomListener(searchButton, 'click', this.initialize);
+      // var searchButton = document.getElementById('search-button')
+      // google.maps.event.addDomListener(searchButton, 'click', this.codeAddress);
     }, // ends componentDidMount
 
     // initialize: function() {
@@ -128,23 +128,28 @@
       var esto = this;
 
       var geocoder = new google.maps.Geocoder();
-      var latlng = new google.maps.LatLng(37.7833, -122.4167);
-      var mapOptions = {
-        zoom: 14,
-        center: latlng
-      }
-      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+      // var latlng = new google.maps.LatLng(37.7833, -122.4167);
+      // var mapOptions = {
+      //   zoom: 14,
+      //   center: latlng
+      // };
 
       geocoder.geocode({'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          map.setCenter(results[0].geometry.location);
+          var mapOptions = {
+            zoom: 14,
+            center: results[0].geometry.location
+          };
+          var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+          // map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
           });
 
-          var lat = results[0].geometry.location.A
-          var lon = results[0].geometry.location.F
+          var lat = results[0].geometry.location.A;
+          var lon = results[0].geometry.location.F;
 
           var request = $.ajax({
             url: "https://mealette-backend.herokuapp.com/api",
@@ -154,7 +159,7 @@
           })
 
           request.done(function(response){
-            $('#map-canvas').show();
+            // $('#map-canvas').show();
 
             esto.setState({ restaurant_objects: response, user_location: true });
           })
