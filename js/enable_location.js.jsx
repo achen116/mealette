@@ -1,5 +1,7 @@
 (function(){
-  var EnableLocation = React.createClass({
+
+  // ENABLE/DISABLE LOCATION COMPONENT ===============================================
+  var EnableOrDenyLocation = React.createClass({
     getInitialState: function() {
       return {
         restaurants: [],
@@ -8,7 +10,6 @@
     },
 
     componentDidMount: function() {
-      debugger
       this.getLocation();
     },
 
@@ -93,10 +94,11 @@
 
       var showOrNoShow;
       var enableLocation = this.state.user_location;
+
       if (enableLocation) {
-        showOrNoShow = <ShowRestaurants name={restaurants}/>;
+        showOrNoShow = <DisplayRestaurants name={restaurants}/>;
       } else {
-        showOrNoShow = <ShowError />;
+        showOrNoShow = <DisplaySearchBar />;
       }
 
       return (
@@ -105,9 +107,11 @@
         </div>
       );
     }
-  }); // ends EnableLocation
+  }); // ends EnableOrDenyLocation
 
-  var ShowRestaurants = React.createClass({
+
+  // DISPLAY RESTAURANTS COMPONENT ===================================================
+  var DisplayRestaurants = React.createClass({
     render: function() {
       return (
         <div>
@@ -118,7 +122,9 @@
     }
   });
 
-  var ShowError = React.createClass({
+
+  // DISPLAY SEARCH BAR COMPONENT ====================================================
+  var DisplaySearchBar = React.createClass({
     getInitialState: function() {
       return {
         restaurants: [],
@@ -147,7 +153,7 @@
       var address = document.getElementById('address').value;
       var esto = this;
 
-      geocoder.geocode( { 'address': address}, function(results, status) {
+      geocoder.geocode({'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
@@ -170,10 +176,10 @@
 
             var newRestaurantState = []
             for (var i = 0; i < response.length; i++) {
-              newRestaurantState.push( {name: response[i].hash.name, rating: response[i].hash.rating} );
+              newRestaurantState.push({name: response[i].hash.name, rating: response[i].hash.rating});
             }
 
-            esto.setState({ restaurants: newRestaurantState, user_location: true });
+            esto.setState({restaurants: newRestaurantState, user_location: true});
           })
 
           request.fail(function(error) {
@@ -196,7 +202,7 @@
       var showOrNoShow;
       var enableLocation = this.state.user_location;
       if (enableLocation) {
-        showOrNoShow = <ShowRestaurants name={restaurants}/>;
+        showOrNoShow = <DisplayRestaurants name={restaurants}/>;
       }
 
       return (
@@ -207,7 +213,9 @@
         </div>
       );
     }
-  }); // ends ShowError
+  }); // ends DisplaySearchBar
 
-  React.render(<EnableLocation />, document.getElementById('restaurants'));
+  
+  // RENDER REACT COMPONENTS =========================================================
+  React.render(<EnableOrDenyLocation />, document.getElementById('restaurants'));
 })();
