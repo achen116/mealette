@@ -1,31 +1,18 @@
 #map-canvas {
+  display: none;
   height: 30em;
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
-#panel {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  margin-left: -180px;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
+.card {
 }
 
-.card{
-
-
+.carousel-item-active {
 }
 
-.carousel-item-active{
-
-}
-
-.carousel-item-inactive{
+.carousel-item-inactive {
   -webkit-filter: blur(7px);
   filter: blur(7px);
 }
