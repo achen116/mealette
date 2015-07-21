@@ -1,3 +1,34 @@
+/*kg ef static css below*/
+a.rat > i.icon{
+  float: left !important;
+}
+
+.cbox{
+  border: 1px solid orange;
+  /*text-align: center;*/
+}
+
+.reviews {
+  border: 1px solid green;
+  height: 15em;
+  text-align: center;
+
+}
+.container {
+  text-align: center;
+}
+
+.spin {
+  margin-top: 2em;
+} /*tried to get margins to space button, unsuccessful*/
+
+.debugger{
+  border: 3px solid red;
+}
+
+/*Carousel css bk and kg were working on is below*/
+
+
 #content {
   width: 290px;
   margin-left: auto;
@@ -8,10 +39,14 @@
   margin: 0
 }
 .react-3d-carousel {
-  width: 290px;
+  width: 380px;
   height: 600px;
   position: relative;
   perspective: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+
+  border: 1px solid red;
 }
 
 .react-3d-carousel .carousel {
@@ -19,6 +54,8 @@
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
+
+  border: 1px solid blue;
 }
 
 /*.react-3d-carousel .carousel  figure {
