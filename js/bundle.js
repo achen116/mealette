@@ -151,8 +151,8 @@
 	      var esto = this;
 
 	      var request = $.ajax({
-	        url: "http://localhost:3000/api",
-	        // url: "https://mealette-backend.herokuapp.com/api",
+	        // url: "http://localhost:3000/api",
+	        url: "https://mealette-backend.herokuapp.com/api",
 	        method: "get",
 	        dataType: "json",
 	        data: { address: address }
@@ -194,7 +194,7 @@
 	  }); // ends SearchBar
 
 	  // RENDER REACT COMPONENTS =========================================================
-	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("restaurants"));
+	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("cbox"));
 	})();
 
 /***/ },

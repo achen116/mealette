@@ -26,16 +26,110 @@
   <!-- REACT -->
   <script src="https://fb.me/react-with-addons-0.13.3.js"></script>
   <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+
+  <!-- JQuery Effects -->
+  <script src="/js/effects.js"></script>
+
 </head>
 
 <body>
-  <div class="ui raised padded container segment">
-    <div id="enable-location-request"></div>
-    <div id="restaurants"></div>
-    <div id="content"></div>
-  </div>
+  <!-- Menu Code -->
+      <div class="ui inverted menu">
+        <div class="header item">Mealette</div>
+        <div class="right menu">
+          <div class="header item">
+            <a class="filters" href="#"><i class="ellipsis vertical icon"></i></a>
+          </div>
+          <!-- Vertical SideBar -->
+          <div class="ui sidebar inverted right vertical menu">
+            <p class="item">
+              Categories
+              <a class="item">
+                Bars
+              </a>
+              <a class="item">
+                Coffee & Tea
+              </a>
+              <a class="item">
+                Breakfast & Brunch
+              </a>
+            </p>
+            <p class="item">
+              Rating
+
+              <a class="item rat">
+                <i class="empty star icon"></i><i class="empty star icon"></i><i class="empty star icon"></i><i class="empty star icon"></i><i class="empty star icon"></i>
+              </a>
+
+              <a class="item rat">
+                <i class="empty star icon"></i><i class="empty star icon"></i><i class="empty star icon"></i><i class="empty star icon"></i>
+              </a>
+
+              <a class="item rat">
+                <i class="empty star icon"></i><i class="empty star icon"></i><i class="empty star icon"></i>
+              </a>
+
+
+              <a class="item rat">
+                <i class="empty star icon"></i><i class="empty star icon"></i>
+              </a>
+
+              <a class="item rat">
+                <i class="empty star icon"></i>
+              </a>
+
+            </p>
+
+          </div>
+          <!-- End Vertical SideBar -->
+
+
+          <div class="pusher">
+            <!-- Site content !-->
+          </div>
+
+        </div>
+      </div>
+
+  <div id="enable-location-request"></div>
+  <div id="content"></div>
+
+
+  <!-- grid code -->
+   <div class="ui grid">
+
+     <!-- hidden filters panel code -->
+
+     <!-- Carousel Code -->
+     <div class="four wide column"></div>
+     <div id="cbox" class="cbox eight wide column">Carousel</div>
+     <div class="four wide column"></div>
+
+     <div class="sixteen wide column"></div>
+
+     <!-- spin button code -->
+     <div class="seven wide column"></div>
+     <div class="container two wide column">
+       <button class="ui button">Spin!</button>
+     </div>
+     <div class="seven wide column"></div>
+
+     <!-- review box code -->
+     <div class="five wide column"></div>
+     <div class="six wide column reviews">
+     <div class="five wide column"></div>
+
+   </div> <!-- ends grid -->
 
   <!-- Bundled JS -->
   <script src="/js/bundle.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

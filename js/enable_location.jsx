@@ -101,8 +101,8 @@
       var esto = this;
 
       var request = $.ajax({
-        url: "http://localhost:3000/api",
-        // url: "https://mealette-backend.herokuapp.com/api",
+        // url: "http://localhost:3000/api",
+        url: "https://mealette-backend.herokuapp.com/api",
         method: "get",
         dataType: "json",
         data: {address: address}
@@ -132,6 +132,7 @@
             <input id="address" type="textbox" placeholder="Enter your location" ref="address" />
             <input id="search-button" type="submit" value="Geocode" />
           </form>
+
           <div>{showOrNoShow}</div>
         </div>
         );
@@ -141,6 +142,6 @@
   // RENDER REACT COMPONENTS =========================================================
   React.render(
     React.createElement(EnableOrDenyLocation,null),
-    document.getElementById('restaurants')
+    document.getElementById('cbox')
     );
 })();
