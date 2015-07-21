@@ -6,7 +6,7 @@
 	var Grid = React.createClass({
 	render: function(){
 		return(
-			<div>
+			<div className="">
 				<Menu />
 				<div className="ui grid">
 

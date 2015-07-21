@@ -4,8 +4,10 @@
   "description": "Randomly find a restaurant in your area",
   "main": "enable_location.js",
   "dependencies": {
-    "react": "^0.13.x",
     "ease-functions": "*",
+    "event-emitter": "^0.3.3",
+    "object-assign": "^3.0.0",
+    "react": "^0.13.x",
     "react-3d-carousel": "*"
   },
   "peerDependencies": {
