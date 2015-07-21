@@ -104,19 +104,99 @@
 	var Menu = React.createClass({
 		displayName: "Menu",
 
-		handleClick: function handleClick() {
-			console.log();
-		},
 		render: function render() {
-			return (
-				//Menu Code
+			return React.createElement(
+				"div",
+				null,
 				React.createElement(
 					"div",
-					{ className: "ui segment" },
+					{ className: "ui inverted menu" },
 					React.createElement(
-						ChangeLocationLink,
-						null,
-						"Change Location"
+						"div",
+						{ className: "header item" },
+						"Mealette"
+					),
+					React.createElement(
+						"div",
+						{ className: "right menu" },
+						React.createElement(
+							"div",
+							{ className: "header item" },
+							React.createElement(
+								ChangeLocationLink,
+								null,
+								"Change Location"
+							),
+							React.createElement(
+								"a",
+								{ className: "filters", href: "#" },
+								React.createElement("i", { className: "ellipsis vertical icon" })
+							)
+						)
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "ui sidebar inverted right vertical menu" },
+					React.createElement(
+						"p",
+						{ className: "item" },
+						"Categories",
+						React.createElement(
+							"a",
+							{ className: "item" },
+							"Bars"
+						),
+						React.createElement(
+							"a",
+							{ className: "item" },
+							"Coffee & Tea"
+						),
+						React.createElement(
+							"a",
+							{ className: "item" },
+							"Breakfast & Brunch"
+						)
+					),
+					React.createElement(
+						"p",
+						{ className: "item" },
+						"Rating",
+						React.createElement(
+							"a",
+							{ className: "item rat" },
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" })
+						),
+						React.createElement(
+							"a",
+							{ className: "item rat" },
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" })
+						),
+						React.createElement(
+							"a",
+							{ className: "item rat" },
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" })
+						),
+						React.createElement(
+							"a",
+							{ className: "item rat" },
+							React.createElement("i", { className: "empty star icon" }),
+							React.createElement("i", { className: "empty star icon" })
+						),
+						React.createElement(
+							"a",
+							{ className: "item rat" },
+							React.createElement("i", { className: "empty star icon" })
+						)
 					)
 				)
 			);
@@ -1014,8 +1094,6 @@
 
 
 	module.exports = UserLocation
-
-	window.DEBUG_UserLocation = UserLocation;
 
 
 /***/ },

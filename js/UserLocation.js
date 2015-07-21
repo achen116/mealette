@@ -33,5 +33,3 @@ UserLocation = EventEmitter({
 
 
 module.exports = UserLocation
-
-window.DEBUG_UserLocation = UserLocation;
