@@ -1,5 +1,6 @@
 (function(){
   // var ReactCarousel = require('./carousel/index.js');
+  var Menu = require('./components/Menu.jsx')
   var MainCarousel = require('./carousel/MainCarousel.jsx');
 
   // ENABLE/DISABLE LOCATION COMPONENT ===============================================
@@ -77,6 +78,7 @@
 
       return (
         <div>
+        <Menu />
         {showOrNoShow}
         </div>
         );
@@ -142,6 +144,6 @@
   // RENDER REACT COMPONENTS =========================================================
   React.render(
     React.createElement(EnableOrDenyLocation,null),
-    document.getElementById('cbox')
+    document.getElementById('wrapper')
     );
 })();

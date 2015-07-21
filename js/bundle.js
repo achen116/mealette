@@ -44,16 +44,17 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	(function () {
 	  // var ReactCarousel = require('./carousel/index.js');
-	  var MainCarousel = __webpack_require__(1);
+	  var Menu = __webpack_require__(1);
+	  var MainCarousel = __webpack_require__(2);
 
 	  // ENABLE/DISABLE LOCATION COMPONENT ===============================================
 
 	  var EnableOrDenyLocation = React.createClass({
-	    displayName: "EnableOrDenyLocation",
+	    displayName: 'EnableOrDenyLocation',
 
 	    getInitialState: function getInitialState() {
 	      return {
@@ -67,23 +68,23 @@
 	    },
 
 	    getLocation: function getLocation() {
-	      var x = document.getElementById("enable-location-request");
+	      var x = document.getElementById('enable-location-request');
 	      if (navigator.geolocation) {
 	        navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
 	      } else {
-	        x.innerHTML = "Geolocation is not supported by this browser.";
+	        x.innerHTML = 'Geolocation is not supported by this browser.';
 	      }
 	    }, // ends getLocation
 
 	    showPosition: function showPosition(position) {
-	      var x = document.getElementById("enable-location-request");
+	      var x = document.getElementById('enable-location-request');
 
 	      var esto = this;
 	      var request = $.ajax({
-	        url: "https://mealette-backend.herokuapp.com/api",
-	        method: "get",
+	        url: 'https://mealette-backend.herokuapp.com/api',
+	        method: 'get',
 	        data: { lat: position.coords.latitude, lon: position.coords.longitude },
-	        dataType: "JSON"
+	        dataType: 'JSON'
 	      });
 
 	      request.done(function (response) {
@@ -96,19 +97,19 @@
 	    }, // ends show position
 
 	    showError: function showError(error) {
-	      var x = document.getElementById("enable-location-request");
+	      var x = document.getElementById('enable-location-request');
 	      switch (error.code) {
 	        case error.PERMISSION_DENIED:
-	          x.innerHTML = "Please provide your address.";
+	          x.innerHTML = 'Please provide your address.';
 	          break;
 	        case error.POSITION_UNAVAILABLE:
-	          x.innerHTML = "Location information is unavailable.";
+	          x.innerHTML = 'Location information is unavailable.';
 	          break;
 	        case error.TIMEOUT:
-	          x.innerHTML = "The request to get location timed out.";
+	          x.innerHTML = 'The request to get location timed out.';
 	          break;
 	        case error.UNKNOWN_ERROR:
-	          x.innerHTML = "An unknown error occurred.";
+	          x.innerHTML = 'An unknown error occurred.';
 	          break;
 	      }
 	    }, // ends showError
@@ -125,8 +126,9 @@
 	      }
 
 	      return React.createElement(
-	        "div",
+	        'div',
 	        null,
+	        React.createElement(Menu, null),
 	        showOrNoShow
 	      );
 	    }
@@ -134,7 +136,7 @@
 
 	  // DISPLAY SEARCH BAR COMPONENT ====================================================
 	  var SearchBar = React.createClass({
-	    displayName: "SearchBar",
+	    displayName: 'SearchBar',
 
 	    getInitialState: function getInitialState() {
 	      return {
@@ -152,15 +154,15 @@
 
 	      var request = $.ajax({
 	        // url: "http://localhost:3000/api",
-	        url: "https://mealette-backend.herokuapp.com/api",
-	        method: "get",
-	        dataType: "json",
+	        url: 'https://mealette-backend.herokuapp.com/api',
+	        method: 'get',
+	        dataType: 'json',
 	        data: { address: address }
 	      });
 
 	      request.done(function (response) {
 	        esto.setState({ restaurant_objects: response, user_location: true });
-	        $("#address").val("");
+	        $('#address').val('');
 	      });
 
 	      request.fail(function (error) {
@@ -176,16 +178,16 @@
 	      }
 
 	      return React.createElement(
-	        "div",
+	        'div',
 	        null,
 	        React.createElement(
-	          "form",
+	          'form',
 	          { onSubmit: this.codeAddress },
-	          React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location", ref: "address" }),
-	          React.createElement("input", { id: "search-button", type: "submit", value: "Geocode" })
+	          React.createElement('input', { id: 'address', type: 'textbox', placeholder: 'Enter your location', ref: 'address' }),
+	          React.createElement('input', { id: 'search-button', type: 'submit', value: 'Geocode' })
 	        ),
 	        React.createElement(
-	          "div",
+	          'div',
 	          null,
 	          showOrNoShow
 	        )
@@ -194,17 +196,127 @@
 	  }); // ends SearchBar
 
 	  // RENDER REACT COMPONENTS =========================================================
-	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("cbox"));
+	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById('wrapper'));
 	})();
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var Menu = React.createClass({
+		displayName: "Menu",
+
+		render: function render() {
+			return (
+				//Menu Code
+				React.createElement(
+					"div",
+					{ className: "ui inverted menu" },
+					React.createElement(
+						"div",
+						{ className: "header item" },
+						"Mealette"
+					),
+					React.createElement(
+						"div",
+						{ className: "right menu" },
+						React.createElement(
+							"div",
+							{ className: "header item" },
+							React.createElement(
+								"a",
+								{ className: "filters", href: "#" },
+								React.createElement("i", { className: "ellipsis vertical icon" })
+							)
+						),
+						"//Vertical SideBar",
+						React.createElement(
+							"div",
+							{ className: "ui sidebar inverted right vertical menu" },
+							React.createElement(
+								"p",
+								{ className: "item" },
+								"Categories",
+								React.createElement(
+									"a",
+									{ className: "item" },
+									"Bars"
+								),
+								React.createElement(
+									"a",
+									{ className: "item" },
+									"Coffee & Tea"
+								),
+								React.createElement(
+									"a",
+									{ className: "item" },
+									"Breakfast & Brunch"
+								)
+							),
+							React.createElement(
+								"p",
+								{ className: "item" },
+								"Rating",
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" })
+								)
+							)
+						),
+						"//End Vertical SideBar",
+						React.createElement(
+							"div",
+							{ className: "pusher" },
+							"//Site content"
+						)
+					)
+				)
+			);
+		}
+	});
+	module.exports = Menu;
+
+/***/ },
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Carousel = __webpack_require__(2);
-	var Ease = __webpack_require__(7);
+	var Carousel = __webpack_require__(3);
+	var Ease = __webpack_require__(8);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -261,15 +373,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(3);
+	var React = __webpack_require__(4);
 
-	var Util = __webpack_require__(4);
-	var Layout = __webpack_require__(5);
-	var Depot = __webpack_require__(6);
+	var Util = __webpack_require__(5);
+	var Layout = __webpack_require__(6);
+	var Depot = __webpack_require__(7);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -330,13 +442,13 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -415,12 +527,12 @@
 	};
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(4);
+	var Util = __webpack_require__(5);
 
 	var _exports = module.exports = {};
 
@@ -471,14 +583,14 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(7);
-	var Layout = __webpack_require__(5);
-	var Util = __webpack_require__(4);
+	var Ease = __webpack_require__(8);
+	var Layout = __webpack_require__(6);
+	var Util = __webpack_require__(5);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -613,7 +725,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {
