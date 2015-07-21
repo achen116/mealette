@@ -1,5 +1,5 @@
 module.exports = {
-  entry: "./js/enable_location.jsx",
+  entry: "./js/components/Grid.jsx",
   output: {
     path: __dirname,
     filename: "./js/bundle.js"

@@ -44,167 +44,324 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	(function () {
-	  // var ReactCarousel = require('./carousel/index.js');
-	  var MainCarousel = __webpack_require__(1);
 
-	  // ENABLE/DISABLE LOCATION COMPONENT ===============================================
+		var Menu = __webpack_require__(1);
+		var EnableOrDenyLocation = __webpack_require__(2);
 
-	  var EnableOrDenyLocation = React.createClass({
-	    displayName: "EnableOrDenyLocation",
+		var Grid = React.createClass({
+			displayName: 'Grid',
 
-	    getInitialState: function getInitialState() {
-	      return {
-	        restaurant_objects: [],
-	        user_location: false
-	      };
-	    },
+			render: function render() {
+				return React.createElement(
+					'div',
+					null,
+					React.createElement(Menu, null),
+					React.createElement(
+						'div',
+						{ className: 'ui grid' },
+						React.createElement('div', { className: 'four wide column' }),
+						React.createElement(
+							'div',
+							{ id: 'cbox', className: 'cbox eight wide column' },
+							React.createElement('div', { id: 'enable-location-request' }),
+							React.createElement(EnableOrDenyLocation, null)
+						),
+						React.createElement('div', { className: 'four wide column' }),
+						React.createElement('div', { className: 'sixteen wide column' }),
+						React.createElement('div', { className: 'seven wide column' }),
+						React.createElement(
+							'div',
+							{ className: 'container two wide column' },
+							React.createElement(
+								'button',
+								{ className: 'ui button' },
+								'Spin!'
+							)
+						),
+						React.createElement('div', { className: 'seven wide column' }),
+						React.createElement('div', { className: 'five wide column' }),
+						React.createElement('div', { className: 'six wide column reviews' }),
+						React.createElement('div', { className: 'five wide column' })
+					)
+				);
+			}
+		});
 
-	    componentDidMount: function componentDidMount() {
-	      this.getLocation();
-	    },
-
-	    getLocation: function getLocation() {
-	      var x = document.getElementById("enable-location-request");
-	      if (navigator.geolocation) {
-	        navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
-	      } else {
-	        x.innerHTML = "Geolocation is not supported by this browser.";
-	      }
-	    }, // ends getLocation
-
-	    showPosition: function showPosition(position) {
-	      var x = document.getElementById("enable-location-request");
-
-	      var esto = this;
-	      var request = $.ajax({
-	        url: "https://mealette-backend.herokuapp.com/api",
-	        method: "get",
-	        data: { lat: position.coords.latitude, lon: position.coords.longitude },
-	        dataType: "JSON"
-	      });
-
-	      request.done(function (response) {
-	        esto.setState({ restaurant_objects: response, user_location: true });
-	      });
-
-	      request.fail(function (errors) {
-	        console.error(errors);
-	      });
-	    }, // ends show position
-
-	    showError: function showError(error) {
-	      var x = document.getElementById("enable-location-request");
-	      switch (error.code) {
-	        case error.PERMISSION_DENIED:
-	          x.innerHTML = "Please provide your address.";
-	          break;
-	        case error.POSITION_UNAVAILABLE:
-	          x.innerHTML = "Location information is unavailable.";
-	          break;
-	        case error.TIMEOUT:
-	          x.innerHTML = "The request to get location timed out.";
-	          break;
-	        case error.UNKNOWN_ERROR:
-	          x.innerHTML = "An unknown error occurred.";
-	          break;
-	      }
-	    }, // ends showError
-
-	    render: function render() {
-
-	      var showOrNoShow;
-	      var enableLocation = this.state.user_location;
-
-	      if (enableLocation) {
-	        showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
-	      } else {
-	        showOrNoShow = React.createElement(SearchBar, null);
-	      }
-
-	      return React.createElement(
-	        "div",
-	        null,
-	        showOrNoShow
-	      );
-	    }
-	  }); // ends EnableOrDenyLocation
-
-	  // DISPLAY SEARCH BAR COMPONENT ====================================================
-	  var SearchBar = React.createClass({
-	    displayName: "SearchBar",
-
-	    getInitialState: function getInitialState() {
-	      return {
-	        restaurant_objects: [],
-	        user_location: false
-	      };
-	    }, // ends getInitialState
-
-	    codeAddress: function codeAddress(e) {
-	      e.preventDefault();
-	      var address = React.findDOMNode(this.refs.address).value.trim();
-
-	      console.log(address);
-	      var esto = this;
-
-	      var request = $.ajax({
-	        // url: "http://localhost:3000/api",
-	        url: "https://mealette-backend.herokuapp.com/api",
-	        method: "get",
-	        dataType: "json",
-	        data: { address: address }
-	      });
-
-	      request.done(function (response) {
-	        esto.setState({ restaurant_objects: response, user_location: true });
-	        $("#address").val("");
-	      });
-
-	      request.fail(function (error) {
-	        console.error(error);
-	      });
-	    }, // ends codeAddress
-
-	    render: function render() {
-	      var showOrNoShow;
-	      var enableLocation = this.state.user_location;
-	      if (enableLocation) {
-	        showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
-	      }
-
-	      return React.createElement(
-	        "div",
-	        null,
-	        React.createElement(
-	          "form",
-	          { onSubmit: this.codeAddress },
-	          React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location", ref: "address" }),
-	          React.createElement("input", { id: "search-button", type: "submit", value: "Geocode" })
-	        ),
-	        React.createElement(
-	          "div",
-	          null,
-	          showOrNoShow
-	        )
-	      );
-	    }
-	  }); // ends SearchBar
-
-	  // RENDER REACT COMPONENTS =========================================================
-	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("cbox"));
+		React.render(React.createElement(Grid, null), document.getElementById('wrapper'));
 	})();
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var Menu = React.createClass({
+		displayName: "Menu",
+
+		render: function render() {
+			return (
+				//Menu Code
+				React.createElement(
+					"div",
+					{ className: "ui inverted menu" },
+					React.createElement(
+						"div",
+						{ className: "header item" },
+						"Mealette"
+					),
+					React.createElement(
+						"div",
+						{ className: "right menu" },
+						React.createElement(
+							"div",
+							{ className: "header item" },
+							React.createElement(
+								"a",
+								{ className: "filters", href: "#" },
+								React.createElement("i", { className: "ellipsis vertical icon" })
+							)
+						),
+						"//Vertical SideBar",
+						React.createElement(
+							"div",
+							{ className: "ui sidebar inverted right vertical menu" },
+							React.createElement(
+								"p",
+								{ className: "item" },
+								"Categories",
+								React.createElement(
+									"a",
+									{ className: "item" },
+									"Bars"
+								),
+								React.createElement(
+									"a",
+									{ className: "item" },
+									"Coffee & Tea"
+								),
+								React.createElement(
+									"a",
+									{ className: "item" },
+									"Breakfast & Brunch"
+								)
+							),
+							React.createElement(
+								"p",
+								{ className: "item" },
+								"Rating",
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" }),
+									React.createElement("i", { className: "empty star icon" })
+								),
+								React.createElement(
+									"a",
+									{ className: "item rat" },
+									React.createElement("i", { className: "empty star icon" })
+								)
+							)
+						),
+						"//End Vertical SideBar",
+						React.createElement(
+							"div",
+							{ className: "pusher" },
+							"//Site content"
+						)
+					)
+				)
+			);
+		}
+	});
+	module.exports = Menu;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var MainCarousel = __webpack_require__(3);
+
+	var EnableOrDenyLocation = React.createClass({
+	  displayName: "EnableOrDenyLocation",
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      restaurant_objects: [],
+	      user_location: false
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.getLocation();
+	  },
+
+	  getLocation: function getLocation() {
+	    var x = document.getElementById("enable-location-request");
+	    if (navigator.geolocation) {
+	      navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
+	    } else {
+	      x.innerHTML = "Geolocation is not supported by this browser.";
+	    }
+	  }, // ends getLocation
+
+	  showPosition: function showPosition(position) {
+	    var x = document.getElementById("enable-location-request");
+
+	    var esto = this;
+	    var request = $.ajax({
+	      url: "https://mealette-backend.herokuapp.com/api",
+	      method: "get",
+	      data: { lat: position.coords.latitude, lon: position.coords.longitude },
+	      dataType: "JSON"
+	    });
+
+	    request.done(function (response) {
+	      esto.setState({ restaurant_objects: response, user_location: true });
+	    });
+
+	    request.fail(function (errors) {
+	      console.error(errors);
+	    });
+	  }, // ends show position
+
+	  showError: function showError(error) {
+	    var x = document.getElementById("enable-location-request");
+	    switch (error.code) {
+	      case error.PERMISSION_DENIED:
+	        x.innerHTML = "Please provide your address.";
+	        break;
+	      case error.POSITION_UNAVAILABLE:
+	        x.innerHTML = "Location information is unavailable.";
+	        break;
+	      case error.TIMEOUT:
+	        x.innerHTML = "The request to get location timed out.";
+	        break;
+	      case error.UNKNOWN_ERROR:
+	        x.innerHTML = "An unknown error occurred.";
+	        break;
+	    }
+	  }, // ends showError
+
+	  render: function render() {
+
+	    var showOrNoShow;
+	    var enableLocation = this.state.user_location;
+
+	    if (enableLocation) {
+	      showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
+	    } else {
+	      showOrNoShow = React.createElement(SearchBar, null);
+	    }
+
+	    return React.createElement(
+	      "div",
+	      null,
+	      showOrNoShow
+	    );
+	  }
+	}); // ends EnableOrDenyLocation
+
+	// DISPLAY SEARCH BAR COMPONENT ====================================================
+	var SearchBar = React.createClass({
+	  displayName: "SearchBar",
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      restaurant_objects: [],
+	      user_location: false
+	    };
+	  }, // ends getInitialState
+
+	  codeAddress: function codeAddress(e) {
+	    e.preventDefault();
+	    var address = React.findDOMNode(this.refs.address).value.trim();
+
+	    console.log(address);
+	    var esto = this;
+
+	    var request = $.ajax({
+	      // url: "http://localhost:3000/api",
+	      url: "https://mealette-backend.herokuapp.com/api",
+	      method: "get",
+	      dataType: "json",
+	      data: { address: address }
+	    });
+
+	    request.done(function (response) {
+	      esto.setState({ restaurant_objects: response, user_location: true });
+	      $("#address").val("");
+	    });
+
+	    request.fail(function (error) {
+	      console.error(error);
+	    });
+	  }, // ends codeAddress
+
+	  render: function render() {
+	    var showOrNoShow;
+	    var enableLocation = this.state.user_location;
+	    if (enableLocation) {
+	      showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
+	    }
+
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.codeAddress },
+	        React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location", ref: "address" }),
+	        React.createElement("input", { id: "search-button", type: "submit", value: "Geocode" })
+	      ),
+	      React.createElement(
+	        "div",
+	        null,
+	        showOrNoShow
+	      )
+	    );
+	  }
+	}); // ends SearchBar
+
+	module.exports = EnableOrDenyLocation;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Carousel = __webpack_require__(2);
-	var Ease = __webpack_require__(7);
+	var Carousel = __webpack_require__(4);
+	var Ease = __webpack_require__(9);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -261,15 +418,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 2 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(3);
+	var React = __webpack_require__(5);
 
-	var Util = __webpack_require__(4);
-	var Layout = __webpack_require__(5);
-	var Depot = __webpack_require__(6);
+	var Util = __webpack_require__(6);
+	var Layout = __webpack_require__(7);
+	var Depot = __webpack_require__(8);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -330,13 +487,13 @@
 
 
 /***/ },
-/* 3 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -415,12 +572,12 @@
 	};
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(4);
+	var Util = __webpack_require__(6);
 
 	var _exports = module.exports = {};
 
@@ -471,14 +628,14 @@
 
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(7);
-	var Layout = __webpack_require__(5);
-	var Util = __webpack_require__(4);
+	var Ease = __webpack_require__(9);
+	var Layout = __webpack_require__(7);
+	var Util = __webpack_require__(6);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -613,7 +770,7 @@
 
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {

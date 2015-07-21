@@ -1,9 +1,5 @@
-(function(){
-  // var ReactCarousel = require('./carousel/index.js');
-  var MainCarousel = require('./carousel/MainCarousel.jsx');
-
-  // ENABLE/DISABLE LOCATION COMPONENT ===============================================
-
+  var MainCarousel = require('../carousel/MainCarousel.jsx');
+  
   var EnableOrDenyLocation = React.createClass({
     getInitialState: function() {
       return {
@@ -139,9 +135,6 @@
     }
   }); // ends SearchBar
 
-  // RENDER REACT COMPONENTS =========================================================
-  React.render(
-    React.createElement(EnableOrDenyLocation,null),
-    document.getElementById('cbox')
-    );
-})();
+module.exports = EnableOrDenyLocation;
+
+
