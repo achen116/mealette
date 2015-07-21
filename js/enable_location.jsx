@@ -44,8 +44,6 @@
         console.error(errors);
       });
 
-      x.innerHTML = "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
     }, // ends show position
 
     showError: function(error) {
@@ -98,11 +96,7 @@
     codeAddress: function(e) {
       e.preventDefault();
       var address = React.findDOMNode(this.refs.address).value.trim();
-      // When someone hits enter or clicks geocode, we call this function
-      // This function sends the plain text to mealette-backend/geocode
-      // Backend picks up the text, runs a geocode on it for coordinates
-      // Backend then sends coordinates to /api for a new call
-      // Backend returns the result like normal
+
       console.log(address);
       var esto = this;
 
@@ -115,7 +109,6 @@
       });
 
       request.done(function(response){
-        console.log(response)
         esto.setState({ restaurant_objects: response, user_location: true });
       });
 
@@ -134,11 +127,11 @@
 
       return (
         <div>
-        <form onSubmit={this.codeAddress}>
-          <input id="address" type="textbox" placeholder="Enter your location" ref="address" />
-          <input id="search-button" type="submit" value="Geocode" />
-        </form>
-        <div>{showOrNoShow}</div>
+          <form onSubmit={this.codeAddress}>
+            <input id="address" type="textbox" placeholder="Enter your location" ref="address" />
+            <input id="search-button" type="submit" value="Geocode" />
+          </form>
+          <div>{showOrNoShow}</div>
         </div>
         );
     }
