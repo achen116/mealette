@@ -71,19 +71,12 @@
 						),
 						React.createElement('div', { className: 'four wide column' }),
 						React.createElement('div', { className: 'sixteen wide column' }),
-						React.createElement('div', { className: 'seven wide column' }),
+						React.createElement('div', { className: 'five wide column' }),
 						React.createElement(
 							'div',
-							{ className: 'container two wide column' },
-							React.createElement(
-								'button',
-								{ className: 'ui button' },
-								'Spin!'
-							)
+							{ className: 'six wide column reviews' },
+							'Reviews'
 						),
-						React.createElement('div', { className: 'seven wide column' }),
-						React.createElement('div', { className: 'five wide column' }),
-						React.createElement('div', { className: 'six wide column reviews' }),
 						React.createElement('div', { className: 'five wide column' })
 					)
 				);
@@ -529,6 +522,7 @@
 	               ));
 	        });
 	        return (
+	          React.createElement("div", null,
 	            React.createElement("section", {className: "react-3d-carousel"},
 	            React.createElement("div", {className: "carousel",
 	            style: {transform: "translateZ("+translateZ+"px)"}},
@@ -536,7 +530,10 @@
 	            ),
 	            React.createElement("div", {className: "prev", onClick: Util.partial(this.onRotate,+angle)}),
 	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
-	            )
+	            ),
+
+	            React.createElement("button", {className: "massive ui button", onClick: Util.partial(this.onRotate,-(19*angle))}, "Spin")
+	          )
 	            );
 	    }
 	});
