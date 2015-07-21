@@ -93,8 +93,6 @@
 	      request.fail(function (errors) {
 	        console.error(errors);
 	      });
-
-	      x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
 	    }, // ends show position
 
 	    showError: function showError(error) {
@@ -148,25 +146,21 @@
 	    codeAddress: function codeAddress(e) {
 	      e.preventDefault();
 	      var address = React.findDOMNode(this.refs.address).value.trim();
-	      // When someone hits enter or clicks geocode, we call this function
-	      // This function sends the plain text to mealette-backend/geocode
-	      // Backend picks up the text, runs a geocode on it for coordinates
-	      // Backend then sends coordinates to /api for a new call
-	      // Backend returns the result like normal
+
 	      console.log(address);
 	      var esto = this;
 
 	      var request = $.ajax({
-	        url: "https://localhost:3000/geocode",
-	        // url: "https://mealette-backend.herokuapp.com/geocode",
+	        url: "http://localhost:3000/api",
+	        // url: "https://mealette-backend.herokuapp.com/api",
 	        method: "get",
 	        dataType: "json",
-	        data: address
+	        data: { address: address }
 	      });
 
 	      request.done(function (response) {
-	        console.log(response);
 	        esto.setState({ restaurant_objects: response, user_location: true });
+	        $("#address").val("");
 	      });
 
 	      request.fail(function (error) {
@@ -211,7 +205,6 @@
 
 	var Carousel = __webpack_require__(2);
 	var Ease = __webpack_require__(7);
-	// var cards = require('./cards');
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -225,10 +218,11 @@
 	            duration: 400
 	        };
 	    },
-	    componentDidMount: function componentDidMount() {
-	        console.log('Inside of Carousel props:');
-	        console.log(this.props.cardData);
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState({ cards: nextProps.cardData });
 	    },
+
 	    componentWillMount: function componentWillMount() {
 	        this.onSides = (function (event) {
 	            this.setState({ cards: cards.slice(0, event.target.value) });
@@ -243,6 +237,7 @@
 	            this.setState({ ease: event.target.value });
 	        }).bind(this);
 	    },
+
 	    render: function render() {
 	        var easeList = Object.keys(Ease).map(function (d) {
 	            return React.createElement(

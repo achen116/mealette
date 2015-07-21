@@ -102,7 +102,7 @@
 
       var request = $.ajax({
         url: "http://localhost:3000/api",
-        // url: "https://mealette-backend.herokuapp.com/geocode",
+        // url: "https://mealette-backend.herokuapp.com/api",
         method: "get",
         dataType: "json",
         data: {address: address}
