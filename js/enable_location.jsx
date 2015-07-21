@@ -1,6 +1,7 @@
 (function(){
   // var ReactCarousel = require('./carousel/index.js');
-  var Menu = require('./components/Menu.jsx')
+  var Menu = require('./components/Menu.jsx');
+  var Grid = require('./components/Grid.jsx');
   var MainCarousel = require('./carousel/MainCarousel.jsx');
 
   // ENABLE/DISABLE LOCATION COMPONENT ===============================================
@@ -79,6 +80,7 @@
       return (
         <div>
         <Menu />
+        <Grid />
         {showOrNoShow}
         </div>
         );

@@ -49,7 +49,8 @@
 	(function () {
 	  // var ReactCarousel = require('./carousel/index.js');
 	  var Menu = __webpack_require__(1);
-	  var MainCarousel = __webpack_require__(2);
+	  var Grid = __webpack_require__(2);
+	  var MainCarousel = __webpack_require__(3);
 
 	  // ENABLE/DISABLE LOCATION COMPONENT ===============================================
 
@@ -129,6 +130,7 @@
 	        'div',
 	        null,
 	        React.createElement(Menu, null),
+	        React.createElement(Grid, null),
 	        showOrNoShow
 	      );
 	    }
@@ -311,12 +313,53 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var Grid = React.createClass({
+		displayName: "Grid",
+
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ className: "ui grid" },
+				React.createElement("div", { className: "four wide column" }),
+				React.createElement(
+					"div",
+					{ id: "cbox", className: "cbox eight wide column" },
+					"Carousel"
+				),
+				React.createElement("div", { className: "four wide column" }),
+				React.createElement("div", { className: "sixteen wide column" }),
+				React.createElement("div", { className: "seven wide column" }),
+				React.createElement(
+					"div",
+					{ className: "container two wide column" },
+					React.createElement(
+						"button",
+						{ className: "ui button" },
+						"Spin!"
+					)
+				),
+				React.createElement("div", { className: "seven wide column" }),
+				React.createElement("div", { className: "five wide column" }),
+				React.createElement("div", { className: "six wide column reviews" }),
+				React.createElement("div", { className: "five wide column" })
+			);
+		}
+	});
+
+	module.exports = Grid;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Carousel = __webpack_require__(3);
-	var Ease = __webpack_require__(8);
+	var Carousel = __webpack_require__(4);
+	var Ease = __webpack_require__(9);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -373,15 +416,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(4);
+	var React = __webpack_require__(5);
 
-	var Util = __webpack_require__(5);
-	var Layout = __webpack_require__(6);
-	var Depot = __webpack_require__(7);
+	var Util = __webpack_require__(6);
+	var Layout = __webpack_require__(7);
+	var Depot = __webpack_require__(8);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -442,13 +485,13 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -527,12 +570,12 @@
 	};
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(5);
+	var Util = __webpack_require__(6);
 
 	var _exports = module.exports = {};
 
@@ -583,14 +626,14 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(8);
-	var Layout = __webpack_require__(6);
-	var Util = __webpack_require__(5);
+	var Ease = __webpack_require__(9);
+	var Layout = __webpack_require__(7);
+	var Util = __webpack_require__(6);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -725,7 +768,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {
