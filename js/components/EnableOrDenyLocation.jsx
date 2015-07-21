@@ -1,5 +1,5 @@
   var MainCarousel = require('../carousel/MainCarousel.jsx');
-  
+
   var EnableOrDenyLocation = React.createClass({
     getInitialState: function() {
       return {
@@ -97,16 +97,24 @@
       var esto = this;
 
       var request = $.ajax({
-        // url: "http://localhost:3000/api",
-        url: "https://mealette-backend.herokuapp.com/api",
+        url: "http://localhost:3000/api",
+        // url: "https://mealette-backend.herokuapp.com/api",
         method: "get",
         dataType: "json",
         data: {address: address}
       });
 
       request.done(function(response){
-        esto.setState({ restaurant_objects: response, user_location: true });
-        $('#address').val('');
+        if (response.status === 400) {
+          $('#enable-location-request').html("Please try again");
+          $('#enable-location-request').css("color", "red");
+          $('#address').val('');
+        } else {
+          esto.setState({ restaurant_objects: response, user_location: true });
+          $('#enable-location-request').html("Please provide your address.");
+          $('#enable-location-request').css("color", "black");
+          $('#address').val('');
+        }
       });
 
       request.fail(function(error) {
