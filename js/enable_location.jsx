@@ -204,9 +204,9 @@
 
       return (
         <div>
-        <input id="address" type="textbox" placeholder="Enter your location" />
-        <input id="search-button" type="button" value="Geocode" onClick={this.codeAddress} />
-        <div>{showOrNoShow}</div>
+          <input id="address" type="textbox" placeholder="Enter your location" />
+          <input id="search-button" type="button" value="Geocode" onClick={this.codeAddress} />
+          <div>{showOrNoShow}</div>
         </div>
         );
     }
@@ -215,6 +215,6 @@
   // RENDER REACT COMPONENTS =========================================================
   React.render(
     React.createElement(EnableOrDenyLocation,null),
-    document.getElementById('restaurants')
+    document.getElementById('cbox')
     );
 })();
