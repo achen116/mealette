@@ -19,14 +19,8 @@
 
 				  <div className="sixteen wide column"></div>
 
-				  <div className="seven wide column"></div>
-				  <div className="container two wide column">
-				    <button className="ui button">Spin!</button>
-				  </div>
-				  <div className="seven wide column"></div>
-
 				  <div className="five wide column"></div>
-				  <div className="six wide column reviews"></div>
+				  <div className="six wide column reviews">Reviews</div>
 				  <div className="five wide column"></div>
 
 				</div>
