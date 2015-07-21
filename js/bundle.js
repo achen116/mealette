@@ -57,7 +57,6 @@
 
 	    getInitialState: function getInitialState() {
 	      return {
-	        restaurants: [],
 	        restaurant_objects: [],
 	        user_location: false
 	      };
@@ -88,36 +87,12 @@
 	      });
 
 	      request.done(function (response) {
-	        var newRestaurantState = [];
-	        for (var i = 0; i < response.length; i++) {
-	          newRestaurantState.push({ name: response[i].hash.name, rating: response[i].hash.rating });
-	        }
-
-	        esto.setState({ restaurants: newRestaurantState, restaurant_objects: response, user_location: true });
-
-	        lat = position.coords.latitude;
-	        lon = position.coords.longitude;
-	        latlon = new google.maps.LatLng(lat, lon);
-	        mapholder = document.getElementById("google-map");
-	        mapholder.style.height = "250px";
-	        mapholder.style.width = "500px";
-
-	        var myOptions = {
-	          center: latlon, zoom: 15,
-	          mapTypeId: google.maps.MapTypeId.ROADMAP,
-	          mapTypeControl: true,
-	          navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL }
-	        };
-
-	        var map = new google.maps.Map(document.getElementById("google-map"), myOptions);
-	        var marker = new google.maps.Marker({ position: latlon, map: map, title: "You are here!" });
+	        esto.setState({ restaurant_objects: response, user_location: true });
 	      });
 
 	      request.fail(function (errors) {
 	        console.error(errors);
 	      });
-
-	      x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
 	    }, // ends show position
 
 	    showError: function showError(error) {
@@ -146,7 +121,7 @@
 	      if (enableLocation) {
 	        showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
 	      } else {
-	        showOrNoShow = React.createElement(DisplaySearchBar, null);
+	        showOrNoShow = React.createElement(SearchBar, null);
 	      }
 
 	      return React.createElement(
@@ -157,119 +132,58 @@
 	    }
 	  }); // ends EnableOrDenyLocation
 
-	  // DISPLAY RESTAURANTS COMPONENT ===================================================
-	  var DisplayRestaurants = React.createClass({
-	    displayName: "DisplayRestaurants",
-
-	    render: function render() {
-	      return React.createElement(
-	        "div",
-	        null,
-	        React.createElement(
-	          "h2",
-	          null,
-	          "Restaurants: "
-	        ),
-	        React.createElement(
-	          "p",
-	          null,
-	          this.props.name
-	        )
-	      );
-	    }
-	  });
-
 	  // DISPLAY SEARCH BAR COMPONENT ====================================================
-	  var DisplaySearchBar = React.createClass({
-	    displayName: "DisplaySearchBar",
+	  var SearchBar = React.createClass({
+	    displayName: "SearchBar",
 
 	    getInitialState: function getInitialState() {
 	      return {
-	        restaurants: [],
+	        restaurant_objects: [],
 	        user_location: false
 	      };
 	    }, // ends getInitialState
 
-	    componentDidMount: function componentDidMount() {
-	      var searchButton = document.getElementById("search-button");
-	      google.maps.event.addDomListener(searchButton, "click", this.initialize);
-	    }, // ends componentDidMount
+	    codeAddress: function codeAddress(e) {
+	      e.preventDefault();
+	      var address = React.findDOMNode(this.refs.address).value.trim();
 
-	    initialize: function initialize() {
-	      geocoder = new google.maps.Geocoder();
-	      var latlng = new google.maps.LatLng(37.7833, -122.4167);
-	      var mapOptions = {
-	        zoom: 14,
-	        center: latlng
-	      };
-
-	      map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-	    }, // ends initialize
-
-	    codeAddress: function codeAddress() {
-	      var address = document.getElementById("address").value;
+	      console.log(address);
 	      var esto = this;
 
-	      geocoder.geocode({ "address": address }, function (results, status) {
-	        if (status == google.maps.GeocoderStatus.OK) {
-	          map.setCenter(results[0].geometry.location);
-	          var marker = new google.maps.Marker({
-	            map: map,
-	            position: results[0].geometry.location
-	          });
+	      var request = $.ajax({
+	        // url: "http://localhost:3000/api",
+	        url: "https://mealette-backend.herokuapp.com/api",
+	        method: "get",
+	        dataType: "json",
+	        data: { address: address }
+	      });
 
-	          var lat = results[0].geometry.location.A;
-	          var lon = results[0].geometry.location.F;
+	      request.done(function (response) {
+	        esto.setState({ restaurant_objects: response, user_location: true });
+	        $("#address").val("");
+	      });
 
-	          var request = $.ajax({
-	            url: "https://mealette-backend.herokuapp.com/api",
-	            method: "get",
-	            dataType: "json",
-	            data: { lat: lat, lon: lon }
-	          });
-
-	          request.done(function (response) {
-	            $("#map-canvas").show();
-
-	            var newRestaurantState = [];
-	            for (var i = 0; i < response.length; i++) {
-	              newRestaurantState.push({ name: response[i].hash.name, rating: response[i].hash.rating });
-	            }
-
-	            esto.setState({ restaurants: newRestaurantState, user_location: true });
-	          });
-
-	          request.fail(function (error) {
-	            console.error(error);
-	          });
-	        } else {
-	          return alert("Geocode was not successful for the following reason: " + status);
-	        }
+	      request.fail(function (error) {
+	        console.error(error);
 	      });
 	    }, // ends codeAddress
 
 	    render: function render() {
-	      var restaurants = this.state.restaurants.map(function (restaurant) {
-	        return React.createElement(
-	          "li",
-	          null,
-	          restaurant.name,
-	          " - ",
-	          restaurant.rating
-	        );
-	      });
-
 	      var showOrNoShow;
 	      var enableLocation = this.state.user_location;
 	      if (enableLocation) {
-	        showOrNoShow = React.createElement(DisplayRestaurants, { name: restaurants });
+	        showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
 	      }
 
 	      return React.createElement(
 	        "div",
 	        null,
-	        React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location" }),
-	        React.createElement("input", { id: "search-button", type: "button", value: "Geocode", onClick: this.codeAddress }),
+	        React.createElement(
+	          "form",
+	          { onSubmit: this.codeAddress },
+	          React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location", ref: "address" }),
+	          React.createElement("input", { id: "search-button", type: "submit", value: "Geocode" })
+	        ),
 	        React.createElement(
 	          "div",
 	          null,
@@ -277,10 +191,10 @@
 	        )
 	      );
 	    }
-	  }); // ends DisplaySearchBar
+	  }); // ends SearchBar
 
 	  // RENDER REACT COMPONENTS =========================================================
-	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("restaurants"));
+	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("cbox"));
 	})();
 
 /***/ },
@@ -291,7 +205,6 @@
 
 	var Carousel = __webpack_require__(2);
 	var Ease = __webpack_require__(7);
-	// var cards = require('./cards');
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -305,10 +218,11 @@
 	            duration: 400
 	        };
 	    },
-	    componentDidMount: function componentDidMount() {
-	        console.log('Inside of Carousel props:');
-	        console.log(this.props.cardData);
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState({ cards: nextProps.cardData });
 	    },
+
 	    componentWillMount: function componentWillMount() {
 	        this.onSides = (function (event) {
 	            this.setState({ cards: cards.slice(0, event.target.value) });
@@ -323,6 +237,7 @@
 	            this.setState({ ease: event.target.value });
 	        }).bind(this);
 	    },
+
 	    render: function render() {
 	        var easeList = Object.keys(Ease).map(function (d) {
 	            return React.createElement(

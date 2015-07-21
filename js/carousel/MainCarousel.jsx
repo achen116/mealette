@@ -1,7 +1,5 @@
 var Carousel = require('react-3d-carousel');
 var Ease = require('ease-functions');
-// var cards = require('./cards');
-
 
 var MainCarousel = React.createClass({
     getInitialState: function () {
@@ -13,10 +11,11 @@ var MainCarousel = React.createClass({
             duration: 400
         };
     },
-    componentDidMount: function(){
-        console.log("Inside of Carousel props:");
-        console.log(this.props.cardData);
+
+    componentWillReceiveProps: function(nextProps) {
+      this.setState({ cards: nextProps.cardData });
     },
+
     componentWillMount: function () {
         this.onSides = function (event) {
             this.setState( {cards: cards.slice(0, event.target.value) });
@@ -31,6 +30,7 @@ var MainCarousel = React.createClass({
             this.setState({ease:  event.target.value});
         }.bind(this);
     },
+
     render: function () {
         var easeList = Object.keys(Ease).map(function (d) {
             return (<option key={d} value={d}>{d}</option>)
