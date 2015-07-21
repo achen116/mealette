@@ -1,148 +1,92 @@
-  var MainCarousel = require('../carousel/MainCarousel.jsx');
+var MainCarousel = require('../carousel/MainCarousel.jsx');
+var SearchBar = require('./SearchBar.jsx');
+var UserLocation = require('../UserLocation.js');
 
-  var EnableOrDenyLocation = React.createClass({
-    getInitialState: function() {
-      return {
-        restaurant_objects: [],
-        user_location: false
-      }
-    },
+var EnableOrDenyLocation = React.createClass({
 
-    componentDidMount: function() {
-      this.getLocation();
-    },
+  getInitialState: function() {
+    return {
+      restaurant_objects: null,
+      user_location: null,
+      error: null,
+    };
+  },
 
-    getLocation: function() {
-      var x = document.getElementById("enable-location-request");
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
-      } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-    }, // ends getLocation
+  componentDidMount: function() {
+    UserLocation.on('change', this.setGeoposition)
+    UserLocation.request()
+  },
 
-    showPosition: function(position) {
-      var x = document.getElementById("enable-location-request");
+  componentWillUnmount: function(){
+    UserLocation.off('change', this.setGeoposition)
+  },
 
-      var esto = this;
-      var request = $.ajax({
-        url: "https://mealette-backend.herokuapp.com/api",
-        method: "get",
-        data: {lat: position.coords.latitude, lon: position.coords.longitude},
-        dataType: "JSON"
-      });
+  setGeoposition: function(user_location){
+    this.setState({
+      restaurant_objects: null,
+      user_location: user_location,
+    });
+    this.loadRestaurants(user_location);
+  },
 
-      request.done(function(response) {
-        esto.setState({ restaurant_objects: response, user_location: true });
-      });
+  unableToGetGeoposition: function(positionError){
+    this.setState({user_location: false})
+  },
 
-      request.fail(function(errors) {
-        console.error(errors);
-      });
+  loadRestaurants: function(user_location) {
+    if (!user_location) return;
 
-    }, // ends show position
+    var component = this;
+    var data = {};
 
-    showError: function(error) {
-      var x = document.getElementById("enable-location-request");
-      switch(error.code) {
-        case error.PERMISSION_DENIED:
-        x.innerHTML = "Please provide your address."
-        break;
-        case error.POSITION_UNAVAILABLE:
-        x.innerHTML = "Location information is unavailable."
-        break;
-        case error.TIMEOUT:
-        x.innerHTML = "The request to get location timed out."
-        break;
-        case error.UNKNOWN_ERROR:
-        x.innerHTML = "An unknown error occurred."
-        break;
-      }
-    }, // ends showError
-
-    render: function() {
-
-      var showOrNoShow;
-      var enableLocation = this.state.user_location;
-
-      if (enableLocation) {
-        showOrNoShow = <MainCarousel cardData={this.state.restaurant_objects} />;
-      } else {
-        showOrNoShow = <SearchBar />;
-      }
-
-      return (
-        <div>
-        {showOrNoShow}
-        </div>
-        );
+    if (user_location.address){
+      data.address = user_location.address;
     }
-  }); // ends EnableOrDenyLocation
-
-
-  // DISPLAY SEARCH BAR COMPONENT ====================================================
-  var SearchBar = React.createClass({
-    getInitialState: function() {
-      return {
-        restaurant_objects: [],
-        user_location: false
-      }
-    }, // ends getInitialState
-
-    codeAddress: function(e) {
-      e.preventDefault();
-      var address = React.findDOMNode(this.refs.address).value.trim();
-
-      console.log(address);
-      var esto = this;
-
-      var request = $.ajax({
-        url: "http://localhost:3000/api",
-        // url: "https://mealette-backend.herokuapp.com/api",
-        method: "get",
-        dataType: "json",
-        data: {address: address}
-      });
-
-      request.done(function(response){
-        if (response.status === 400) {
-          $('#enable-location-request').html("Please try again");
-          $('#enable-location-request').css("color", "red");
-          $('#address').val('');
-        } else {
-          esto.setState({ restaurant_objects: response, user_location: true });
-          $('#enable-location-request').html("Please provide your address.");
-          $('#enable-location-request').css("color", "black");
-          $('#address').val('');
-        }
-      });
-
-      request.fail(function(error) {
-        console.error(error);
-      });
-
-    }, // ends codeAddress
-
-    render: function() {
-      var showOrNoShow;
-      var enableLocation = this.state.user_location;
-      if (enableLocation) {
-        showOrNoShow = <MainCarousel cardData={this.state.restaurant_objects} />;
-      }
-
-      return (
-        <div>
-          <form onSubmit={this.codeAddress}>
-            <input id="address" type="textbox" placeholder="Enter your location" ref="address" />
-            <input id="search-button" type="submit" value="Geocode" />
-          </form>
-
-          <div>{showOrNoShow}</div>
-        </div>
-        );
+    if (user_location.coords){
+      data.lat = user_location.coords.latitude;
+      data.lon = user_location.coords.longitude;
     }
-  }); // ends SearchBar
+
+    var request = $.ajax({
+      url: "https://mealette-backend.herokuapp.com/api",
+      method: "get",
+      data: data,
+      dataType: "JSON"
+    });
+
+    request.done(function(response) {
+      component.setState({restaurant_objects: response});
+    });
+
+    request.fail(function(errors) {
+      component.setState({restaurant_objects: null, error: errors});
+    });
+
+  },
+
+  render: function() {
+
+    var content;
+
+    if (this.state.errors){
+      content = <div>CRAP! {this.state.errors}</div>
+    } else if (this.state.user_location) {
+      if (this.state.restaurant_objects) {
+        content = <MainCarousel cardData={this.state.restaurant_objects} />;
+      } else{
+        content = <div>loading restaurants</div>;
+      }
+    } else {
+      content = <SearchBar />;
+    }
+
+    return (
+      <div>
+        {content}
+      </div>
+    );
+  }
+}); // ends EnableOrDenyLocation
+
 
 module.exports = EnableOrDenyLocation;
-
-
