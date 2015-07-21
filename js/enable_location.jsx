@@ -110,6 +110,7 @@
 
       request.done(function(response){
         esto.setState({ restaurant_objects: response, user_location: true });
+        $('#address').val('');
       });
 
       request.fail(function(error) {
