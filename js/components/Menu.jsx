@@ -7,7 +7,7 @@ var Menu = React.createClass({
 	showDropdown: function(){
 	  $('.dropdown')
 	    .dropdown({
-	      action: 'hide'
+	      transition: 'drop'
 	    })
 	  ;
 	},
@@ -18,11 +18,10 @@ var Menu = React.createClass({
 				<div className="ui inverted menu">
 				  <div className="header item">Mealette</div>
 				  <div className="right menu">
+				  	<div onClick={this.showDropdown} className="ui floating dropdown">
+				  	  <div className="item">Menu <i className="dropdown icon"></i></div>
 
-				  	<div className="ui dropdown">
-				  	  <div onClick={this.showDropdown} className="header item">Menu <i onClick={this.showDropdown} className="dropdown icon"></i></div>
-
-				  	  <div className="ui inverted menu">
+				  	  <div className="ui menu menu-dropdown">
 				  	    <div className="item">
 				  	      <ChangeLocationLink>Change Location</ChangeLocationLink>
 				  	    </div>

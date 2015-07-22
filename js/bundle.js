@@ -82,7 +82,7 @@
 
 		showDropdown: function showDropdown() {
 			$('.dropdown').dropdown({
-				action: 'hide'
+				transition: 'drop'
 			});
 		},
 
@@ -103,16 +103,16 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ className: 'ui dropdown' },
+							{ onClick: this.showDropdown, className: 'ui floating dropdown' },
 							React.createElement(
 								'div',
-								{ onClick: this.showDropdown, className: 'header item' },
+								{ className: 'item' },
 								'Menu ',
-								React.createElement('i', { onClick: this.showDropdown, className: 'dropdown icon' })
+								React.createElement('i', { className: 'dropdown icon' })
 							),
 							React.createElement(
 								'div',
-								{ className: 'ui inverted menu' },
+								{ className: 'ui menu menu-dropdown' },
 								React.createElement(
 									'div',
 									{ className: 'item' },
@@ -376,15 +376,14 @@
 	    }
 
 	    var request = $.ajax({
-	      url: 'http://localhost:3000/api',
-	      // url: "https://mealette-backend.herokuapp.com/api",
+	      // url: "http://localhost:3000/api",
+	      url: 'https://mealette-backend.herokuapp.com/api',
 	      method: 'get',
 	      data: data,
 	      dataType: 'JSON'
 	    });
 
 	    request.done(function (response) {
-	      console.log(response);
 	      component.setState({ restaurant_objects: response });
 	      $('.image img').each(function () {
 	        this.src = this.src.replace(/ms\.jpg$/, 'ls.jpg');
