@@ -7,7 +7,6 @@ var ShuffleButton = React.createClass({
     var currentLocation = UserLocation.position;
     var currentCategory = UserLocation.category;
 
-    debugger
     UserLocation.set(currentLocation, currentCategory, repopulate);
   },
 

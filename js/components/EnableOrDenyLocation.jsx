@@ -47,14 +47,12 @@ var EnableOrDenyLocation = React.createClass({
       data.address = user_location.address;
       data.category = category;
       data.repopulate = repopulate;
-      debugger
     }
     if (user_location.coords){
       data.lat = user_location.coords.latitude;
       data.lon = user_location.coords.longitude;
       data.category = category;
       data.repopulate = repopulate;
-      debugger
     }
 
     var request = $.ajax({

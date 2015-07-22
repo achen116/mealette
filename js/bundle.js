@@ -343,7 +343,6 @@
 	    var currentLocation = UserLocation.position;
 	    var currentCategory = UserLocation.category;
 
-	    debugger;
 	    UserLocation.set(currentLocation, currentCategory, repopulate);
 	  },
 
@@ -414,14 +413,12 @@
 	      data.address = user_location.address;
 	      data.category = category;
 	      data.repopulate = repopulate;
-	      debugger;
 	    }
 	    if (user_location.coords) {
 	      data.lat = user_location.coords.latitude;
 	      data.lon = user_location.coords.longitude;
 	      data.category = category;
 	      data.repopulate = repopulate;
-	      debugger;
 	    }
 
 	    var request = $.ajax({
@@ -1145,7 +1142,6 @@
 	    UserLocation.position = position;
 	    UserLocation.category = category;
 	    UserLocation.repopulate = repopulate || 0;
-	    debugger
 	    UserLocation.emit('change', position, category, repopulate);
 	    return this;
 	  },
@@ -1156,7 +1152,6 @@
 	      navigator.geolocation.getCurrentPosition(
 	        function(position){
 	          UserLocation.set(position);
-	          debugger
 	          resolve(position);
 	        },
 	        function(positionError){
