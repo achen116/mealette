@@ -44,157 +44,36 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	(function () {
-	  // var ReactCarousel = require('./carousel/index.js');
-	  var MainCarousel = __webpack_require__(1);
 
-	  // ENABLE/DISABLE LOCATION COMPONENT ===============================================
+		var Menu = __webpack_require__(1);
+		var EnableOrDenyLocation = __webpack_require__(6);
 
-	  var EnableOrDenyLocation = React.createClass({
-	    displayName: "EnableOrDenyLocation",
+		var Grid = React.createClass({
+			displayName: 'Grid',
 
-	    getInitialState: function getInitialState() {
-	      return {
-	        restaurant_objects: [],
-	        user_location: false
-	      };
-	    },
+			render: function render() {
+				return React.createElement(
+					'div',
+					{ className: '' },
+					React.createElement(Menu, null),
+					React.createElement(EnableOrDenyLocation, null),
+					React.createElement(
+						'div',
+						{ className: 'ui two column centered grid' },
+						React.createElement(
+							'div',
+							{ className: 'ui raised segment column reviews' },
+							'Reviews'
+						)
+					)
+				);
+			}
+		});
 
-	    componentDidMount: function componentDidMount() {
-	      this.getLocation();
-	    },
-
-	    getLocation: function getLocation() {
-	      var x = document.getElementById("enable-location-request");
-	      if (navigator.geolocation) {
-	        navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
-	      } else {
-	        x.innerHTML = "Geolocation is not supported by this browser.";
-	      }
-	    }, // ends getLocation
-
-	    showPosition: function showPosition(position) {
-	      var x = document.getElementById("enable-location-request");
-
-	      var esto = this;
-	      var request = $.ajax({
-	        url: "https://mealette-backend.herokuapp.com/api",
-	        method: "get",
-	        data: { lat: position.coords.latitude, lon: position.coords.longitude },
-	        dataType: "JSON"
-	      });
-
-	      request.done(function (response) {
-	        esto.setState({ restaurant_objects: response, user_location: true });
-	      });
-
-	      request.fail(function (errors) {
-	        console.error(errors);
-	      });
-	    }, // ends show position
-
-	    showError: function showError(error) {
-	      var x = document.getElementById("enable-location-request");
-	      switch (error.code) {
-	        case error.PERMISSION_DENIED:
-	          x.innerHTML = "Please provide your address.";
-	          break;
-	        case error.POSITION_UNAVAILABLE:
-	          x.innerHTML = "Location information is unavailable.";
-	          break;
-	        case error.TIMEOUT:
-	          x.innerHTML = "The request to get location timed out.";
-	          break;
-	        case error.UNKNOWN_ERROR:
-	          x.innerHTML = "An unknown error occurred.";
-	          break;
-	      }
-	    }, // ends showError
-
-	    render: function render() {
-
-	      var showOrNoShow;
-	      var enableLocation = this.state.user_location;
-
-	      if (enableLocation) {
-	        showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
-	      } else {
-	        showOrNoShow = React.createElement(SearchBar, null);
-	      }
-
-	      return React.createElement(
-	        "div",
-	        null,
-	        showOrNoShow
-	      );
-	    }
-	  }); // ends EnableOrDenyLocation
-
-	  // DISPLAY SEARCH BAR COMPONENT ====================================================
-	  var SearchBar = React.createClass({
-	    displayName: "SearchBar",
-
-	    getInitialState: function getInitialState() {
-	      return {
-	        restaurant_objects: [],
-	        user_location: false
-	      };
-	    }, // ends getInitialState
-
-	    codeAddress: function codeAddress(e) {
-	      e.preventDefault();
-	      var address = React.findDOMNode(this.refs.address).value.trim();
-
-	      console.log(address);
-	      var esto = this;
-
-	      var request = $.ajax({
-	        // url: "http://localhost:3000/api",
-	        url: "https://mealette-backend.herokuapp.com/api",
-	        method: "get",
-	        dataType: "json",
-	        data: { address: address }
-	      });
-
-	      request.done(function (response) {
-	        esto.setState({ restaurant_objects: response, user_location: true });
-	        $("#address").val("");
-	      });
-
-	      request.fail(function (error) {
-	        console.error(error);
-	      });
-	    }, // ends codeAddress
-
-	    render: function render() {
-	      var showOrNoShow;
-	      var enableLocation = this.state.user_location;
-	      if (enableLocation) {
-	        showOrNoShow = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
-	      }
-
-	      return React.createElement(
-	        "div",
-	        null,
-	        React.createElement(
-	          "form",
-	          { onSubmit: this.codeAddress },
-	          React.createElement("input", { id: "address", type: "textbox", placeholder: "Enter your location", ref: "address" }),
-	          React.createElement("input", { id: "search-button", type: "submit", value: "Geocode" })
-	        ),
-	        React.createElement(
-	          "div",
-	          null,
-	          showOrNoShow
-	        )
-	      );
-	    }
-	  }); // ends SearchBar
-
-	  // RENDER REACT COMPONENTS =========================================================
-	  React.render(React.createElement(EnableOrDenyLocation, null), document.getElementById("cbox"));
+		React.render(React.createElement(Grid, null), document.getElementById('wrapper'));
 	})();
 
 /***/ },
@@ -203,8 +82,371 @@
 
 	'use strict';
 
-	var Carousel = __webpack_require__(2);
-	var Ease = __webpack_require__(7);
+	var ChangeLocationLink = __webpack_require__(2);
+	var CategoryFilter = __webpack_require__(5);
+
+	var Menu = React.createClass({
+		displayName: 'Menu',
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'div',
+					{ className: 'ui inverted menu' },
+					React.createElement(
+						'div',
+						{ className: 'header item' },
+						'Mealette'
+					),
+					React.createElement(
+						'div',
+						{ className: 'right menu' },
+						React.createElement(
+							'div',
+							{ className: 'header item' },
+							React.createElement(
+								ChangeLocationLink,
+								null,
+								'Change Location'
+							),
+							React.createElement(
+								'a',
+								{ className: 'filters', href: '#' },
+								React.createElement('i', { className: 'ellipsis vertical icon' })
+							)
+						)
+					)
+				),
+				React.createElement(CategoryFilter, null),
+				React.createElement(
+					'div',
+					{ className: 'ui sidebar inverted right vertical menu' },
+					React.createElement(
+						'p',
+						{ className: 'item' },
+						'Categories',
+						React.createElement(
+							'a',
+							{ className: 'item' },
+							'Bars'
+						),
+						React.createElement(
+							'a',
+							{ className: 'item' },
+							'Coffee & Tea'
+						),
+						React.createElement(
+							'a',
+							{ className: 'item' },
+							'Breakfast & Brunch'
+						)
+					),
+					React.createElement(
+						'p',
+						{ className: 'item' },
+						'Rating',
+						React.createElement(
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
+						),
+						React.createElement(
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
+						),
+						React.createElement(
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
+						),
+						React.createElement(
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
+						),
+						React.createElement(
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' })
+						)
+					)
+				)
+			);
+		}
+
+	});
+
+	module.exports = Menu;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var objectAssign = __webpack_require__(3);
+	var ActionLink = __webpack_require__(4);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  changeLocation: function changeLocation() {
+	    UserLocation.remove();
+	  },
+
+	  render: function render() {
+	    var props = objectAssign({}, this.props);
+	    props.onClick = this.changeLocation;
+	    return React.createElement(ActionLink, props, this.props.children);
+	  }
+
+	});
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	'use strict';
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+	function ToObject(val) {
+		if (val == null) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+
+		return Object(val);
+	}
+
+	function ownEnumerableKeys(obj) {
+		var keys = Object.getOwnPropertyNames(obj);
+
+		if (Object.getOwnPropertySymbols) {
+			keys = keys.concat(Object.getOwnPropertySymbols(obj));
+		}
+
+		return keys.filter(function (key) {
+			return propIsEnumerable.call(obj, key);
+		});
+	}
+
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var keys;
+		var to = ToObject(target);
+
+		for (var s = 1; s < arguments.length; s++) {
+			from = arguments[s];
+			keys = ownEnumerableKeys(Object(from));
+
+			for (var i = 0; i < keys.length; i++) {
+				to[keys[i]] = from[keys[i]];
+			}
+		}
+
+		return to;
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var objectAssign = __webpack_require__(3);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  propTypes: {
+	    onClick: React.PropTypes.func.isRequired
+	  },
+
+	  onClick: function onClick(event) {
+	    event.preventDefault();
+	    if (this.props.onClick) this.props.onClick(event);
+	  },
+
+	  render: function render() {
+	    var props = objectAssign({}, this.props);
+	    if ('string' != typeof props.href) props.href = '';
+	    props.onClick = this.onClick;
+	    return React.createElement('a', props);
+	  }
+
+	});
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var CategoryFilter = React.createClass({
+	  displayName: 'CategoryFilter',
+
+	  filterCategory: function filterCategory(event) {
+	    event.preventDefault();
+	    console.log('in filter category');
+
+	    var component = this;
+	    var input = this.refs.category.getDOMNode();
+	    var category = input.value;
+	    input.value = '';
+
+	    var currentLocation = UserLocation.position;
+
+	    UserLocation.set(currentLocation, category);
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'form',
+	      { onSubmit: this.filterCategory },
+	      React.createElement('input', { type: 'textbox', placeholder: 'What do you want to eat?', ref: 'category' }),
+	      React.createElement('input', { type: 'submit', value: 'search' })
+	    );
+	  }
+	});
+
+	module.exports = CategoryFilter;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var MainCarousel = __webpack_require__(7);
+	var SearchBar = __webpack_require__(14);
+	var UserLocation = __webpack_require__(15);
+
+	var EnableOrDenyLocation = React.createClass({
+	  displayName: 'EnableOrDenyLocation',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      restaurant_objects: null,
+	      user_location: null,
+	      category: null,
+	      error: null
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    UserLocation.on('change', this.setGeoposition);
+	    UserLocation.request();
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    UserLocation.off('change', this.setGeoposition);
+	  },
+
+	  setGeoposition: function setGeoposition(user_location, category) {
+	    this.setState({
+	      restaurant_objects: null,
+	      user_location: user_location,
+	      category: category
+	    });
+	    this.loadRestaurants(user_location, category);
+	  },
+
+	  unableToGetGeoposition: function unableToGetGeoposition(positionError) {
+	    this.setState({ user_location: false });
+	  },
+
+	  loadRestaurants: function loadRestaurants(user_location, category) {
+	    if (!user_location) return;
+
+	    var component = this;
+	    var data = {};
+
+	    if (user_location.address) {
+	      data.address = user_location.address;
+	      data.category = category;
+	    }
+	    if (user_location.coords) {
+	      data.lat = user_location.coords.latitude;
+	      data.lon = user_location.coords.longitude;
+	      data.category = category;
+	    }
+
+	    var request = $.ajax({
+	      // url: "http://localhost:3000/api",
+	      url: 'https://mealette-backend.herokuapp.com/api',
+	      method: 'get',
+	      data: data,
+	      dataType: 'JSON'
+	    });
+
+	    request.done(function (response) {
+	      component.setState({ restaurant_objects: response });
+	      $('.image img').each(function () {
+	        this.src = this.src.replace(/ms\.jpg$/, 'ls.jpg');
+	      });
+	    });
+
+	    request.fail(function (errors) {
+	      component.setState({ restaurant_objects: null, error: errors });
+	    });
+	  },
+
+	  render: function render() {
+
+	    var content;
+
+	    if (this.state.errors) {
+	      content = React.createElement(
+	        'div',
+	        null,
+	        'CRAP! ',
+	        this.state.errors
+	      );
+	    } else if (this.state.user_location) {
+	      if (this.state.restaurant_objects) {
+	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
+	      } else {
+	        content = React.createElement(
+	          'div',
+	          null,
+	          'loading restaurants'
+	        );
+	      }
+	    } else {
+	      content = React.createElement(SearchBar, null);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      content
+	    );
+	  }
+	}); // ends EnableOrDenyLocation
+
+	module.exports = EnableOrDenyLocation;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Carousel = __webpack_require__(8);
+	var Ease = __webpack_require__(13);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -261,15 +503,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 2 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(3);
+	var React = __webpack_require__(9);
 
-	var Util = __webpack_require__(4);
-	var Layout = __webpack_require__(5);
-	var Depot = __webpack_require__(6);
+	var Util = __webpack_require__(10);
+	var Layout = __webpack_require__(11);
+	var Depot = __webpack_require__(12);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -297,24 +539,27 @@
 	                   React.createElement("img", {src: d.card.hash.image_url})
 	                 ),
 	                 React.createElement("div", {className: "content"},
-	                   React.createElement("a", {className: "header"}, d.card.hash.name),
+	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name),
 	                   React.createElement("div", {className: "meta"},
-	                   React.createElement("span", {className: "date"}, "Joined in 2013")
+	                   React.createElement("span", {className: "closed"}, d.card.hash.is_closed ? "Closed Now" : "Open Now")
 	                   ),
 	                   React.createElement("div", {className: "description"},
-	                     d.card.hash.categories[0]
+	                     d.card.hash.categories[0][0]
 	                   )
 	                 ),
 	                 React.createElement("div", {className: "extra content"},
-	                   React.createElement("a", null,
-	                   React.createElement("i", {className: "user icon"}),
-	                   d.card.hash.rating
+	                   React.createElement("span", null,
+	                    React.createElement("i", {className: "orange star icon"}), d.card.hash.rating
+	                   ),
+	                   React.createElement("span", {className: "right floated"},
+	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "orange map icon"}), d.card.hash.location.display_address[0])
 	                   )
 	                 )
 	               )
 	               ));
 	        });
 	        return (
+	          React.createElement("div", null,
 	            React.createElement("section", {className: "react-3d-carousel"},
 	            React.createElement("div", {className: "carousel",
 	            style: {transform: "translateZ("+translateZ+"px)"}},
@@ -322,21 +567,25 @@
 	            ),
 	            React.createElement("div", {className: "prev", onClick: Util.partial(this.onRotate,+angle)}),
 	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
+	            ),
+	            React.createElement("div", {className: "spin-button"},
+	              React.createElement("button", {className: "massive ui button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
 	            )
-	            );
+	          )
+	        );
 	    }
 	});
 	module.exports = Carousel;
 
 
 /***/ },
-/* 3 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 4 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -415,12 +664,12 @@
 	};
 
 /***/ },
-/* 5 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(4);
+	var Util = __webpack_require__(10);
 
 	var _exports = module.exports = {};
 
@@ -471,14 +720,14 @@
 
 
 /***/ },
-/* 6 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(7);
-	var Layout = __webpack_require__(5);
-	var Util = __webpack_require__(4);
+	var Ease = __webpack_require__(13);
+	var Layout = __webpack_require__(11);
+	var Util = __webpack_require__(10);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -613,7 +862,7 @@
 
 
 /***/ },
-/* 7 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {
@@ -807,6 +1056,478 @@
 	    }
 
 	}.call(this));
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var SearchBar = React.createClass({
+	  displayName: "SearchBar",
+
+	  changeLocation: function changeLocation(event) {
+	    event.preventDefault();
+	    var input = this.refs.address.getDOMNode();
+	    var address = input.value;
+	    input.value = "";
+	    UserLocation.set({ address: address });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.changeLocation },
+	        React.createElement("input", { type: "textbox", placeholder: "Enter your location", ref: "address" }),
+	        React.createElement("input", { type: "submit", value: "Geocode" })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = SearchBar;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var EventEmitter = __webpack_require__(16);
+
+	UserLocation = EventEmitter({
+	  position: null,
+	  category: null,
+
+	  set: function(position, category){
+	    UserLocation.position = position;
+	    UserLocation.category = category;
+
+	    UserLocation.emit('change', position, category);
+	    return this;
+	  },
+
+	  request: function(){
+	    if (UserLocation.position) return Promise.resolve(UserLocation.position);
+	    return new Promise(function(resolve, reject){
+	      navigator.geolocation.getCurrentPosition(
+	        function(position){
+	          UserLocation.set(position);
+	          resolve(position);
+	        },
+	        function(positionError){
+	          UserLocation.set(null);
+	          reject(positionError);
+	        }
+	      );
+	    });
+	    return this;
+	  },
+
+	  remove: function(){
+	    return UserLocation.set(null);
+	  }
+	});
+
+
+	module.exports = UserLocation
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var d        = __webpack_require__(17)
+	  , callable = __webpack_require__(30)
+
+	  , apply = Function.prototype.apply, call = Function.prototype.call
+	  , create = Object.create, defineProperty = Object.defineProperty
+	  , defineProperties = Object.defineProperties
+	  , hasOwnProperty = Object.prototype.hasOwnProperty
+	  , descriptor = { configurable: true, enumerable: false, writable: true }
+
+	  , on, once, off, emit, methods, descriptors, base;
+
+	on = function (type, listener) {
+		var data;
+
+		callable(listener);
+
+		if (!hasOwnProperty.call(this, '__ee__')) {
+			data = descriptor.value = create(null);
+			defineProperty(this, '__ee__', descriptor);
+			descriptor.value = null;
+		} else {
+			data = this.__ee__;
+		}
+		if (!data[type]) data[type] = listener;
+		else if (typeof data[type] === 'object') data[type].push(listener);
+		else data[type] = [data[type], listener];
+
+		return this;
+	};
+
+	once = function (type, listener) {
+		var once, self;
+
+		callable(listener);
+		self = this;
+		on.call(this, type, once = function () {
+			off.call(self, type, once);
+			apply.call(listener, this, arguments);
+		});
+
+		once.__eeOnceListener__ = listener;
+		return this;
+	};
+
+	off = function (type, listener) {
+		var data, listeners, candidate, i;
+
+		callable(listener);
+
+		if (!hasOwnProperty.call(this, '__ee__')) return this;
+		data = this.__ee__;
+		if (!data[type]) return this;
+		listeners = data[type];
+
+		if (typeof listeners === 'object') {
+			for (i = 0; (candidate = listeners[i]); ++i) {
+				if ((candidate === listener) ||
+						(candidate.__eeOnceListener__ === listener)) {
+					if (listeners.length === 2) data[type] = listeners[i ? 0 : 1];
+					else listeners.splice(i, 1);
+				}
+			}
+		} else {
+			if ((listeners === listener) ||
+					(listeners.__eeOnceListener__ === listener)) {
+				delete data[type];
+			}
+		}
+
+		return this;
+	};
+
+	emit = function (type) {
+		var i, l, listener, listeners, args;
+
+		if (!hasOwnProperty.call(this, '__ee__')) return;
+		listeners = this.__ee__[type];
+		if (!listeners) return;
+
+		if (typeof listeners === 'object') {
+			l = arguments.length;
+			args = new Array(l - 1);
+			for (i = 1; i < l; ++i) args[i - 1] = arguments[i];
+
+			listeners = listeners.slice();
+			for (i = 0; (listener = listeners[i]); ++i) {
+				apply.call(listener, this, args);
+			}
+		} else {
+			switch (arguments.length) {
+			case 1:
+				call.call(listeners, this);
+				break;
+			case 2:
+				call.call(listeners, this, arguments[1]);
+				break;
+			case 3:
+				call.call(listeners, this, arguments[1], arguments[2]);
+				break;
+			default:
+				l = arguments.length;
+				args = new Array(l - 1);
+				for (i = 1; i < l; ++i) {
+					args[i - 1] = arguments[i];
+				}
+				apply.call(listeners, this, args);
+			}
+		}
+	};
+
+	methods = {
+		on: on,
+		once: once,
+		off: off,
+		emit: emit
+	};
+
+	descriptors = {
+		on: d(on),
+		once: d(once),
+		off: d(off),
+		emit: d(emit)
+	};
+
+	base = defineProperties({}, descriptors);
+
+	module.exports = exports = function (o) {
+		return (o == null) ? create(base) : defineProperties(Object(o), descriptors);
+	};
+	exports.methods = methods;
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var assign        = __webpack_require__(18)
+	  , normalizeOpts = __webpack_require__(25)
+	  , isCallable    = __webpack_require__(26)
+	  , contains      = __webpack_require__(27)
+
+	  , d;
+
+	d = module.exports = function (dscr, value/*, options*/) {
+		var c, e, w, options, desc;
+		if ((arguments.length < 2) || (typeof dscr !== 'string')) {
+			options = value;
+			value = dscr;
+			dscr = null;
+		} else {
+			options = arguments[2];
+		}
+		if (dscr == null) {
+			c = w = true;
+			e = false;
+		} else {
+			c = contains.call(dscr, 'c');
+			e = contains.call(dscr, 'e');
+			w = contains.call(dscr, 'w');
+		}
+
+		desc = { value: value, configurable: c, enumerable: e, writable: w };
+		return !options ? desc : assign(normalizeOpts(options), desc);
+	};
+
+	d.gs = function (dscr, get, set/*, options*/) {
+		var c, e, options, desc;
+		if (typeof dscr !== 'string') {
+			options = set;
+			set = get;
+			get = dscr;
+			dscr = null;
+		} else {
+			options = arguments[3];
+		}
+		if (get == null) {
+			get = undefined;
+		} else if (!isCallable(get)) {
+			options = get;
+			get = set = undefined;
+		} else if (set == null) {
+			set = undefined;
+		} else if (!isCallable(set)) {
+			options = set;
+			set = undefined;
+		}
+		if (dscr == null) {
+			c = true;
+			e = false;
+		} else {
+			c = contains.call(dscr, 'c');
+			e = contains.call(dscr, 'e');
+		}
+
+		desc = { get: get, set: set, configurable: c, enumerable: e };
+		return !options ? desc : assign(normalizeOpts(options), desc);
+	};
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(19)()
+		? Object.assign
+		: __webpack_require__(20);
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function () {
+		var assign = Object.assign, obj;
+		if (typeof assign !== 'function') return false;
+		obj = { foo: 'raz' };
+		assign(obj, { bar: 'dwa' }, { trzy: 'trzy' });
+		return (obj.foo + obj.bar + obj.trzy) === 'razdwatrzy';
+	};
+
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var keys  = __webpack_require__(21)
+	  , value = __webpack_require__(24)
+
+	  , max = Math.max;
+
+	module.exports = function (dest, src/*, …srcn*/) {
+		var error, i, l = max(arguments.length, 2), assign;
+		dest = Object(value(dest));
+		assign = function (key) {
+			try { dest[key] = src[key]; } catch (e) {
+				if (!error) error = e;
+			}
+		};
+		for (i = 1; i < l; ++i) {
+			src = arguments[i];
+			keys(src).forEach(assign);
+		}
+		if (error !== undefined) throw error;
+		return dest;
+	};
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(22)()
+		? Object.keys
+		: __webpack_require__(23);
+
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function () {
+		try {
+			Object.keys('primitive');
+			return true;
+		} catch (e) { return false; }
+	};
+
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var keys = Object.keys;
+
+	module.exports = function (object) {
+		return keys(object == null ? object : Object(object));
+	};
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (value) {
+		if (value == null) throw new TypeError("Cannot use null or undefined");
+		return value;
+	};
+
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var forEach = Array.prototype.forEach, create = Object.create;
+
+	var process = function (src, obj) {
+		var key;
+		for (key in src) obj[key] = src[key];
+	};
+
+	module.exports = function (options/*, …options*/) {
+		var result = create(null);
+		forEach.call(arguments, function (options) {
+			if (options == null) return;
+			process(Object(options), result);
+		});
+		return result;
+	};
+
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	// Deprecated
+
+	'use strict';
+
+	module.exports = function (obj) { return typeof obj === 'function'; };
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = __webpack_require__(28)()
+		? String.prototype.contains
+		: __webpack_require__(29);
+
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var str = 'razdwatrzy';
+
+	module.exports = function () {
+		if (typeof str.contains !== 'function') return false;
+		return ((str.contains('dwa') === true) && (str.contains('foo') === false));
+	};
+
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var indexOf = String.prototype.indexOf;
+
+	module.exports = function (searchString/*, position*/) {
+		return indexOf.call(this, searchString, arguments[1]) > -1;
+	};
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = function (fn) {
+		if (typeof fn !== 'function') throw new TypeError(fn + " is not a function");
+		return fn;
+	};
+
 
 /***/ }
 /******/ ]);

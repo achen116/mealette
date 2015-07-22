@@ -4,23 +4,24 @@ a.rat > i.icon{
 }
 
 .cbox{
-  border: 1px solid orange;
-  /*text-align: center;*/
+/*  border: 1px solid orange;
+  text-align: center;*/
 }
 
 .reviews {
   border: 1px solid green;
   height: 15em;
   text-align: center;
-
+  margin-top: 15px;
+  width: 290px;
 }
 .container {
-  text-align: center;
-}
+/*  text-align: center;
+*/}
 
 .spin {
-  margin-top: 2em;
-} /*tried to get margins to space button, unsuccessful*/
+/*  margin-top: 2em;
+*/} /*tried to get margins to space button, unsuccessful*/
 
 .debugger{
   border: 3px solid red;
@@ -40,24 +41,23 @@ a.rat > i.icon{
 }
 .react-3d-carousel {
   width: 380px;
-  height: 600px;
+  height: 500px;
   position: relative;
   perspective: 1000px;
   margin-left: auto;
   margin-right: auto;
 
-  border: 1px solid red;
 }
 
 .react-3d-carousel .carousel {
-  width: 100%;
-  height: 100%;
-  position: absolute;
+
   transform-style: preserve-3d;
 
-  border: 1px solid blue;
 }
-
+.spin-button {
+  text-align: center;
+  margin-bottom: 50px;
+}
 /*.react-3d-carousel .carousel  figure {
   display: block;
   position: absolute;
