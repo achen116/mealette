@@ -96,82 +96,17 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ className: 'header item' },
+							{ className: 'item' },
 							React.createElement(
 								ChangeLocationLink,
 								null,
 								'Change Location'
-							),
-							React.createElement(
-								'a',
-								{ className: 'filters', href: '#' },
-								React.createElement('i', { className: 'ellipsis vertical icon' })
 							)
-						)
-					)
-				),
-				React.createElement(CategoryFilter, null),
-				React.createElement(
-					'div',
-					{ className: 'ui sidebar inverted right vertical menu' },
-					React.createElement(
-						'p',
-						{ className: 'item' },
-						'Categories',
+						),
 						React.createElement(
-							'a',
+							'div',
 							{ className: 'item' },
-							'Bars'
-						),
-						React.createElement(
-							'a',
-							{ className: 'item' },
-							'Coffee & Tea'
-						),
-						React.createElement(
-							'a',
-							{ className: 'item' },
-							'Breakfast & Brunch'
-						)
-					),
-					React.createElement(
-						'p',
-						{ className: 'item' },
-						'Rating',
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' })
+							React.createElement(CategoryFilter, null)
 						)
 					)
 				)
@@ -309,13 +244,9 @@
 	      { className: 'ui form', onSubmit: this.filterCategory },
 	      React.createElement(
 	        'div',
-	        { className: 'inline field' },
-	        React.createElement('input', { type: 'text', ref: 'category', placeholder: 'Change category' }),
-	        React.createElement(
-	          'button',
-	          { className: 'ui button', type: 'submit' },
-	          'Search'
-	        )
+	        { className: 'ui icon input' },
+	        React.createElement('input', { type: 'text', ref: 'category', placeholder: 'Category' }),
+	        React.createElement('i', { className: 'search link icon', onClick: this.filterCategory })
 	      )
 	    );
 	  }
@@ -411,7 +342,7 @@
 	      content = React.createElement(
 	        'div',
 	        null,
-	        'CRAP! ',
+	        'Error: ',
 	        this.state.errors
 	      );
 	    } else if (this.state.user_location) {
@@ -1075,16 +1006,16 @@
 
 	  render: function render() {
 	    return React.createElement(
-	      "form",
-	      { className: "ui form", onSubmit: this.changeLocation },
+	      "div",
+	      { className: "change-location" },
 	      React.createElement(
-	        "div",
-	        { className: "inline field" },
-	        React.createElement("input", { type: "text", ref: "address", placeholder: "Enter your location" }),
+	        "form",
+	        { className: "ui form", onSubmit: this.changeLocation },
 	        React.createElement(
-	          "button",
-	          { className: "ui button", type: "submit" },
-	          "Search"
+	          "div",
+	          { className: "ui icon input" },
+	          React.createElement("input", { type: "text", ref: "address", placeholder: "Enter your location" }),
+	          React.createElement("i", { className: "search link icon", onClick: this.changeLocation })
 	        )
 	      )
 	    );

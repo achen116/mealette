@@ -1,0 +1,10 @@
+.change-location {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.change-location form.form input {
+  font-size: 2em !important;
+}

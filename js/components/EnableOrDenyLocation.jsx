@@ -79,7 +79,7 @@ var EnableOrDenyLocation = React.createClass({
     var content;
 
     if (this.state.errors){
-      content = <div>CRAP! {this.state.errors}</div>
+      content = <div>Error: {this.state.errors}</div>
     } else if (this.state.user_location) {
       if (this.state.restaurant_objects) {
         content = <MainCarousel cardData={this.state.restaurant_objects} />;
