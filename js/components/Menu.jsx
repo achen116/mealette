@@ -1,6 +1,6 @@
 var ChangeLocationLink = require('./ChangeLocationLink')
 var CategoryFilter = require('./CategoryFilter')
-var ShuffleButton = require('./ShuffleButton')
+
 
 var Menu = React.createClass({
 
@@ -24,9 +24,6 @@ var Menu = React.createClass({
 				  	  <div className="ui menu menu-dropdown">
 				  	    <div className="item">
 				  	      <ChangeLocationLink>Change Location</ChangeLocationLink>
-				  	    </div>
-				  	    <div className="item">
-		    		    	<ShuffleButton />
 				  	    </div>
 				  	    <div className="item">
 				  	      <CategoryFilter/>
