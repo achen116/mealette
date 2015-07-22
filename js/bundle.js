@@ -59,16 +59,7 @@
 					'div',
 					{ className: '' },
 					React.createElement(Menu, null),
-					React.createElement(EnableOrDenyLocation, null),
-					React.createElement(
-						'div',
-						{ className: 'ui two column centered grid' },
-						React.createElement(
-							'div',
-							{ className: 'ui raised segment column reviews' },
-							'Reviews'
-						)
-					)
+					React.createElement(EnableOrDenyLocation, null)
 				);
 			}
 		});
@@ -89,6 +80,12 @@
 	var Menu = React.createClass({
 		displayName: 'Menu',
 
+		showDropdown: function showDropdown() {
+			$('.dropdown').dropdown({
+				action: 'hide'
+			});
+		},
+
 		render: function render() {
 			return React.createElement(
 				'div',
@@ -106,83 +103,36 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ className: 'header item' },
+							{ className: 'ui dropdown' },
 							React.createElement(
-								ChangeLocationLink,
-								null,
-								'Change Location'
+								'div',
+								{ onClick: this.showDropdown, className: 'header item' },
+								'Menu ',
+								React.createElement('i', { onClick: this.showDropdown, className: 'dropdown icon' })
 							),
 							React.createElement(
-								'a',
-								{ className: 'filters', href: '#' },
-								React.createElement('i', { className: 'ellipsis vertical icon' })
+								'div',
+								{ className: 'ui inverted menu' },
+								React.createElement(
+									'div',
+									{ className: 'item' },
+									React.createElement(
+										ChangeLocationLink,
+										null,
+										'Change Location'
+									)
+								),
+								React.createElement(
+									'div',
+									{ className: 'item' },
+									React.createElement(ShuffleButton, null)
+								),
+								React.createElement(
+									'div',
+									{ className: 'item' },
+									React.createElement(CategoryFilter, null)
+								)
 							)
-						)
-					)
-				),
-				React.createElement(CategoryFilter, null),
-				React.createElement(ShuffleButton, null),
-				React.createElement(
-					'div',
-					{ className: 'ui sidebar inverted right vertical menu' },
-					React.createElement(
-						'p',
-						{ className: 'item' },
-						'Categories',
-						React.createElement(
-							'a',
-							{ className: 'item' },
-							'Bars'
-						),
-						React.createElement(
-							'a',
-							{ className: 'item' },
-							'Coffee & Tea'
-						),
-						React.createElement(
-							'a',
-							{ className: 'item' },
-							'Breakfast & Brunch'
-						)
-					),
-					React.createElement(
-						'p',
-						{ className: 'item' },
-						'Rating',
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' }),
-							React.createElement('i', { className: 'empty star icon' })
-						),
-						React.createElement(
-							'a',
-							{ className: 'item rat' },
-							React.createElement('i', { className: 'empty star icon' })
 						)
 					)
 				)
@@ -317,9 +267,13 @@
 	  render: function render() {
 	    return React.createElement(
 	      'form',
-	      { onSubmit: this.filterCategory },
-	      React.createElement('input', { type: 'textbox', placeholder: 'What do you want to eat?', ref: 'category' }),
-	      React.createElement('input', { type: 'submit', value: 'search' })
+	      { className: 'ui form', onSubmit: this.filterCategory },
+	      React.createElement(
+	        'div',
+	        { className: 'ui icon input' },
+	        React.createElement('input', { type: 'text', ref: 'category', placeholder: 'Category' }),
+	        React.createElement('i', { className: 'search link icon', onClick: this.filterCategory })
+	      )
 	    );
 	  }
 	});
@@ -449,6 +403,7 @@
 	      content = React.createElement(
 	        'div',
 	        null,
+	        'Error: ',
 	        this.state.errors
 	      );
 	    } else if (this.state.user_location) {
@@ -457,14 +412,17 @@
 	      } else {
 	        content = React.createElement(
 	          'div',
-	          null,
-	          'loading restaurants'
+	          { className: 'ui active dimmer' },
+	          React.createElement(
+	            'div',
+	            { className: 'ui large text loader' },
+	            'Cooking Up Something Good'
+	          )
 	        );
 	      }
 	    } else {
 	      content = React.createElement(SearchBar, null);
 	    }
-
 	    return React.createElement(
 	      'div',
 	      null,
@@ -575,20 +533,15 @@
 	                   React.createElement("img", {src: d.card.hash.image_url})
 	                 ),
 	                 React.createElement("div", {className: "content"},
-	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name),
-	                   React.createElement("div", {className: "meta"},
-	                   React.createElement("span", {className: "closed"}, d.card.hash.is_closed ? "Closed Now" : "Open Now")
-	                   ),
-	                   React.createElement("div", {className: "description"},
-	                     d.card.hash.categories[0][0]
-	                   )
+	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name)
 	                 ),
 	                 React.createElement("div", {className: "extra content"},
 	                   React.createElement("span", null,
-	                    React.createElement("i", {className: "orange star icon"}), d.card.hash.rating
+	                    React.createElement("i", {className: "red star icon"}), d.card.hash.rating
 	                   ),
+	                   React.createElement("span", {className: "card-category"}, d.card.hash.categories[0][0]),
 	                   React.createElement("span", {className: "right floated"},
-	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "orange map icon"}), d.card.hash.location.display_address[0])
+	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "red map icon"}), d.card.hash.location.display_address[0])
 	                   )
 	                 )
 	               )
@@ -605,7 +558,7 @@
 	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
 	            ),
 	            React.createElement("div", {className: "spin-button"},
-	              React.createElement("button", {className: "massive ui button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
+	              React.createElement("button", {className: "massive ui red button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
 	            )
 	          )
 	        );
@@ -1114,12 +1067,16 @@
 	  render: function render() {
 	    return React.createElement(
 	      "div",
-	      null,
+	      { className: "change-location" },
 	      React.createElement(
 	        "form",
-	        { onSubmit: this.changeLocation },
-	        React.createElement("input", { type: "textbox", placeholder: "Enter your location", ref: "address" }),
-	        React.createElement("input", { type: "submit", value: "Geocode" })
+	        { className: "ui form change-location", onSubmit: this.changeLocation },
+	        React.createElement(
+	          "div",
+	          { className: "ui icon input" },
+	          React.createElement("input", { type: "text", ref: "address", placeholder: "Enter your location" }),
+	          React.createElement("i", { className: "search link icon", onClick: this.changeLocation })
+	        )
 	      )
 	    );
 	  }
