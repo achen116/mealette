@@ -385,8 +385,8 @@
 	    }
 
 	    var request = $.ajax({
-	      url: 'http://localhost:3000/api',
-	      // url: "https://mealette-backend.herokuapp.com/api",
+	      // url: "http://localhost:3000/api",
+	      url: 'https://mealette-backend.herokuapp.com/api',
 	      method: 'get',
 	      data: data,
 	      dataType: 'JSON'
@@ -394,6 +394,9 @@
 
 	    request.done(function (response) {
 	      component.setState({ restaurant_objects: response });
+	      $('.image img').each(function () {
+	        this.src = this.src.replace(/ms\.jpg$/, 'ls.jpg');
+	      });
 	    });
 
 	    request.fail(function (errors) {
