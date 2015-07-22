@@ -339,7 +339,7 @@
 	    event.preventDefault();
 	    console.log("hellooooo");
 
-	    var repopulate = true;
+	    var repopulate = UserLocation.repopulate + 1;
 	    var currentLocation = UserLocation.position;
 	    var currentCategory = UserLocation.category;
 
@@ -425,14 +425,15 @@
 	    }
 
 	    var request = $.ajax({
-	      // url: "http://localhost:3000/api",
-	      url: 'https://mealette-backend.herokuapp.com/api',
+	      url: 'http://localhost:3000/api',
+	      // url: "https://mealette-backend.herokuapp.com/api",
 	      method: 'get',
 	      data: data,
 	      dataType: 'JSON'
 	    });
 
 	    request.done(function (response) {
+	      console.log(response);
 	      component.setState({ restaurant_objects: response });
 	      $('.image img').each(function () {
 	        this.src = this.src.replace(/ms\.jpg$/, 'ls.jpg');
@@ -1109,6 +1110,7 @@
 	    var input = this.refs.address.getDOMNode();
 	    var address = input.value;
 	    input.value = "";
+
 	    UserLocation.set({ address: address });
 	  },
 
@@ -1142,7 +1144,7 @@
 	  set: function(position, category, repopulate){
 	    UserLocation.position = position;
 	    UserLocation.category = category;
-	    UserLocation.repopulate = repopulate;
+	    UserLocation.repopulate = repopulate || 0;
 	    debugger
 	    UserLocation.emit('change', position, category, repopulate);
 	    return this;
@@ -1154,6 +1156,7 @@
 	      navigator.geolocation.getCurrentPosition(
 	        function(position){
 	          UserLocation.set(position);
+	          debugger
 	          resolve(position);
 	        },
 	        function(positionError){

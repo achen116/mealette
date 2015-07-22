@@ -8,7 +8,7 @@ UserLocation = EventEmitter({
   set: function(position, category, repopulate){
     UserLocation.position = position;
     UserLocation.category = category;
-    UserLocation.repopulate = repopulate;
+    UserLocation.repopulate = repopulate || 0;
     debugger
     UserLocation.emit('change', position, category, repopulate);
     return this;
@@ -20,6 +20,7 @@ UserLocation = EventEmitter({
       navigator.geolocation.getCurrentPosition(
         function(position){
           UserLocation.set(position);
+          debugger
           resolve(position);
         },
         function(positionError){

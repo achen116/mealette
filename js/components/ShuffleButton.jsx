@@ -3,7 +3,7 @@ var ShuffleButton = React.createClass({
     event.preventDefault();
     console.log('hellooooo');
 
-    var repopulate = true;
+    var repopulate = UserLocation.repopulate + 1;
     var currentLocation = UserLocation.position;
     var currentCategory = UserLocation.category;
 
