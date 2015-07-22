@@ -5,6 +5,7 @@ var SearchBar = React.createClass({
     var input = this.refs.address.getDOMNode()
     var address = input.value
     input.value = ''
+
     UserLocation.set({address: address});
   },
 

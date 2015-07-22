@@ -3,12 +3,13 @@ var EventEmitter = require('event-emitter');
 UserLocation = EventEmitter({
   position: null,
   category: null,
+  repopulate: null,
 
-  set: function(position, category){
+  set: function(position, category, repopulate){
     UserLocation.position = position;
     UserLocation.category = category;
-
-    UserLocation.emit('change', position, category);
+    UserLocation.repopulate = repopulate || 0;
+    UserLocation.emit('change', position, category, repopulate);
     return this;
   },
 
