@@ -63,6 +63,9 @@ var EnableOrDenyLocation = React.createClass({
 
     request.done(function(response) {
       component.setState({restaurant_objects: response});
+      $(".image img").each(function() {
+         this.src = this.src.replace(/ms\.jpg$/,'ls.jpg');
+        });
     });
 
     request.fail(function(errors) {
