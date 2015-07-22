@@ -9,6 +9,7 @@ var EnableOrDenyLocation = React.createClass({
       restaurant_objects: null,
       user_location: null,
       category: null,
+      repopulate: null,
       error: null,
     };
   },
@@ -22,20 +23,21 @@ var EnableOrDenyLocation = React.createClass({
     UserLocation.off('change', this.setGeoposition)
   },
 
-  setGeoposition: function(user_location, category){
+  setGeoposition: function(user_location, category, repopulate){
     this.setState({
       restaurant_objects: null,
       user_location: user_location,
       category: category,
+      repopulate: repopulate,
     });
-    this.loadRestaurants(user_location, category);
+    this.loadRestaurants(user_location, category, repopulate);
   },
 
   unableToGetGeoposition: function(positionError){
     this.setState({user_location: false})
   },
 
-  loadRestaurants: function(user_location, category) {
+  loadRestaurants: function(user_location, category, repopulate) {
     if (!user_location) return;
 
     var component = this;
@@ -44,14 +46,16 @@ var EnableOrDenyLocation = React.createClass({
     if (user_location.address){
       data.address = user_location.address;
       data.category = category;
+      data.repopulate = repopulate;
+      debugger
     }
     if (user_location.coords){
       data.lat = user_location.coords.latitude;
       data.lon = user_location.coords.longitude;
       data.category = category;
+      data.repopulate = repopulate;
+      debugger
     }
-
-
 
     var request = $.ajax({
       // url: "http://localhost:3000/api",
@@ -75,11 +79,10 @@ var EnableOrDenyLocation = React.createClass({
   },
 
   render: function() {
-
     var content;
 
     if (this.state.errors){
-      content = <div>CRAP! {this.state.errors}</div>
+      content = <div>{this.state.errors}</div>
     } else if (this.state.user_location) {
       if (this.state.restaurant_objects) {
         content = <MainCarousel cardData={this.state.restaurant_objects} />;
@@ -96,7 +99,7 @@ var EnableOrDenyLocation = React.createClass({
       </div>
     );
   }
-}); // ends EnableOrDenyLocation
+});
 
 
 module.exports = EnableOrDenyLocation;
