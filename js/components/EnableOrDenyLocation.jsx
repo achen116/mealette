@@ -8,6 +8,7 @@ var EnableOrDenyLocation = React.createClass({
     return {
       restaurant_objects: null,
       user_location: null,
+      category: null,
       error: null,
     };
   },
@@ -21,19 +22,20 @@ var EnableOrDenyLocation = React.createClass({
     UserLocation.off('change', this.setGeoposition)
   },
 
-  setGeoposition: function(user_location){
+  setGeoposition: function(user_location, category){
     this.setState({
       restaurant_objects: null,
       user_location: user_location,
+      category: category,
     });
-    this.loadRestaurants(user_location);
+    this.loadRestaurants(user_location, category);
   },
 
   unableToGetGeoposition: function(positionError){
     this.setState({user_location: false})
   },
 
-  loadRestaurants: function(user_location) {
+  loadRestaurants: function(user_location, category) {
     if (!user_location) return;
 
     var component = this;
@@ -41,14 +43,19 @@ var EnableOrDenyLocation = React.createClass({
 
     if (user_location.address){
       data.address = user_location.address;
+      data.category = category;
     }
     if (user_location.coords){
       data.lat = user_location.coords.latitude;
       data.lon = user_location.coords.longitude;
+      data.category = category;
     }
 
+
+
     var request = $.ajax({
-      url: "https://mealette-backend.herokuapp.com/api",
+      url: "http://localhost:3000/api",
+      // url: "https://mealette-backend.herokuapp.com/api",
       method: "get",
       data: data,
       dataType: "JSON"
