@@ -372,7 +372,6 @@
 	      category: category
 	    });
 	    this.loadRestaurants(user_location, category);
-	    debugger;
 	  },
 
 	  unableToGetGeoposition: function unableToGetGeoposition(positionError) {
@@ -388,7 +387,6 @@
 	    if (user_location.address) {
 	      data.address = user_location.address;
 	      data.category = category;
-	      debugger;
 	    }
 	    if (user_location.coords) {
 	      data.lat = user_location.coords.latitude;
@@ -1110,7 +1108,6 @@
 	    UserLocation.position = position;
 	    UserLocation.category = category;
 
-	    debugger
 	    UserLocation.emit('change', position, category);
 	    return this;
 	  },

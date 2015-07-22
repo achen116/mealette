@@ -8,7 +8,6 @@ UserLocation = EventEmitter({
     UserLocation.position = position;
     UserLocation.category = category;
 
-    debugger
     UserLocation.emit('change', position, category);
     return this;
   },

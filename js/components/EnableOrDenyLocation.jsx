@@ -29,7 +29,6 @@ var EnableOrDenyLocation = React.createClass({
       category: category,
     });
     this.loadRestaurants(user_location, category);
-    debugger
   },
 
   unableToGetGeoposition: function(positionError){
@@ -45,7 +44,6 @@ var EnableOrDenyLocation = React.createClass({
     if (user_location.address){
       data.address = user_location.address;
       data.category = category;
-      debugger
     }
     if (user_location.coords){
       data.lat = user_location.coords.latitude;
