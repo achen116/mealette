@@ -48,7 +48,8 @@ var EnableOrDenyLocation = React.createClass({
     }
 
     var request = $.ajax({
-      url: "https://mealette-backend.herokuapp.com/api",
+      url: "http://localhost:3000/api",
+      // url: "https://mealette-backend.herokuapp.com/api",
       method: "get",
       data: data,
       dataType: "JSON"

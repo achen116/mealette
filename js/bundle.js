@@ -49,7 +49,7 @@
 	(function () {
 
 		var Menu = __webpack_require__(1);
-		var EnableOrDenyLocation = __webpack_require__(5);
+		var EnableOrDenyLocation = __webpack_require__(13);
 
 		var Grid = React.createClass({
 			displayName: 'Grid',
@@ -90,105 +90,107 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var ChangeLocationLink = __webpack_require__(2);
+	var CategoryFilter = __webpack_require__(5);
 
 	var Menu = React.createClass({
-		displayName: "Menu",
+		displayName: 'Menu',
 
 		render: function render() {
 			return React.createElement(
-				"div",
+				'div',
 				null,
 				React.createElement(
-					"div",
-					{ className: "ui inverted menu" },
+					'div',
+					{ className: 'ui inverted menu' },
 					React.createElement(
-						"div",
-						{ className: "header item" },
-						"Mealette"
+						'div',
+						{ className: 'header item' },
+						'Mealette'
 					),
 					React.createElement(
-						"div",
-						{ className: "right menu" },
+						'div',
+						{ className: 'right menu' },
 						React.createElement(
-							"div",
-							{ className: "header item" },
+							'div',
+							{ className: 'header item' },
 							React.createElement(
 								ChangeLocationLink,
 								null,
-								"Change Location"
+								'Change Location'
 							),
 							React.createElement(
-								"a",
-								{ className: "filters", href: "#" },
-								React.createElement("i", { className: "ellipsis vertical icon" })
+								'a',
+								{ className: 'filters', href: '#' },
+								React.createElement('i', { className: 'ellipsis vertical icon' })
 							)
 						)
 					)
 				),
+				React.createElement(CategoryFilter, null),
 				React.createElement(
-					"div",
-					{ className: "ui sidebar inverted right vertical menu" },
+					'div',
+					{ className: 'ui sidebar inverted right vertical menu' },
 					React.createElement(
-						"p",
-						{ className: "item" },
-						"Categories",
+						'p',
+						{ className: 'item' },
+						'Categories',
 						React.createElement(
-							"a",
-							{ className: "item" },
-							"Bars"
+							'a',
+							{ className: 'item' },
+							'Bars'
 						),
 						React.createElement(
-							"a",
-							{ className: "item" },
-							"Coffee & Tea"
+							'a',
+							{ className: 'item' },
+							'Coffee & Tea'
 						),
 						React.createElement(
-							"a",
-							{ className: "item" },
-							"Breakfast & Brunch"
+							'a',
+							{ className: 'item' },
+							'Breakfast & Brunch'
 						)
 					),
 					React.createElement(
-						"p",
-						{ className: "item" },
-						"Rating",
+						'p',
+						{ className: 'item' },
+						'Rating',
 						React.createElement(
-							"a",
-							{ className: "item rat" },
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" })
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
 						),
 						React.createElement(
-							"a",
-							{ className: "item rat" },
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" })
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
 						),
 						React.createElement(
-							"a",
-							{ className: "item rat" },
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" })
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
 						),
 						React.createElement(
-							"a",
-							{ className: "item rat" },
-							React.createElement("i", { className: "empty star icon" }),
-							React.createElement("i", { className: "empty star icon" })
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' }),
+							React.createElement('i', { className: 'empty star icon' })
 						),
 						React.createElement(
-							"a",
-							{ className: "item rat" },
-							React.createElement("i", { className: "empty star icon" })
+							'a',
+							{ className: 'item rat' },
+							React.createElement('i', { className: 'empty star icon' })
 						)
 					)
 				)
@@ -304,11 +306,9 @@
 	'use strict';
 
 	var MainCarousel = __webpack_require__(6);
-	var SearchBar = __webpack_require__(13);
-	var UserLocation = __webpack_require__(14);
 
-	var EnableOrDenyLocation = React.createClass({
-	  displayName: 'EnableOrDenyLocation',
+	var CategoryFilter = React.createClass({
+	  displayName: 'CategoryFilter',
 
 	  getInitialState: function getInitialState() {
 	    return {
@@ -318,49 +318,24 @@
 	    };
 	  },
 
-	  componentDidMount: function componentDidMount() {
-	    UserLocation.on('change', this.setGeoposition);
-	    UserLocation.request();
-	  },
-
-	  componentWillUnmount: function componentWillUnmount() {
-	    UserLocation.off('change', this.setGeoposition);
-	  },
-
-	  setGeoposition: function setGeoposition(user_location) {
-	    this.setState({
-	      restaurant_objects: null,
-	      user_location: user_location
-	    });
-	    this.loadRestaurants(user_location);
-	  },
-
-	  unableToGetGeoposition: function unableToGetGeoposition(positionError) {
-	    this.setState({ user_location: false });
-	  },
-
-	  loadRestaurants: function loadRestaurants(user_location) {
-	    if (!user_location) return;
+	  filterCategory: function filterCategory(event) {
+	    event.preventDefault();
 
 	    var component = this;
-	    var data = {};
+	    var input = this.refs.category.getDOMNode();
+	    var category = input.value;
+	    input.value = '';
 
-	    if (user_location.address) {
-	      data.address = user_location.address;
-	    }
-	    if (user_location.coords) {
-	      data.lat = user_location.coords.latitude;
-	      data.lon = user_location.coords.longitude;
-	    }
-
+	    var data = { address: '679 38th Ave, San Francisco', category: category };
 	    var request = $.ajax({
-	      url: 'https://mealette-backend.herokuapp.com/api',
+	      url: 'http://localhost:3000/api',
 	      method: 'get',
 	      data: data,
 	      dataType: 'JSON'
 	    });
 
 	    request.done(function (response) {
+	      console.log(response);
 	      component.setState({ restaurant_objects: response });
 	    });
 
@@ -368,41 +343,19 @@
 	      component.setState({ restaurant_objects: null, error: errors });
 	    });
 	  },
-
 	  render: function render() {
-
-	    var content;
-
-	    if (this.state.errors) {
-	      content = React.createElement(
-	        'div',
-	        null,
-	        'CRAP! ',
-	        this.state.errors
-	      );
-	    } else if (this.state.user_location) {
-	      if (this.state.restaurant_objects) {
-	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
-	      } else {
-	        content = React.createElement(
-	          'div',
-	          null,
-	          'loading restaurants'
-	        );
-	      }
-	    } else {
-	      content = React.createElement(SearchBar, null);
-	    }
-
 	    return React.createElement(
-	      'div',
-	      null,
-	      content
+	      'form',
+	      { onSubmit: this.filterCategory },
+	      React.createElement('input', { type: 'textbox', placeholder: 'What do you want to eat?', ref: 'category' }),
+	      React.createElement('input', { type: 'submit', value: 'search' })
 	    );
 	  }
-	}); // ends EnableOrDenyLocation
+	});
 
-	module.exports = EnableOrDenyLocation;
+	module.exports = CategoryFilter;
+
+	// <MainCarousel cardData={this.state.restaurant_objects} />
 
 /***/ },
 /* 6 */
@@ -1021,6 +974,114 @@
 
 /***/ },
 /* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var MainCarousel = __webpack_require__(6);
+	var SearchBar = __webpack_require__(14);
+	var UserLocation = __webpack_require__(15);
+
+	var EnableOrDenyLocation = React.createClass({
+	  displayName: 'EnableOrDenyLocation',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      restaurant_objects: null,
+	      user_location: null,
+	      error: null
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    UserLocation.on('change', this.setGeoposition);
+	    UserLocation.request();
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    UserLocation.off('change', this.setGeoposition);
+	  },
+
+	  setGeoposition: function setGeoposition(user_location) {
+	    this.setState({
+	      restaurant_objects: null,
+	      user_location: user_location
+	    });
+	    this.loadRestaurants(user_location);
+	  },
+
+	  unableToGetGeoposition: function unableToGetGeoposition(positionError) {
+	    this.setState({ user_location: false });
+	  },
+
+	  loadRestaurants: function loadRestaurants(user_location) {
+	    if (!user_location) return;
+
+	    var component = this;
+	    var data = {};
+
+	    if (user_location.address) {
+	      data.address = user_location.address;
+	    }
+	    if (user_location.coords) {
+	      data.lat = user_location.coords.latitude;
+	      data.lon = user_location.coords.longitude;
+	    }
+
+	    var request = $.ajax({
+	      url: 'http://localhost:3000/api',
+	      // url: "https://mealette-backend.herokuapp.com/api",
+	      method: 'get',
+	      data: data,
+	      dataType: 'JSON'
+	    });
+
+	    request.done(function (response) {
+	      component.setState({ restaurant_objects: response });
+	    });
+
+	    request.fail(function (errors) {
+	      component.setState({ restaurant_objects: null, error: errors });
+	    });
+	  },
+
+	  render: function render() {
+
+	    var content;
+
+	    if (this.state.errors) {
+	      content = React.createElement(
+	        'div',
+	        null,
+	        'CRAP! ',
+	        this.state.errors
+	      );
+	    } else if (this.state.user_location) {
+	      if (this.state.restaurant_objects) {
+	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
+	      } else {
+	        content = React.createElement(
+	          'div',
+	          null,
+	          'loading restaurants'
+	        );
+	      }
+	    } else {
+	      content = React.createElement(SearchBar, null);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      content
+	    );
+	  }
+	}); // ends EnableOrDenyLocation
+
+	module.exports = EnableOrDenyLocation;
+
+/***/ },
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1053,10 +1114,10 @@
 	module.exports = SearchBar;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var EventEmitter = __webpack_require__(15);
+	var EventEmitter = __webpack_require__(16);
 
 	UserLocation = EventEmitter({
 	  position: null,
@@ -1094,13 +1155,13 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var d        = __webpack_require__(16)
-	  , callable = __webpack_require__(29)
+	var d        = __webpack_require__(17)
+	  , callable = __webpack_require__(30)
 
 	  , apply = Function.prototype.apply, call = Function.prototype.call
 	  , create = Object.create, defineProperty = Object.defineProperty
@@ -1232,15 +1293,15 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var assign        = __webpack_require__(17)
-	  , normalizeOpts = __webpack_require__(24)
-	  , isCallable    = __webpack_require__(25)
-	  , contains      = __webpack_require__(26)
+	var assign        = __webpack_require__(18)
+	  , normalizeOpts = __webpack_require__(25)
+	  , isCallable    = __webpack_require__(26)
+	  , contains      = __webpack_require__(27)
 
 	  , d;
 
@@ -1301,18 +1362,18 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(18)()
+	module.exports = __webpack_require__(19)()
 		? Object.assign
-		: __webpack_require__(19);
+		: __webpack_require__(20);
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1327,13 +1388,13 @@
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys  = __webpack_require__(20)
-	  , value = __webpack_require__(23)
+	var keys  = __webpack_require__(21)
+	  , value = __webpack_require__(24)
 
 	  , max = Math.max;
 
@@ -1355,18 +1416,18 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(21)()
+	module.exports = __webpack_require__(22)()
 		? Object.keys
-		: __webpack_require__(22);
+		: __webpack_require__(23);
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1380,7 +1441,7 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1393,7 +1454,7 @@
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1405,7 +1466,7 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1428,7 +1489,7 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	// Deprecated
@@ -1439,18 +1500,18 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(27)()
+	module.exports = __webpack_require__(28)()
 		? String.prototype.contains
-		: __webpack_require__(28);
+		: __webpack_require__(29);
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1464,7 +1525,7 @@
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1477,7 +1538,7 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
