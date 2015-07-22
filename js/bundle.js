@@ -49,7 +49,7 @@
 	(function () {
 
 		var Menu = __webpack_require__(1);
-		var EnableOrDenyLocation = __webpack_require__(13);
+		var EnableOrDenyLocation = __webpack_require__(6);
 
 		var Grid = React.createClass({
 			displayName: 'Grid',
@@ -301,48 +301,27 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
-
-	var MainCarousel = __webpack_require__(6);
 
 	var CategoryFilter = React.createClass({
 	  displayName: 'CategoryFilter',
 
-	  getInitialState: function getInitialState() {
-	    return {
-	      restaurant_objects: null,
-	      user_location: null,
-	      error: null
-	    };
-	  },
-
 	  filterCategory: function filterCategory(event) {
 	    event.preventDefault();
+	    console.log('in filter category');
 
 	    var component = this;
 	    var input = this.refs.category.getDOMNode();
 	    var category = input.value;
 	    input.value = '';
 
-	    var data = { address: '679 38th Ave, San Francisco', category: category };
-	    var request = $.ajax({
-	      url: 'http://localhost:3000/api',
-	      method: 'get',
-	      data: data,
-	      dataType: 'JSON'
-	    });
+	    var currentLocation = UserLocation.position;
 
-	    request.done(function (response) {
-	      console.log(response);
-	      component.setState({ restaurant_objects: response });
-	    });
-
-	    request.fail(function (errors) {
-	      component.setState({ restaurant_objects: null, error: errors });
-	    });
+	    UserLocation.set(currentLocation, category);
 	  },
+
 	  render: function render() {
 	    return React.createElement(
 	      'form',
@@ -355,16 +334,128 @@
 
 	module.exports = CategoryFilter;
 
-	// <MainCarousel cardData={this.state.restaurant_objects} />
-
 /***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Carousel = __webpack_require__(7);
-	var Ease = __webpack_require__(12);
+	var MainCarousel = __webpack_require__(7);
+	var SearchBar = __webpack_require__(14);
+	var UserLocation = __webpack_require__(15);
+
+	var EnableOrDenyLocation = React.createClass({
+	  displayName: 'EnableOrDenyLocation',
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      restaurant_objects: null,
+	      user_location: null,
+	      category: null,
+	      error: null
+	    };
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    UserLocation.on('change', this.setGeoposition);
+	    UserLocation.request();
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    UserLocation.off('change', this.setGeoposition);
+	  },
+
+	  setGeoposition: function setGeoposition(user_location, category) {
+	    this.setState({
+	      restaurant_objects: null,
+	      user_location: user_location,
+	      category: category
+	    });
+	    this.loadRestaurants(user_location, category);
+	    debugger;
+	  },
+
+	  unableToGetGeoposition: function unableToGetGeoposition(positionError) {
+	    this.setState({ user_location: false });
+	  },
+
+	  loadRestaurants: function loadRestaurants(user_location, category) {
+	    if (!user_location) return;
+
+	    var component = this;
+	    var data = {};
+
+	    if (user_location.address) {
+	      data.address = user_location.address;
+	      data.category = category;
+	      debugger;
+	    }
+	    if (user_location.coords) {
+	      data.lat = user_location.coords.latitude;
+	      data.lon = user_location.coords.longitude;
+	      data.category = category;
+	    }
+
+	    var request = $.ajax({
+	      url: 'http://localhost:3000/api',
+	      // url: "https://mealette-backend.herokuapp.com/api",
+	      method: 'get',
+	      data: data,
+	      dataType: 'JSON'
+	    });
+
+	    request.done(function (response) {
+	      component.setState({ restaurant_objects: response });
+	    });
+
+	    request.fail(function (errors) {
+	      component.setState({ restaurant_objects: null, error: errors });
+	    });
+	  },
+
+	  render: function render() {
+
+	    var content;
+
+	    if (this.state.errors) {
+	      content = React.createElement(
+	        'div',
+	        null,
+	        'CRAP! ',
+	        this.state.errors
+	      );
+	    } else if (this.state.user_location) {
+	      if (this.state.restaurant_objects) {
+	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
+	      } else {
+	        content = React.createElement(
+	          'div',
+	          null,
+	          'loading restaurants'
+	        );
+	      }
+	    } else {
+	      content = React.createElement(SearchBar, null);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      content
+	    );
+	  }
+	}); // ends EnableOrDenyLocation
+
+	module.exports = EnableOrDenyLocation;
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Carousel = __webpack_require__(8);
+	var Ease = __webpack_require__(13);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -421,15 +512,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(8);
+	var React = __webpack_require__(9);
 
-	var Util = __webpack_require__(9);
-	var Layout = __webpack_require__(10);
-	var Depot = __webpack_require__(11);
+	var Util = __webpack_require__(10);
+	var Layout = __webpack_require__(11);
+	var Depot = __webpack_require__(12);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -494,13 +585,13 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -579,12 +670,12 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(9);
+	var Util = __webpack_require__(10);
 
 	var _exports = module.exports = {};
 
@@ -635,14 +726,14 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(12);
-	var Layout = __webpack_require__(10);
-	var Util = __webpack_require__(9);
+	var Ease = __webpack_require__(13);
+	var Layout = __webpack_require__(11);
+	var Util = __webpack_require__(10);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -777,7 +868,7 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {
@@ -973,114 +1064,6 @@
 	}.call(this));
 
 /***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var MainCarousel = __webpack_require__(6);
-	var SearchBar = __webpack_require__(14);
-	var UserLocation = __webpack_require__(15);
-
-	var EnableOrDenyLocation = React.createClass({
-	  displayName: 'EnableOrDenyLocation',
-
-	  getInitialState: function getInitialState() {
-	    return {
-	      restaurant_objects: null,
-	      user_location: null,
-	      error: null
-	    };
-	  },
-
-	  componentDidMount: function componentDidMount() {
-	    UserLocation.on('change', this.setGeoposition);
-	    UserLocation.request();
-	  },
-
-	  componentWillUnmount: function componentWillUnmount() {
-	    UserLocation.off('change', this.setGeoposition);
-	  },
-
-	  setGeoposition: function setGeoposition(user_location) {
-	    this.setState({
-	      restaurant_objects: null,
-	      user_location: user_location
-	    });
-	    this.loadRestaurants(user_location);
-	  },
-
-	  unableToGetGeoposition: function unableToGetGeoposition(positionError) {
-	    this.setState({ user_location: false });
-	  },
-
-	  loadRestaurants: function loadRestaurants(user_location) {
-	    if (!user_location) return;
-
-	    var component = this;
-	    var data = {};
-
-	    if (user_location.address) {
-	      data.address = user_location.address;
-	    }
-	    if (user_location.coords) {
-	      data.lat = user_location.coords.latitude;
-	      data.lon = user_location.coords.longitude;
-	    }
-
-	    var request = $.ajax({
-	      url: 'http://localhost:3000/api',
-	      // url: "https://mealette-backend.herokuapp.com/api",
-	      method: 'get',
-	      data: data,
-	      dataType: 'JSON'
-	    });
-
-	    request.done(function (response) {
-	      component.setState({ restaurant_objects: response });
-	    });
-
-	    request.fail(function (errors) {
-	      component.setState({ restaurant_objects: null, error: errors });
-	    });
-	  },
-
-	  render: function render() {
-
-	    var content;
-
-	    if (this.state.errors) {
-	      content = React.createElement(
-	        'div',
-	        null,
-	        'CRAP! ',
-	        this.state.errors
-	      );
-	    } else if (this.state.user_location) {
-	      if (this.state.restaurant_objects) {
-	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
-	      } else {
-	        content = React.createElement(
-	          'div',
-	          null,
-	          'loading restaurants'
-	        );
-	      }
-	    } else {
-	      content = React.createElement(SearchBar, null);
-	    }
-
-	    return React.createElement(
-	      'div',
-	      null,
-	      content
-	    );
-	  }
-	}); // ends EnableOrDenyLocation
-
-	module.exports = EnableOrDenyLocation;
-
-/***/ },
 /* 14 */
 /***/ function(module, exports) {
 
@@ -1121,10 +1104,14 @@
 
 	UserLocation = EventEmitter({
 	  position: null,
+	  category: null,
 
-	  set: function(position){
+	  set: function(position, category){
 	    UserLocation.position = position;
-	    UserLocation.emit('change', position);
+	    UserLocation.category = category;
+
+	    debugger
+	    UserLocation.emit('change', position, category);
 	    return this;
 	  },
 
