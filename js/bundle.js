@@ -293,7 +293,12 @@
 	    event.preventDefault();
 	    console.log("hellooooo");
 
-	    var repopulate = UserLocation.repopulate + 1;
+	    if (UserLocation.repopulate === 0) {
+	      var repopulate = UserLocation.repopulate + 1;
+	    } else {
+	      var repopulate = UserLocation.repopulate - 1;
+	    }
+
 	    var currentLocation = UserLocation.position;
 	    var currentCategory = UserLocation.category;
 
@@ -304,7 +309,7 @@
 	    return React.createElement(
 	      "button",
 	      { className: "ui button", onClick: this.shuffleRestaurants },
-	      "Shuffle!"
+	      "See More!"
 	    );
 	  }
 	});
