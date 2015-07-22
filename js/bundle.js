@@ -48,23 +48,25 @@
 
 	(function () {
 
-		var Menu = __webpack_require__(1);
-		var EnableOrDenyLocation = __webpack_require__(7);
+	  var Menu = __webpack_require__(1);
+	  var EnableOrDenyLocation = __webpack_require__(6);
+	  var ShuffleButton = __webpack_require__(31);
 
-		var Grid = React.createClass({
-			displayName: 'Grid',
+	  var Grid = React.createClass({
+	    displayName: 'Grid',
 
-			render: function render() {
-				return React.createElement(
-					'div',
-					{ className: '' },
-					React.createElement(Menu, null),
-					React.createElement(EnableOrDenyLocation, null)
-				);
-			}
-		});
+	    render: function render() {
+	      return React.createElement(
+	        'div',
+	        { className: '' },
+	        React.createElement(Menu, null),
+	        React.createElement(EnableOrDenyLocation, null),
+	        React.createElement(ShuffleButton, null)
+	      );
+	    }
+	  });
 
-		React.render(React.createElement(Grid, null), document.getElementById('wrapper'));
+	  React.render(React.createElement(Grid, null), document.getElementById('wrapper'));
 	})();
 
 /***/ },
@@ -75,7 +77,6 @@
 
 	var ChangeLocationLink = __webpack_require__(2);
 	var CategoryFilter = __webpack_require__(5);
-	var ShuffleButton = __webpack_require__(6);
 
 	var Menu = React.createClass({
 		displayName: 'Menu',
@@ -121,11 +122,6 @@
 										null,
 										'Change Location'
 									)
-								),
-								React.createElement(
-									'div',
-									{ className: 'item' },
-									React.createElement(ShuffleButton, null)
 								),
 								React.createElement(
 									'div',
@@ -282,49 +278,13 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	var ShuffleButton = React.createClass({
-	  displayName: "ShuffleButton",
-
-	  shuffleRestaurants: function shuffleRestaurants(event) {
-	    event.preventDefault();
-	    console.log("hellooooo");
-
-	    if (UserLocation.repopulate === 0) {
-	      var repopulate = UserLocation.repopulate + 1;
-	    } else {
-	      var repopulate = UserLocation.repopulate - 1;
-	    }
-
-	    var currentLocation = UserLocation.position;
-	    var currentCategory = UserLocation.category;
-
-	    UserLocation.set(currentLocation, currentCategory, repopulate);
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      "button",
-	      { className: "ui button", onClick: this.shuffleRestaurants },
-	      "See More!"
-	    );
-	  }
-	});
-
-	module.exports = ShuffleButton;
-
-/***/ },
-/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MainCarousel = __webpack_require__(8);
-	var SearchBar = __webpack_require__(15);
-	var UserLocation = __webpack_require__(16);
+	var MainCarousel = __webpack_require__(7);
+	var SearchBar = __webpack_require__(14);
+	var UserLocation = __webpack_require__(15);
 
 	var EnableOrDenyLocation = React.createClass({
 	  displayName: 'EnableOrDenyLocation',
@@ -439,13 +399,13 @@
 	module.exports = EnableOrDenyLocation;
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Carousel = __webpack_require__(9);
-	var Ease = __webpack_require__(14);
+	var Carousel = __webpack_require__(8);
+	var Ease = __webpack_require__(13);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -502,15 +462,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(10);
+	var React = __webpack_require__(9);
 
-	var Util = __webpack_require__(11);
-	var Layout = __webpack_require__(12);
-	var Depot = __webpack_require__(13);
+	var Util = __webpack_require__(10);
+	var Layout = __webpack_require__(11);
+	var Depot = __webpack_require__(12);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -573,13 +533,13 @@
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -658,12 +618,12 @@
 	};
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(11);
+	var Util = __webpack_require__(10);
 
 	var _exports = module.exports = {};
 
@@ -714,14 +674,14 @@
 
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(14);
-	var Layout = __webpack_require__(12);
-	var Util = __webpack_require__(11);
+	var Ease = __webpack_require__(13);
+	var Layout = __webpack_require__(11);
+	var Util = __webpack_require__(10);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -856,7 +816,7 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {
@@ -1052,7 +1012,7 @@
 	}.call(this));
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1090,10 +1050,10 @@
 	module.exports = SearchBar;
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var EventEmitter = __webpack_require__(17);
+	var EventEmitter = __webpack_require__(16);
 
 	UserLocation = EventEmitter({
 	  position: null,
@@ -1135,13 +1095,13 @@
 
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var d        = __webpack_require__(18)
-	  , callable = __webpack_require__(31)
+	var d        = __webpack_require__(17)
+	  , callable = __webpack_require__(30)
 
 	  , apply = Function.prototype.apply, call = Function.prototype.call
 	  , create = Object.create, defineProperty = Object.defineProperty
@@ -1273,15 +1233,15 @@
 
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var assign        = __webpack_require__(19)
-	  , normalizeOpts = __webpack_require__(26)
-	  , isCallable    = __webpack_require__(27)
-	  , contains      = __webpack_require__(28)
+	var assign        = __webpack_require__(18)
+	  , normalizeOpts = __webpack_require__(25)
+	  , isCallable    = __webpack_require__(26)
+	  , contains      = __webpack_require__(27)
 
 	  , d;
 
@@ -1342,18 +1302,18 @@
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(20)()
+	module.exports = __webpack_require__(19)()
 		? Object.assign
-		: __webpack_require__(21);
+		: __webpack_require__(20);
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1368,13 +1328,13 @@
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys  = __webpack_require__(22)
-	  , value = __webpack_require__(25)
+	var keys  = __webpack_require__(21)
+	  , value = __webpack_require__(24)
 
 	  , max = Math.max;
 
@@ -1396,18 +1356,18 @@
 
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(23)()
+	module.exports = __webpack_require__(22)()
 		? Object.keys
-		: __webpack_require__(24);
+		: __webpack_require__(23);
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1421,7 +1381,7 @@
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1434,7 +1394,7 @@
 
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1446,7 +1406,7 @@
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1469,7 +1429,7 @@
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	// Deprecated
@@ -1480,18 +1440,18 @@
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(29)()
+	module.exports = __webpack_require__(28)()
 		? String.prototype.contains
-		: __webpack_require__(30);
+		: __webpack_require__(29);
 
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1505,7 +1465,7 @@
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1518,7 +1478,7 @@
 
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1528,6 +1488,44 @@
 		return fn;
 	};
 
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var ShuffleButton = React.createClass({
+	  displayName: 'ShuffleButton',
+
+	  shuffleRestaurants: function shuffleRestaurants(event) {
+	    event.preventDefault();
+	    console.log('hellooooo');
+
+	    if (UserLocation.repopulate === 0) {
+	      var repopulate = UserLocation.repopulate + 1;
+	      $('i.plus').removeClass('plus').addClass('minus');
+	    } else {
+	      var repopulate = UserLocation.repopulate - 1;
+	      $('i.minus').removeClass('minus').addClass('plus');
+	    }
+
+	    var currentLocation = UserLocation.position;
+	    var currentCategory = UserLocation.category;
+
+	    UserLocation.set(currentLocation, currentCategory, repopulate);
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'a',
+	      { className: 'repopulate', onClick: this.shuffleRestaurants },
+	      React.createElement('i', { className: 'plus icon' })
+	    );
+	  }
+	});
+
+	module.exports = ShuffleButton;
 
 /***/ }
 /******/ ]);

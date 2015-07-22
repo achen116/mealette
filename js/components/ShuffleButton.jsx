@@ -5,8 +5,10 @@ var ShuffleButton = React.createClass({
 
     if (UserLocation.repopulate === 0) {
       var repopulate = UserLocation.repopulate + 1;
+      $('i.plus').removeClass('plus').addClass('minus');
     } else {
       var repopulate = UserLocation.repopulate - 1;
+      $('i.minus').removeClass('minus').addClass('plus');
     }
 
     var currentLocation = UserLocation.position;
@@ -17,7 +19,7 @@ var ShuffleButton = React.createClass({
 
   render: function() {
     return (
-      <button className="ui button" onClick={this.shuffleRestaurants}>See More!</button>
+      <a className='repopulate' onClick={this.shuffleRestaurants}><i className="plus icon"></i></a>
     );
   }
 });
