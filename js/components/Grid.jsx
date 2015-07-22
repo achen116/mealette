@@ -2,7 +2,7 @@
 
 	var Menu = require('./Menu.jsx');
   var EnableOrDenyLocation = require('./EnableOrDenyLocation.jsx');
-  var ShuffleButton = require('./ShuffleButton')
+  var RepopulateButton = require('./RepopulateButton')
 
 	var Grid = React.createClass({
 	render: function(){
@@ -10,7 +10,7 @@
 			<div className="">
   				<Menu />
   			  <EnableOrDenyLocation />
-          <ShuffleButton />
+          <RepopulateButton />
 			</div>
 		);
 	}

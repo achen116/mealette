@@ -1,5 +1,5 @@
-var ShuffleButton = React.createClass({
-  shuffleRestaurants: function(event) {
+var RepopulateButton = React.createClass({
+  repopulateRestaurants: function(event) {
     event.preventDefault();
     console.log('hellooooo');
 
@@ -19,9 +19,9 @@ var ShuffleButton = React.createClass({
 
   render: function() {
     return (
-      <a className='repopulate' onClick={this.shuffleRestaurants}><i className="plus icon"></i></a>
+      <a className='repopulate' onClick={this.repopulateRestaurants}><i className="plus icon"></i></a>
     );
   }
 });
 
-module.exports = ShuffleButton;
+module.exports = RepopulateButton;

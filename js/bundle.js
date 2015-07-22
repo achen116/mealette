@@ -50,7 +50,7 @@
 
 	  var Menu = __webpack_require__(1);
 	  var EnableOrDenyLocation = __webpack_require__(6);
-	  var ShuffleButton = __webpack_require__(31);
+	  var RepopulateButton = __webpack_require__(31);
 
 	  var Grid = React.createClass({
 	    displayName: 'Grid',
@@ -61,7 +61,7 @@
 	        { className: '' },
 	        React.createElement(Menu, null),
 	        React.createElement(EnableOrDenyLocation, null),
-	        React.createElement(ShuffleButton, null)
+	        React.createElement(RepopulateButton, null)
 	      );
 	    }
 	  });
@@ -1495,10 +1495,10 @@
 
 	'use strict';
 
-	var ShuffleButton = React.createClass({
-	  displayName: 'ShuffleButton',
+	var RepopulateButton = React.createClass({
+	  displayName: 'RepopulateButton',
 
-	  shuffleRestaurants: function shuffleRestaurants(event) {
+	  repopulateRestaurants: function repopulateRestaurants(event) {
 	    event.preventDefault();
 	    console.log('hellooooo');
 
@@ -1519,13 +1519,13 @@
 	  render: function render() {
 	    return React.createElement(
 	      'a',
-	      { className: 'repopulate', onClick: this.shuffleRestaurants },
+	      { className: 'repopulate', onClick: this.repopulateRestaurants },
 	      React.createElement('i', { className: 'plus icon' })
 	    );
 	  }
 	});
 
-	module.exports = ShuffleButton;
+	module.exports = RepopulateButton;
 
 /***/ }
 /******/ ]);
