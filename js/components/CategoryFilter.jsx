@@ -16,9 +16,11 @@ var CategoryFilter = React.createClass({
 
   render: function(){
     return (
-      <form onSubmit={this.filterCategory}>
-        <input type="textbox" placeholder="What do you want to eat?" ref="category" />
-        <input type="submit" value="search" />
+      <form className="ui form" onSubmit={this.filterCategory}>
+        <div className="inline field">
+          <input type="text" ref="category" placeholder="Change category" />
+          <button className="ui button" type="submit">Search</button>
+        </div>
       </form>
     );
   }

@@ -9,11 +9,6 @@
 			<div className="">
 				<Menu />
 			  <EnableOrDenyLocation />
-			  <div className="ui two column centered grid">
-			  	<div className="ui raised segment column reviews">
-			  		Reviews
-			  	</div>
-			  </div>
 			</div>
 		);
 	}

@@ -59,16 +59,7 @@
 					'div',
 					{ className: '' },
 					React.createElement(Menu, null),
-					React.createElement(EnableOrDenyLocation, null),
-					React.createElement(
-						'div',
-						{ className: 'ui two column centered grid' },
-						React.createElement(
-							'div',
-							{ className: 'ui raised segment column reviews' },
-							'Reviews'
-						)
-					)
+					React.createElement(EnableOrDenyLocation, null)
 				);
 			}
 		});
@@ -315,9 +306,17 @@
 	  render: function render() {
 	    return React.createElement(
 	      'form',
-	      { onSubmit: this.filterCategory },
-	      React.createElement('input', { type: 'textbox', placeholder: 'What do you want to eat?', ref: 'category' }),
-	      React.createElement('input', { type: 'submit', value: 'search' })
+	      { className: 'ui form', onSubmit: this.filterCategory },
+	      React.createElement(
+	        'div',
+	        { className: 'inline field' },
+	        React.createElement('input', { type: 'text', ref: 'category', placeholder: 'Change category' }),
+	        React.createElement(
+	          'button',
+	          { className: 'ui button', type: 'submit' },
+	          'Search'
+	        )
+	      )
 	    );
 	  }
 	});
@@ -569,7 +568,7 @@
 	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
 	            ),
 	            React.createElement("div", {className: "spin-button"},
-	              React.createElement("button", {className: "massive ui button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
+	              React.createElement("button", {className: "massive ui red button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
 	            )
 	          )
 	        );
@@ -1076,13 +1075,17 @@
 
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      null,
+	      "form",
+	      { className: "ui form", onSubmit: this.changeLocation },
 	      React.createElement(
-	        "form",
-	        { onSubmit: this.changeLocation },
-	        React.createElement("input", { type: "textbox", placeholder: "Enter your location", ref: "address" }),
-	        React.createElement("input", { type: "submit", value: "Geocode" })
+	        "div",
+	        { className: "inline field" },
+	        React.createElement("input", { type: "text", ref: "address", placeholder: "Enter your location" }),
+	        React.createElement(
+	          "button",
+	          { className: "ui button", type: "submit" },
+	          "Search"
+	        )
 	      )
 	    );
 	  }
