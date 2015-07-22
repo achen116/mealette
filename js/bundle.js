@@ -59,25 +59,15 @@
 					'div',
 					{ className: '' },
 					React.createElement(Menu, null),
+					React.createElement(EnableOrDenyLocation, null),
 					React.createElement(
 						'div',
-						{ className: 'ui grid' },
-						React.createElement('div', { className: 'four wide column' }),
+						{ className: 'ui two column centered grid' },
 						React.createElement(
 							'div',
-							{ id: 'cbox', className: 'cbox eight wide column' },
-							React.createElement('div', { id: 'enable-location-request' }),
-							React.createElement(EnableOrDenyLocation, null)
-						),
-						React.createElement('div', { className: 'four wide column' }),
-						React.createElement('div', { className: 'sixteen wide column' }),
-						React.createElement('div', { className: 'five wide column' }),
-						React.createElement(
-							'div',
-							{ className: 'six wide column reviews' },
+							{ className: 'ui raised segment column reviews' },
 							'Reviews'
-						),
-						React.createElement('div', { className: 'five wide column' })
+						)
 					)
 				);
 			}
@@ -504,18 +494,20 @@
 	                   React.createElement("img", {src: d.card.hash.image_url})
 	                 ),
 	                 React.createElement("div", {className: "content"},
-	                   React.createElement("a", {className: "header"}, d.card.hash.name),
+	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name),
 	                   React.createElement("div", {className: "meta"},
-	                   React.createElement("span", {className: "date"}, "Joined in 2013")
+	                   React.createElement("span", {className: "closed"}, d.card.hash.is_closed ? "Closed Now" : "Open Now")
 	                   ),
 	                   React.createElement("div", {className: "description"},
-	                     d.card.hash.categories[0]
+	                     d.card.hash.categories[0][0]
 	                   )
 	                 ),
 	                 React.createElement("div", {className: "extra content"},
-	                   React.createElement("a", null,
-	                   React.createElement("i", {className: "user icon"}),
-	                   d.card.hash.rating
+	                   React.createElement("span", null,
+	                    React.createElement("i", {className: "orange star icon"}), d.card.hash.rating
+	                   ),
+	                   React.createElement("span", {className: "right floated"},
+	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "orange map icon"}), d.card.hash.location.display_address[0])
 	                   )
 	                 )
 	               )
@@ -531,10 +523,11 @@
 	            React.createElement("div", {className: "prev", onClick: Util.partial(this.onRotate,+angle)}),
 	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
 	            ),
-
-	            React.createElement("button", {className: "massive ui button", onClick: Util.partial(this.onRotate,-(19*angle))}, "Spin")
+	            React.createElement("div", {className: "spin-button"},
+	              React.createElement("button", {className: "massive ui button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
+	            )
 	          )
-	            );
+	        );
 	    }
 	});
 	module.exports = Carousel;
