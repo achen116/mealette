@@ -79,6 +79,12 @@
 	var Menu = React.createClass({
 		displayName: 'Menu',
 
+		showDropdown: function showDropdown() {
+			$('.dropdown').dropdown({
+				action: 'hide'
+			});
+		},
+
 		render: function render() {
 			return React.createElement(
 				'div',
@@ -96,17 +102,31 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ className: 'item' },
+							{ className: 'ui dropdown' },
 							React.createElement(
-								ChangeLocationLink,
-								null,
-								'Change Location'
+								'div',
+								{ onClick: this.showDropdown, className: 'header item' },
+								'Menu ',
+								React.createElement('i', { onClick: this.showDropdown, className: 'dropdown icon' })
+							),
+							React.createElement(
+								'div',
+								{ className: 'ui inverted menu' },
+								React.createElement(
+									'div',
+									{ className: 'item' },
+									React.createElement(
+										ChangeLocationLink,
+										null,
+										'Change Location'
+									)
+								),
+								React.createElement(
+									'div',
+									{ className: 'item' },
+									React.createElement(CategoryFilter, null)
+								)
 							)
-						),
-						React.createElement(
-							'div',
-							{ className: 'item' },
-							React.createElement(CategoryFilter, null)
 						)
 					)
 				)
@@ -472,18 +492,15 @@
 	                   React.createElement("img", {src: d.card.hash.image_url})
 	                 ),
 	                 React.createElement("div", {className: "content"},
-	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name),
-
-	                   React.createElement("div", {className: "description"},
-	                     d.card.hash.categories[0][0]
-	                   )
+	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name)
 	                 ),
 	                 React.createElement("div", {className: "extra content"},
 	                   React.createElement("span", null,
-	                    React.createElement("i", {className: "orange star icon"}), d.card.hash.rating
+	                    React.createElement("i", {className: "red star icon"}), d.card.hash.rating
 	                   ),
+	                   React.createElement("span", {className: "card-category"}, d.card.hash.categories[0][0]),
 	                   React.createElement("span", {className: "right floated"},
-	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "orange map icon"}), d.card.hash.location.display_address[0])
+	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "red map icon"}), d.card.hash.location.display_address[0])
 	                   )
 	                 )
 	               )

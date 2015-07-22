@@ -7,8 +7,8 @@
 	render: function(){
 		return(
 			<div className="">
-				<Menu />
-			  <EnableOrDenyLocation />
+  				<Menu />
+  			  <EnableOrDenyLocation />
 			</div>
 		);
 	}
