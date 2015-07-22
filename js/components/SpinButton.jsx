@@ -18,4 +18,5 @@ var SpinButton = React.createClass({
     );
   }
 });
+
 module.exports = SpinButton;

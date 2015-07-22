@@ -1,5 +1,6 @@
 var ChangeLocationLink = require('./ChangeLocationLink')
 var CategoryFilter = require('./CategoryFilter')
+var ShuffleButton = require('./ShuffleButton')
 
 var Menu = React.createClass({
 	render: function(){
@@ -15,7 +16,8 @@ var Menu = React.createClass({
 				    </div>
 				  </div>
 				</div>
-	    	<CategoryFilter/>
+	    	<CategoryFilter />
+	    	<ShuffleButton />
 
 		    <div className="ui sidebar inverted right vertical menu">
 		      <p className="item">
