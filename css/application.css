@@ -8,3 +8,7 @@
 .change-location form.form input {
   font-size: 2em !important;
 }
+
+.input > .ui-input-text.ui-body-inherit.ui-corner-all.ui-shadow-inset {
+  width: 100% !important;
+}

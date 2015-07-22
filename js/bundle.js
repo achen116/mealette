@@ -351,14 +351,17 @@
 	      } else {
 	        content = React.createElement(
 	          'div',
-	          null,
-	          'loading restaurants'
+	          { className: 'ui active dimmer' },
+	          React.createElement(
+	            'div',
+	            { className: 'ui large text loader' },
+	            'Cooking Up Something Good'
+	          )
 	        );
 	      }
 	    } else {
 	      content = React.createElement(SearchBar, null);
 	    }
-
 	    return React.createElement(
 	      'div',
 	      null,
@@ -470,9 +473,7 @@
 	                 ),
 	                 React.createElement("div", {className: "content"},
 	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name),
-	                   React.createElement("div", {className: "meta"},
-	                   React.createElement("span", {className: "closed"}, d.card.hash.is_closed ? "Closed Now" : "Open Now")
-	                   ),
+
 	                   React.createElement("div", {className: "description"},
 	                     d.card.hash.categories[0][0]
 	                   )
@@ -1010,7 +1011,7 @@
 	      { className: "change-location" },
 	      React.createElement(
 	        "form",
-	        { className: "ui form", onSubmit: this.changeLocation },
+	        { className: "ui form change-location", onSubmit: this.changeLocation },
 	        React.createElement(
 	          "div",
 	          { className: "ui icon input" },
