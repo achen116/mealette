@@ -1,28 +1,28 @@
 var EventEmitter = require('event-emitter');
 
-UserLocation = EventEmitter({
+FilterOptions = EventEmitter({
   position: null,
   category: null,
   repopulate: null,
 
   set: function(position, category, repopulate){
-    UserLocation.position = position;
-    UserLocation.category = category;
-    UserLocation.repopulate = repopulate || 0;
-    UserLocation.emit('change', position, category, repopulate);
+    FilterOptions.position = position;
+    FilterOptions.category = category;
+    FilterOptions.repopulate = repopulate || 0;
+    FilterOptions.emit('change', position, category, repopulate);
     return this;
   },
 
-  request: function(){
-    if (UserLocation.position) return Promise.resolve(UserLocation.position);
+  requestLocation: function(){
+    if (FilterOptions.position) return Promise.resolve(FilterOptions.position);
     return new Promise(function(resolve, reject){
       navigator.geolocation.getCurrentPosition(
         function(position){
-          UserLocation.set(position);
+          FilterOptions.set(position);
           resolve(position);
         },
         function(positionError){
-          UserLocation.set(null);
+          FilterOptions.set(null);
           reject(positionError);
         }
       );
@@ -31,9 +31,9 @@ UserLocation = EventEmitter({
   },
 
   remove: function(){
-    return UserLocation.set(null);
+    return FilterOptions.set(null);
   }
 });
 
 
-module.exports = UserLocation
+module.exports = FilterOptions

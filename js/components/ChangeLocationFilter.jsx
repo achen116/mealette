@@ -6,7 +6,7 @@ var ChangeLocationFilter = React.createClass({
     var address = input.value
     input.value = ''
 
-    UserLocation.set({address: address});
+    FilterOptions.set({address: address});
   },
 
   render: function() {

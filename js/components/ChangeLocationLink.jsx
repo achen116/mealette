@@ -4,7 +4,7 @@ var ActionLink = require('./ActionLink')
 module.exports = React.createClass({
 
   changeLocation: function(){
-    UserLocation.remove();
+    FilterOptions.remove();
   },
 
   render: function(){

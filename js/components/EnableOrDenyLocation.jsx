@@ -1,6 +1,6 @@
 var MainCarousel = require('../carousel/MainCarousel.jsx');
 var ChangeLocationFilter = require('./ChangeLocationFilter.jsx');
-var UserLocation = require('../UserLocation.js');
+var FilterOptions = require('../FilterOptions.js');
 
 var EnableOrDenyLocation = React.createClass({
 
@@ -16,13 +16,12 @@ var EnableOrDenyLocation = React.createClass({
   },
 
   componentDidMount: function() {
-    debugger
-    UserLocation.on('change', this.setGeoposition)
-    UserLocation.request()
+    FilterOptions.on('change', this.setGeoposition)
+    FilterOptions.requestLocation()
   },
 
   componentWillUnmount: function(){
-    UserLocation.off('change', this.setGeoposition)
+    FilterOptions.off('change', this.setGeoposition)
   },
 
   setGeoposition: function(user_location, category, repopulate){
@@ -85,7 +84,7 @@ var EnableOrDenyLocation = React.createClass({
 
   render: function() {
     var content;
-    debugger
+
     if (this.state.errors){
       content = <div>Error: {this.state.errors}</div>
     } 

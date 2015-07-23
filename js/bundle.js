@@ -75,7 +75,7 @@
 
 	var ChangeLocationLink = __webpack_require__(2);
 	var CategoryFilter = __webpack_require__(5);
-	var RepopulateButton = __webpack_require__(6);
+	var MoreRestaurantsFilter = __webpack_require__(6);
 
 	var Menu = React.createClass({
 		displayName: 'Menu',
@@ -116,7 +116,7 @@
 								React.createElement(
 									'div',
 									{ className: 'item' },
-									React.createElement(RepopulateButton, null)
+									React.createElement(MoreRestaurantsFilter, null)
 								),
 								React.createElement(
 									'div',
@@ -156,7 +156,7 @@
 	  displayName: 'exports',
 
 	  changeLocation: function changeLocation() {
-	    UserLocation.remove();
+	    FilterOptions.remove();
 	  },
 
 	  render: function render() {
@@ -261,9 +261,9 @@
 	    var category = input.value;
 	    input.value = "";
 
-	    var currentLocation = UserLocation.position;
+	    var currentLocation = FilterOptions.position;
 
-	    UserLocation.set(currentLocation, category);
+	    FilterOptions.set(currentLocation, category);
 	  },
 
 	  render: function render() {
@@ -288,22 +288,22 @@
 
 	'use strict';
 
-	var RepopulateButton = React.createClass({
-	  displayName: 'RepopulateButton',
+	var MoreRestaurantsFilter = React.createClass({
+	  displayName: 'MoreRestaurantsFilter',
 
 	  repopulateRestaurants: function repopulateRestaurants(event) {
 	    event.preventDefault();
 
-	    if (UserLocation.repopulate === 0) {
-	      var repopulate = UserLocation.repopulate + 1;
+	    if (FilterOptions.repopulate === 0) {
+	      var repopulate = FilterOptions.repopulate + 1;
 	    } else {
-	      var repopulate = UserLocation.repopulate - 1;
+	      var repopulate = FilterOptions.repopulate - 1;
 	    }
 
-	    var currentLocation = UserLocation.position;
-	    var currentCategory = UserLocation.category;
+	    var currentLocation = FilterOptions.position;
+	    var currentCategory = FilterOptions.category;
 
-	    UserLocation.set(currentLocation, currentCategory, repopulate);
+	    FilterOptions.set(currentLocation, currentCategory, repopulate);
 	  },
 
 	  render: function render() {
@@ -315,7 +315,7 @@
 	  }
 	});
 
-	module.exports = RepopulateButton;
+	module.exports = MoreRestaurantsFilter;
 
 /***/ },
 /* 7 */
@@ -325,7 +325,7 @@
 
 	var MainCarousel = __webpack_require__(8);
 	var ChangeLocationFilter = __webpack_require__(15);
-	var UserLocation = __webpack_require__(16);
+	var FilterOptions = __webpack_require__(16);
 
 	var EnableOrDenyLocation = React.createClass({
 	  displayName: 'EnableOrDenyLocation',
@@ -342,13 +342,12 @@
 	  },
 
 	  componentDidMount: function componentDidMount() {
-	    debugger;
-	    UserLocation.on('change', this.setGeoposition);
-	    UserLocation.request();
+	    FilterOptions.on('change', this.setGeoposition);
+	    FilterOptions.requestLocation();
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {
-	    UserLocation.off('change', this.setGeoposition);
+	    FilterOptions.off('change', this.setGeoposition);
 	  },
 
 	  setGeoposition: function setGeoposition(user_location, category, repopulate) {
@@ -410,7 +409,7 @@
 
 	  render: function render() {
 	    var content;
-	    debugger;
+
 	    if (this.state.errors) {
 	      content = React.createElement(
 	        'div',
@@ -1092,7 +1091,7 @@
 	    var address = input.value;
 	    input.value = "";
 
-	    UserLocation.set({ address: address });
+	    FilterOptions.set({ address: address });
 	  },
 
 	  render: function render() {
@@ -1121,29 +1120,29 @@
 
 	var EventEmitter = __webpack_require__(17);
 
-	UserLocation = EventEmitter({
+	FilterOptions = EventEmitter({
 	  position: null,
 	  category: null,
 	  repopulate: null,
 
 	  set: function(position, category, repopulate){
-	    UserLocation.position = position;
-	    UserLocation.category = category;
-	    UserLocation.repopulate = repopulate || 0;
-	    UserLocation.emit('change', position, category, repopulate);
+	    FilterOptions.position = position;
+	    FilterOptions.category = category;
+	    FilterOptions.repopulate = repopulate || 0;
+	    FilterOptions.emit('change', position, category, repopulate);
 	    return this;
 	  },
 
-	  request: function(){
-	    if (UserLocation.position) return Promise.resolve(UserLocation.position);
+	  requestLocation: function(){
+	    if (FilterOptions.position) return Promise.resolve(FilterOptions.position);
 	    return new Promise(function(resolve, reject){
 	      navigator.geolocation.getCurrentPosition(
 	        function(position){
-	          UserLocation.set(position);
+	          FilterOptions.set(position);
 	          resolve(position);
 	        },
 	        function(positionError){
-	          UserLocation.set(null);
+	          FilterOptions.set(null);
 	          reject(positionError);
 	        }
 	      );
@@ -1152,12 +1151,12 @@
 	  },
 
 	  remove: function(){
-	    return UserLocation.set(null);
+	    return FilterOptions.set(null);
 	  }
 	});
 
 
-	module.exports = UserLocation
+	module.exports = FilterOptions
 
 
 /***/ },
