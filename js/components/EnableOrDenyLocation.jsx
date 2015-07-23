@@ -1,6 +1,6 @@
 var MainCarousel = require('../carousel/MainCarousel.jsx');
-var SearchBar = require('./SearchBar.jsx');
-var UserLocation = require('../UserLocation.js');
+var ChangeLocationFilter = require('./ChangeLocationFilter.jsx');
+var FilterOptions = require('../FilterOptions.js');
 
 var EnableOrDenyLocation = React.createClass({
 
@@ -11,16 +11,17 @@ var EnableOrDenyLocation = React.createClass({
       category: null,
       repopulate: null,
       error: null,
+      pageLoad: true,
     };
   },
 
   componentDidMount: function() {
-    UserLocation.on('change', this.setGeoposition)
-    UserLocation.request()
+    FilterOptions.on('change', this.setGeoposition)
+    FilterOptions.requestLocation()
   },
 
   componentWillUnmount: function(){
-    UserLocation.off('change', this.setGeoposition)
+    FilterOptions.off('change', this.setGeoposition)
   },
 
   setGeoposition: function(user_location, category, repopulate){
@@ -29,6 +30,7 @@ var EnableOrDenyLocation = React.createClass({
       user_location: user_location,
       category: category,
       repopulate: repopulate,
+      pageLoad: false,
     });
     this.loadRestaurants(user_location, category, repopulate);
   },
@@ -85,18 +87,30 @@ var EnableOrDenyLocation = React.createClass({
 
     if (this.state.errors){
       content = <div>Error: {this.state.errors}</div>
-    } else if (this.state.user_location) {
+    } 
+    else if (this.state.pageLoad) {
+      content =
+        <div className="ui active dimmer">
+          <div className="ui large text loader">Welcome to Mealette!</div>
+          <img className="ui fluid image" src="http://i.onionstatic.com/clickhole/2076/original/1200.jpg" />
+        </div>
+    }
+    else if (this.state.user_location) {
       if (this.state.restaurant_objects) {
         content = <MainCarousel cardData={this.state.restaurant_objects} />;
-      } else {
+      } 
+      else {
+        this.setTimeout = (content = <p>Hello!</p>);
         content =
         <div className="ui active dimmer">
           <div className="ui large text loader">Cooking Up Something Good</div>
         </div>
       }
-    } else {
-      content = <SearchBar />;
+    } 
+    else {
+      content = <ChangeLocationFilter />;
     }
+
     return (
       <div>
         {content}

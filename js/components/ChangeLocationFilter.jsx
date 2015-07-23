@@ -1,4 +1,4 @@
-var SearchBar = React.createClass({
+var ChangeLocationFilter = React.createClass({
 
   changeLocation: function(event){
     event.preventDefault();
@@ -6,7 +6,7 @@ var SearchBar = React.createClass({
     var address = input.value
     input.value = ''
 
-    UserLocation.set({address: address});
+    FilterOptions.set({address: address});
   },
 
   render: function() {
@@ -22,4 +22,4 @@ var SearchBar = React.createClass({
   }
 });
 
-module.exports = SearchBar;
+module.exports = ChangeLocationFilter;

@@ -1,6 +1,6 @@
 var ChangeLocationLink = require('./ChangeLocationLink')
 var CategoryFilter = require('./CategoryFilter')
-var RepopulateButton = require('./RepopulateButton')
+var MoreRestaurantsFilter = require('./MoreRestaurantsFilter')
 
 var Menu = React.createClass({
 
@@ -26,7 +26,7 @@ var Menu = React.createClass({
 
 				  	  <div className="ui menu menu-dropdown">
 				  	    <div className="item">
-				  	      <RepopulateButton />
+				  	      <MoreRestaurantsFilter />
 				  	    </div>
 				  	    <div className="item">
 				  	      <ChangeLocationLink>Change Location</ChangeLocationLink>

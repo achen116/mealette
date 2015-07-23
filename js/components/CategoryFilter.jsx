@@ -10,9 +10,9 @@ var CategoryFilter = React.createClass({
     var category = input.value
     input.value = ''
 
-    var currentLocation = UserLocation.position
+    var currentLocation = FilterOptions.position
 
-    UserLocation.set(currentLocation, category);
+    FilterOptions.set(currentLocation, category);
   },
 
   render: function(){
