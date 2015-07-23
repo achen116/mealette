@@ -1,5 +1,6 @@
 var ChangeLocationLink = require('./ChangeLocationLink')
 var CategoryFilter = require('./CategoryFilter')
+var RepopulateButton = require('./RepopulateButton')
 
 var Menu = React.createClass({
 
@@ -27,8 +28,11 @@ var Menu = React.createClass({
 				  	    <div className="item">
 				  	      <ChangeLocationLink>Change Location</ChangeLocationLink>
 				  	    </div>
-				  	    <div className="">
+				  	    <div className="item">
 				  	      <CategoryFilter />
+				  	    </div>
+				  	    <div className="item">
+				  	      <RepopulateButton />
 				  	    </div>
 				  	  </div>
 				  	</div>
