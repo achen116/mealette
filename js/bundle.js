@@ -336,11 +336,13 @@
 	      user_location: null,
 	      category: null,
 	      repopulate: null,
-	      error: null
+	      error: null,
+	      pageLoad: true
 	    };
 	  },
 
 	  componentDidMount: function componentDidMount() {
+	    debugger;
 	    UserLocation.on('change', this.setGeoposition);
 	    UserLocation.request();
 	  },
@@ -354,7 +356,8 @@
 	      restaurant_objects: null,
 	      user_location: user_location,
 	      category: category,
-	      repopulate: repopulate
+	      repopulate: repopulate,
+	      pageLoad: false
 	    });
 	    this.loadRestaurants(user_location, category, repopulate);
 	  },
@@ -407,7 +410,7 @@
 
 	  render: function render() {
 	    var content;
-
+	    debugger;
 	    if (this.state.errors) {
 	      content = React.createElement(
 	        'div',
@@ -415,10 +418,26 @@
 	        'Error: ',
 	        this.state.errors
 	      );
+	    } else if (this.state.pageLoad) {
+	      content = React.createElement(
+	        'div',
+	        { className: 'ui active dimmer' },
+	        React.createElement(
+	          'div',
+	          { className: 'ui large text loader' },
+	          'Welcome to Mealette!'
+	        ),
+	        React.createElement('img', { className: 'ui fluid image', src: 'http://i.onionstatic.com/clickhole/2076/original/1200.jpg' })
+	      );
 	    } else if (this.state.user_location) {
 	      if (this.state.restaurant_objects) {
 	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
 	      } else {
+	        this.setTimeout = content = React.createElement(
+	          'p',
+	          null,
+	          'Hello!'
+	        );
 	        content = React.createElement(
 	          'div',
 	          { className: 'ui active dimmer' },
@@ -432,6 +451,7 @@
 	    } else {
 	      content = React.createElement(SearchBar, null);
 	    }
+
 	    return React.createElement(
 	      'div',
 	      null,

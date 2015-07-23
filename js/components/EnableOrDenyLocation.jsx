@@ -11,10 +11,12 @@ var EnableOrDenyLocation = React.createClass({
       category: null,
       repopulate: null,
       error: null,
+      pageLoad: true,
     };
   },
 
   componentDidMount: function() {
+    debugger
     UserLocation.on('change', this.setGeoposition)
     UserLocation.request()
   },
@@ -29,6 +31,7 @@ var EnableOrDenyLocation = React.createClass({
       user_location: user_location,
       category: category,
       repopulate: repopulate,
+      pageLoad: false,
     });
     this.loadRestaurants(user_location, category, repopulate);
   },
@@ -82,21 +85,33 @@ var EnableOrDenyLocation = React.createClass({
 
   render: function() {
     var content;
-
+    debugger
     if (this.state.errors){
       content = <div>Error: {this.state.errors}</div>
-    } else if (this.state.user_location) {
+    } 
+    else if (this.state.pageLoad) {
+      content =
+        <div className="ui active dimmer">
+          <div className="ui large text loader">Welcome to Mealette!</div>
+          <img className="ui fluid image" src="http://i.onionstatic.com/clickhole/2076/original/1200.jpg" />
+        </div>
+    }
+    else if (this.state.user_location) {
       if (this.state.restaurant_objects) {
         content = <MainCarousel cardData={this.state.restaurant_objects} />;
-      } else {
+      } 
+      else {
+        this.setTimeout = (content = <p>Hello!</p>);
         content =
         <div className="ui active dimmer">
           <div className="ui large text loader">Cooking Up Something Good</div>
         </div>
       }
-    } else {
+    } 
+    else {
       content = <SearchBar />;
     }
+
     return (
       <div>
         {content}
