@@ -13,7 +13,7 @@ var SearchBar = React.createClass({
     return (
       <div className="change-location">
           <form className="ui form change-location" onSubmit={this.changeLocation}>
-            <div className="ui icon input">
+            <div className="ui icon search input">
               <input type="text" ref="address" placeholder="Enter your location" /><i className="search link icon" onClick={this.changeLocation}></i>
             </div>
           </form>

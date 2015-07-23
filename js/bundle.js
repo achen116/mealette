@@ -104,10 +104,10 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ onClick: this.showDropdown, className: 'ui floating dropdown' },
+							{ className: 'ui floating dropdown' },
 							React.createElement(
 								'div',
-								{ className: 'item' },
+								{ className: 'item', onClick: this.showDropdown },
 								'Menu ',
 								React.createElement('i', { className: 'dropdown icon' })
 							),
