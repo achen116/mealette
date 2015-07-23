@@ -4,10 +4,8 @@ var RepopulateButton = React.createClass({
 
     if (UserLocation.repopulate === 0) {
       var repopulate = UserLocation.repopulate + 1;
-      // $('i.plus').removeClass('plus').addClass('minus');
     } else {
       var repopulate = UserLocation.repopulate - 1;
-      // $('i.minus').removeClass('minus').addClass('plus');
     }
 
     var currentLocation = UserLocation.position;
