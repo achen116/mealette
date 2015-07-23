@@ -324,7 +324,7 @@
 	'use strict';
 
 	var MainCarousel = __webpack_require__(8);
-	var SearchBar = __webpack_require__(15);
+	var ChangeLocationFilter = __webpack_require__(15);
 	var UserLocation = __webpack_require__(16);
 
 	var EnableOrDenyLocation = React.createClass({
@@ -449,7 +449,7 @@
 	        );
 	      }
 	    } else {
-	      content = React.createElement(SearchBar, null);
+	      content = React.createElement(ChangeLocationFilter, null);
 	    }
 
 	    return React.createElement(
@@ -1083,8 +1083,8 @@
 
 	"use strict";
 
-	var SearchBar = React.createClass({
-	  displayName: "SearchBar",
+	var ChangeLocationFilter = React.createClass({
+	  displayName: "ChangeLocationFilter",
 
 	  changeLocation: function changeLocation(event) {
 	    event.preventDefault();
@@ -1113,7 +1113,7 @@
 	  }
 	});
 
-	module.exports = SearchBar;
+	module.exports = ChangeLocationFilter;
 
 /***/ },
 /* 16 */

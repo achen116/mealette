@@ -1,5 +1,5 @@
 var MainCarousel = require('../carousel/MainCarousel.jsx');
-var SearchBar = require('./SearchBar.jsx');
+var ChangeLocationFilter = require('./ChangeLocationFilter.jsx');
 var UserLocation = require('../UserLocation.js');
 
 var EnableOrDenyLocation = React.createClass({
@@ -109,7 +109,7 @@ var EnableOrDenyLocation = React.createClass({
       }
     } 
     else {
-      content = <SearchBar />;
+      content = <ChangeLocationFilter />;
     }
 
     return (

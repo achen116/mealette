@@ -1,4 +1,4 @@
-var SearchBar = React.createClass({
+var ChangeLocationFilter = React.createClass({
 
   changeLocation: function(event){
     event.preventDefault();
@@ -22,4 +22,4 @@ var SearchBar = React.createClass({
   }
 });
 
-module.exports = SearchBar;
+module.exports = ChangeLocationFilter;
