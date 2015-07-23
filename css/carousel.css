@@ -41,7 +41,7 @@ a.rat > i.icon{
 }
 .react-3d-carousel {
   width: 380px;
-  height: 500px;
+  height: 440px;
   position: relative;
   perspective: 1000px;
   margin-left: auto;
@@ -57,6 +57,11 @@ a.rat > i.icon{
 .spin-button {
   text-align: center;
   margin-bottom: 50px;
+}
+
+.ui.button > .icon.spinning-button {
+  margin: 0px;
+  opacity: 1;
 }
 /*.react-3d-carousel .carousel  figure {
   display: block;

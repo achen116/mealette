@@ -1,0 +1,26 @@
+.change-location {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.change-location form.form input {
+  font-size: 2em !important;
+}
+
+.input > .ui-input-text.ui-body-inherit.ui-corner-all.ui-shadow-inset {
+  width: 100% !important;
+}
+.card-category {
+  margin-left: 10px;
+}
+
+.menu-dropdown {
+  border-radius: 0 !important;
+  background: #1b1c1d !important;
+}
+
+.item > a:not(.ui) {
+  color: rgba(255, 255, 255, 1) !important;
+}

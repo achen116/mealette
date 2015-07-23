@@ -9,6 +9,7 @@ var EnableOrDenyLocation = React.createClass({
       restaurant_objects: null,
       user_location: null,
       category: null,
+      repopulate: null,
       error: null,
     };
   },
@@ -22,20 +23,21 @@ var EnableOrDenyLocation = React.createClass({
     UserLocation.off('change', this.setGeoposition)
   },
 
-  setGeoposition: function(user_location, category){
+  setGeoposition: function(user_location, category, repopulate){
     this.setState({
       restaurant_objects: null,
       user_location: user_location,
       category: category,
+      repopulate: repopulate,
     });
-    this.loadRestaurants(user_location, category);
+    this.loadRestaurants(user_location, category, repopulate);
   },
 
   unableToGetGeoposition: function(positionError){
     this.setState({user_location: false})
   },
 
-  loadRestaurants: function(user_location, category) {
+  loadRestaurants: function(user_location, category, repopulate) {
     if (!user_location) return;
 
     var component = this;
@@ -44,14 +46,14 @@ var EnableOrDenyLocation = React.createClass({
     if (user_location.address){
       data.address = user_location.address;
       data.category = category;
+      data.repopulate = repopulate;
     }
     if (user_location.coords){
       data.lat = user_location.coords.latitude;
       data.lon = user_location.coords.longitude;
       data.category = category;
+      data.repopulate = repopulate;
     }
-
-
 
     var request = $.ajax({
       // url: "http://localhost:3000/api",
@@ -64,8 +66,12 @@ var EnableOrDenyLocation = React.createClass({
     request.done(function(response) {
       component.setState({restaurant_objects: response});
       $(".image img").each(function() {
+        if (this.src === "") {
+          this.src = "https://mealette-backend.herokuapp.com/placeholder-image.png"
+        } else {
          this.src = this.src.replace(/ms\.jpg$/,'ls.jpg');
-        });
+        }
+      });
     });
 
     request.fail(function(errors) {
@@ -75,28 +81,29 @@ var EnableOrDenyLocation = React.createClass({
   },
 
   render: function() {
-
     var content;
 
     if (this.state.errors){
-      content = <div>CRAP! {this.state.errors}</div>
+      content = <div>Error: {this.state.errors}</div>
     } else if (this.state.user_location) {
       if (this.state.restaurant_objects) {
         content = <MainCarousel cardData={this.state.restaurant_objects} />;
-      } else{
-        content = <div>loading restaurants</div>;
+      } else {
+        content =
+        <div className="ui active dimmer">
+          <div className="ui large text loader">Cooking Up Something Good</div>
+        </div>
       }
     } else {
       content = <SearchBar />;
     }
-
     return (
       <div>
         {content}
       </div>
     );
   }
-}); // ends EnableOrDenyLocation
+});
 
 
 module.exports = EnableOrDenyLocation;
