@@ -58,7 +58,6 @@ var EnableOrDenyLocation = React.createClass({
     }
 
     var request = $.ajax({
-      // url: "http://localhost:3000/api",
       url: "https://mealette-backend.herokuapp.com/api",
       method: "get",
       data: data,
@@ -91,8 +90,9 @@ var EnableOrDenyLocation = React.createClass({
     else if (this.state.pageLoad) {
       content =
         <div className="ui active dimmer">
-          <div className="ui large text loader">Welcome to Mealette!</div>
-          <img className="ui fluid image" src="http://i.onionstatic.com/clickhole/2076/original/1200.jpg" />
+          <div className="ui large text loader">
+            <h1 className="home-header">Mealette</h1>
+          </div>
         </div>
     }
     else if (this.state.user_location) {
@@ -100,10 +100,11 @@ var EnableOrDenyLocation = React.createClass({
         content = <MainCarousel cardData={this.state.restaurant_objects} />;
       } 
       else {
-        this.setTimeout = (content = <p>Hello!</p>);
         content =
         <div className="ui active dimmer">
-          <div className="ui large text loader">Cooking Up Something Good</div>
+          <div className="ui large text loader">
+            <h3>Cooking Up Something Good</h3>
+          </div>
         </div>
       }
     } 

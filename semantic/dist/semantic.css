@@ -26832,7 +26832,7 @@ a.ui.card:hover,
   height: 100%;
   text-align: center;
   vertical-align: middle;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: #df2e2c;
   opacity: 0;
   line-height: 1;
   -webkit-animation-fill-mode: both;

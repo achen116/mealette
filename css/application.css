@@ -24,3 +24,22 @@
 .item > a:not(.ui) {
   color: rgba(255, 255, 255, 1) !important;
 }
+
+.ui.red.inverted.menu {
+  border-radius: 0;
+}
+
+.ui.red.inverted.menu .header.item {
+  font-family: Quicksand, sans-serif;
+  font-size: 20px;
+  text-shadow: none !important;
+}
+
+.item a.ui-link {
+  font-weight: normal !important;
+}
+
+.home-header {
+  font-family: Quicksand, sans-serif;
+  font-size: 45px;
+}

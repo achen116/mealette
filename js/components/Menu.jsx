@@ -14,14 +14,13 @@ var Menu = React.createClass({
 	render: function(){
 		return(
 			<div>
-				<div className="ui inverted menu">
+				<div className="ui red inverted menu">
 				  <div className="header item">Mealette</div>
 				  <div className="right menu">
 
-				  	<div onClick={this.showDropdown} className="ui floating dropdown">
-				  	  <div className="item">
-				  	  	Menu
-				  	  	<i className="dropdown icon"></i>
+				  	<div onClick={this.showDropdown} className="ui dropdown">
+				  	  <div className="item header">
+				  	  	<i className="sidebar icon"></i>
 				  	  </div>
 
 				  	  <div className="ui menu menu-dropdown">
