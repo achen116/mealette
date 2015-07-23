@@ -26,13 +26,13 @@ var Menu = React.createClass({
 
 				  	  <div className="ui menu menu-dropdown">
 				  	    <div className="item">
+				  	      <RepopulateButton />
+				  	    </div>
+				  	    <div className="item">
 				  	      <ChangeLocationLink>Change Location</ChangeLocationLink>
 				  	    </div>
-				  	    <div className="item">
+				  	    <div className="">
 				  	      <CategoryFilter />
-				  	    </div>
-				  	    <div className="item">
-				  	      <RepopulateButton />
 				  	    </div>
 				  	  </div>
 				  	</div>

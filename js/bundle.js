@@ -48,25 +48,23 @@
 
 	(function () {
 
-	  var Menu = __webpack_require__(1);
-	  var EnableOrDenyLocation = __webpack_require__(6);
-	  var RepopulateButton = __webpack_require__(31);
+		var Menu = __webpack_require__(1);
+		var EnableOrDenyLocation = __webpack_require__(7);
 
-	  var Grid = React.createClass({
-	    displayName: 'Grid',
+		var Grid = React.createClass({
+			displayName: 'Grid',
 
-	    render: function render() {
-	      return React.createElement(
-	        'div',
-	        { className: '' },
-	        React.createElement(Menu, null),
-	        React.createElement(EnableOrDenyLocation, null),
-	        React.createElement(RepopulateButton, null)
-	      );
-	    }
-	  });
+			render: function render() {
+				return React.createElement(
+					'div',
+					{ className: '' },
+					React.createElement(Menu, null),
+					React.createElement(EnableOrDenyLocation, null)
+				);
+			}
+		});
 
-	  React.render(React.createElement(Grid, null), document.getElementById('wrapper'));
+		React.render(React.createElement(Grid, null), document.getElementById('wrapper'));
 	})();
 
 /***/ },
@@ -77,6 +75,7 @@
 
 	var ChangeLocationLink = __webpack_require__(2);
 	var CategoryFilter = __webpack_require__(5);
+	var RepopulateButton = __webpack_require__(6);
 
 	var Menu = React.createClass({
 		displayName: 'Menu',
@@ -114,6 +113,11 @@
 							React.createElement(
 								'div',
 								{ className: 'ui menu menu-dropdown' },
+								React.createElement(
+									'div',
+									{ className: 'item' },
+									React.createElement(RepopulateButton, null)
+								),
 								React.createElement(
 									'div',
 									{ className: 'item' },
@@ -280,13 +284,48 @@
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var RepopulateButton = React.createClass({
+	  displayName: 'RepopulateButton',
+
+	  repopulateRestaurants: function repopulateRestaurants(event) {
+	    event.preventDefault();
+
+	    if (UserLocation.repopulate === 0) {
+	      var repopulate = UserLocation.repopulate + 1;
+	    } else {
+	      var repopulate = UserLocation.repopulate - 1;
+	    }
+
+	    var currentLocation = UserLocation.position;
+	    var currentCategory = UserLocation.category;
+
+	    UserLocation.set(currentLocation, currentCategory, repopulate);
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'a',
+	      { className: 'repopulate', onClick: this.repopulateRestaurants },
+	      'More Restaurants'
+	    );
+	  }
+	});
+
+	module.exports = RepopulateButton;
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var MainCarousel = __webpack_require__(7);
-	var SearchBar = __webpack_require__(14);
-	var UserLocation = __webpack_require__(15);
+	var MainCarousel = __webpack_require__(8);
+	var SearchBar = __webpack_require__(15);
+	var UserLocation = __webpack_require__(16);
 
 	var EnableOrDenyLocation = React.createClass({
 	  displayName: 'EnableOrDenyLocation',
@@ -404,13 +443,13 @@
 	module.exports = EnableOrDenyLocation;
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Carousel = __webpack_require__(8);
-	var Ease = __webpack_require__(13);
+	var Carousel = __webpack_require__(9);
+	var Ease = __webpack_require__(14);
 
 	var MainCarousel = React.createClass({
 	    displayName: 'MainCarousel',
@@ -467,15 +506,15 @@
 	module.exports = MainCarousel;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var React = __webpack_require__(9);
+	var React = __webpack_require__(10);
 
-	var Util = __webpack_require__(10);
-	var Layout = __webpack_require__(11);
-	var Depot = __webpack_require__(12);
+	var Util = __webpack_require__(11);
+	var Layout = __webpack_require__(12);
+	var Depot = __webpack_require__(13);
 
 	var Carousel = React.createClass({displayName: "Carousel",
 	    getInitialState: function () {
@@ -497,20 +536,20 @@
 	        var translateZ = -Layout[this.props.layout].distance(this.props.width,
 	            this.state.figures.length);
 	        var figures = this.state.figures.map(function (d, i) {
-	            return (React.createElement("figure", {key: i, style: Util.figureStyle(d)},
-	               React.createElement("div", {className: "ui card"},
-	                 React.createElement("div", {className: "image"},
+	            return (React.createElement("figure", {key: i, style: Util.figureStyle(d)}, 
+	               React.createElement("div", {className: "ui card"}, 
+	                 React.createElement("div", {className: "image"}, 
 	                   React.createElement("img", {src: d.card.hash.image_url})
-	                 ),
-	                 React.createElement("div", {className: "content"},
+	                 ), 
+	                 React.createElement("div", {className: "content"}, 
 	                   React.createElement("a", {className: "header", href: d.card.hash.url, target: "_new"}, d.card.hash.name)
-	                 ),
-	                 React.createElement("div", {className: "extra content"},
-	                   React.createElement("span", null,
+	                 ), 
+	                 React.createElement("div", {className: "extra content"}, 
+	                   React.createElement("span", null, 
 	                    React.createElement("i", {className: "red star icon"}), d.card.hash.rating
-	                   ),
-	                   React.createElement("span", {className: "card-category"}, d.card.hash.categories[0][0]),
-	                   React.createElement("span", {className: "right floated"},
+	                   ), 
+	                   React.createElement("span", {className: "card-category"}, d.card.hash.categories[0][0]), 
+	                   React.createElement("span", {className: "right floated"}, 
 	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "red map icon"}), d.card.hash.location.display_address[0])
 	                   )
 	                 )
@@ -518,17 +557,19 @@
 	               ));
 	        });
 	        return (
-	          React.createElement("div", null,
-	            React.createElement("section", {className: "react-3d-carousel"},
-	            React.createElement("div", {className: "carousel",
-	            style: {transform: "translateZ("+translateZ+"px)"}},
+	          React.createElement("div", null, 
+	            React.createElement("section", {className: "react-3d-carousel"}, 
+	            React.createElement("div", {className: "carousel", 
+	            style: {transform: "translateZ("+translateZ+"px)"}}, 
 	            figures
-	            ),
-	            React.createElement("div", {className: "prev", onClick: Util.partial(this.onRotate,+angle)}),
+	            ), 
+	            React.createElement("div", {className: "prev", onClick: Util.partial(this.onRotate,+angle)}), 
 	            React.createElement("div", {className: "next", onClick: Util.partial(this.onRotate,-angle)})
-	            ),
-	            React.createElement("div", {className: "spin-button"},
-	              React.createElement("button", {className: "massive ui red button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, "Spin")
+	            ), 
+	            React.createElement("div", {className: "spin-button"}, 
+	              React.createElement("button", {className: "massive ui red button", onClick: Util.partial(this.onRotate,-((Math.floor(Math.random() * (39 - 19 + 1)) + 19)*angle))}, 
+	                React.createElement("i", {className: "refresh icon spinning-button"})
+	              )
 	            )
 	          )
 	        );
@@ -538,13 +579,13 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -623,12 +664,12 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Util = __webpack_require__(10);
+	var Util = __webpack_require__(11);
 
 	var _exports = module.exports = {};
 
@@ -679,14 +720,14 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Ease = __webpack_require__(13);
-	var Layout = __webpack_require__(11);
-	var Util = __webpack_require__(10);
+	var Ease = __webpack_require__(14);
+	var Layout = __webpack_require__(12);
+	var Util = __webpack_require__(11);
 
 	module.exports = function depot(initialState, initialProps, callback) {
 	    var res = {};
@@ -821,7 +862,7 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function () {
@@ -1017,7 +1058,7 @@
 	}.call(this));
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1055,10 +1096,10 @@
 	module.exports = SearchBar;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var EventEmitter = __webpack_require__(16);
+	var EventEmitter = __webpack_require__(17);
 
 	UserLocation = EventEmitter({
 	  position: null,
@@ -1100,13 +1141,13 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var d        = __webpack_require__(17)
-	  , callable = __webpack_require__(30)
+	var d        = __webpack_require__(18)
+	  , callable = __webpack_require__(31)
 
 	  , apply = Function.prototype.apply, call = Function.prototype.call
 	  , create = Object.create, defineProperty = Object.defineProperty
@@ -1238,15 +1279,15 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var assign        = __webpack_require__(18)
-	  , normalizeOpts = __webpack_require__(25)
-	  , isCallable    = __webpack_require__(26)
-	  , contains      = __webpack_require__(27)
+	var assign        = __webpack_require__(19)
+	  , normalizeOpts = __webpack_require__(26)
+	  , isCallable    = __webpack_require__(27)
+	  , contains      = __webpack_require__(28)
 
 	  , d;
 
@@ -1307,18 +1348,18 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(19)()
+	module.exports = __webpack_require__(20)()
 		? Object.assign
-		: __webpack_require__(20);
+		: __webpack_require__(21);
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1333,13 +1374,13 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var keys  = __webpack_require__(21)
-	  , value = __webpack_require__(24)
+	var keys  = __webpack_require__(22)
+	  , value = __webpack_require__(25)
 
 	  , max = Math.max;
 
@@ -1361,18 +1402,18 @@
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(22)()
+	module.exports = __webpack_require__(23)()
 		? Object.keys
-		: __webpack_require__(23);
+		: __webpack_require__(24);
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1386,7 +1427,7 @@
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1399,7 +1440,7 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1411,7 +1452,7 @@
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1434,7 +1475,7 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	// Deprecated
@@ -1445,18 +1486,18 @@
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(28)()
+	module.exports = __webpack_require__(29)()
 		? String.prototype.contains
-		: __webpack_require__(29);
+		: __webpack_require__(30);
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1470,7 +1511,7 @@
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1483,7 +1524,7 @@
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1493,44 +1534,6 @@
 		return fn;
 	};
 
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var RepopulateButton = React.createClass({
-	  displayName: 'RepopulateButton',
-
-	  repopulateRestaurants: function repopulateRestaurants(event) {
-	    event.preventDefault();
-	    console.log('hellooooo');
-
-	    if (UserLocation.repopulate === 0) {
-	      var repopulate = UserLocation.repopulate + 1;
-	      $('i.plus').removeClass('plus').addClass('minus');
-	    } else {
-	      var repopulate = UserLocation.repopulate - 1;
-	      $('i.minus').removeClass('minus').addClass('plus');
-	    }
-
-	    var currentLocation = UserLocation.position;
-	    var currentCategory = UserLocation.category;
-
-	    UserLocation.set(currentLocation, currentCategory, repopulate);
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'a',
-	      { className: 'repopulate', onClick: this.repopulateRestaurants },
-	      React.createElement('i', { className: 'plus icon' })
-	    );
-	  }
-	});
-
-	module.exports = RepopulateButton;
 
 /***/ }
 /******/ ]);
