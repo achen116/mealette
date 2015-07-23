@@ -1,10 +1,11 @@
 var CategoryFilter = React.createClass({
+  handleReturn: function(event){
+    if(event.keyCode == 13){
+      this.filterCategory();
+     }
+  },
 
   filterCategory: function(event){
-    event.preventDefault();
-    console.log('in filter category');
-
-    var component = this;
     var input = this.refs.category.getDOMNode()
     var category = input.value
     input.value = ''
@@ -16,8 +17,8 @@ var CategoryFilter = React.createClass({
 
   render: function(){
     return (
-      <form className="ui form" onSubmit={this.filterCategory}>
-        <div className="ui icon input">
+      <form className="ui form" onKeyDown={this.handleReturn}>
+        <div className="ui icon search input">
           <input type="text" ref="category" placeholder="Category" />
           <i className="search link icon" onClick={this.filterCategory}></i>
         </div>
