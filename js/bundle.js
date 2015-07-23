@@ -92,7 +92,7 @@
 				null,
 				React.createElement(
 					'div',
-					{ className: 'ui inverted menu' },
+					{ className: 'ui red inverted menu' },
 					React.createElement(
 						'div',
 						{ className: 'header item' },
@@ -103,12 +103,11 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ onClick: this.showDropdown, className: 'ui floating dropdown' },
+							{ onClick: this.showDropdown, className: 'ui dropdown' },
 							React.createElement(
 								'div',
-								{ className: 'item' },
-								'Menu',
-								React.createElement('i', { className: 'dropdown icon' })
+								{ className: 'item header' },
+								React.createElement('i', { className: 'sidebar icon' })
 							),
 							React.createElement(
 								'div',
@@ -384,7 +383,6 @@
 	    }
 
 	    var request = $.ajax({
-	      // url: "http://localhost:3000/api",
 	      url: 'https://mealette-backend.herokuapp.com/api',
 	      method: 'get',
 	      data: data,
@@ -424,26 +422,28 @@
 	        React.createElement(
 	          'div',
 	          { className: 'ui large text loader' },
-	          'Welcome to Mealette!'
-	        ),
-	        React.createElement('img', { className: 'ui fluid image', src: 'http://i.onionstatic.com/clickhole/2076/original/1200.jpg' })
+	          React.createElement(
+	            'h1',
+	            { className: 'home-header' },
+	            'Mealette'
+	          )
+	        )
 	      );
 	    } else if (this.state.user_location) {
 	      if (this.state.restaurant_objects) {
 	        content = React.createElement(MainCarousel, { cardData: this.state.restaurant_objects });
 	      } else {
-	        this.setTimeout = content = React.createElement(
-	          'p',
-	          null,
-	          'Hello!'
-	        );
 	        content = React.createElement(
 	          'div',
 	          { className: 'ui active dimmer' },
 	          React.createElement(
 	            'div',
 	            { className: 'ui large text loader' },
-	            'Cooking Up Something Good'
+	            React.createElement(
+	              'h3',
+	              null,
+	              'Cooking Up Something Good'
+	            )
 	          )
 	        );
 	      }
