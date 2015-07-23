@@ -66,8 +66,12 @@ var EnableOrDenyLocation = React.createClass({
     request.done(function(response) {
       component.setState({restaurant_objects: response});
       $(".image img").each(function() {
+        if (this.src === "") {
+          this.src = "https://mealette-backend.herokuapp.com/placeholder-image.png"
+        } else {
          this.src = this.src.replace(/ms\.jpg$/,'ls.jpg');
-        });
+        }
+      });
     });
 
     request.fail(function(errors) {

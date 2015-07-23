@@ -104,11 +104,11 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ className: 'ui floating dropdown' },
+							{ onClick: this.showDropdown, className: 'ui floating dropdown' },
 							React.createElement(
 								'div',
-								{ className: 'item', onClick: this.showDropdown },
-								'Menu ',
+								{ className: 'item' },
+								'Menu',
 								React.createElement('i', { className: 'dropdown icon' })
 							),
 							React.createElement(
@@ -125,7 +125,7 @@
 								),
 								React.createElement(
 									'div',
-									{ className: 'item' },
+									{ className: '' },
 									React.createElement(CategoryFilter, null)
 								)
 							)
@@ -241,19 +241,21 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	var CategoryFilter = React.createClass({
-	  displayName: 'CategoryFilter',
+	  displayName: "CategoryFilter",
+
+	  handleReturn: function handleReturn(event) {
+	    if (event.keyCode == 13) {
+	      this.filterCategory();
+	    }
+	  },
 
 	  filterCategory: function filterCategory(event) {
-	    event.preventDefault();
-	    console.log('in filter category');
-
-	    var component = this;
 	    var input = this.refs.category.getDOMNode();
 	    var category = input.value;
-	    input.value = '';
+	    input.value = "";
 
 	    var currentLocation = UserLocation.position;
 
@@ -262,13 +264,13 @@
 
 	  render: function render() {
 	    return React.createElement(
-	      'form',
-	      { className: 'ui form', onSubmit: this.filterCategory },
+	      "form",
+	      { className: "ui form", onKeyDown: this.handleReturn },
 	      React.createElement(
-	        'div',
-	        { className: 'ui icon input' },
-	        React.createElement('input', { type: 'text', ref: 'category', placeholder: 'Category' }),
-	        React.createElement('i', { className: 'search link icon', onClick: this.filterCategory })
+	        "div",
+	        { className: "ui icon search input" },
+	        React.createElement("input", { type: "text", ref: "category", placeholder: "Category" }),
+	        React.createElement("i", { className: "search link icon", onClick: this.filterCategory })
 	      )
 	    );
 	  }
@@ -351,7 +353,11 @@
 	    request.done(function (response) {
 	      component.setState({ restaurant_objects: response });
 	      $('.image img').each(function () {
-	        this.src = this.src.replace(/ms\.jpg$/, 'ls.jpg');
+	        if (this.src === '') {
+	          this.src = 'https://mealette-backend.herokuapp.com/placeholder-image.png';
+	        } else {
+	          this.src = this.src.replace(/ms\.jpg$/, 'ls.jpg');
+	        }
 	      });
 	    });
 
