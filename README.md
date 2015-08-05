@@ -3,6 +3,8 @@ Mealette is a random restaurant generator for indecisive foodies. It uses a spec
 
 Visit [http://mealette.herokuapp.com](http://mealette.herokuapp.com) to see the app in action. (Currently compatible on Google Chrome Browser and Android phones).
 
+![mealette](images/mealette.png)
+
 ## Wireframe
 ![wireframe](images/mealette-wireframe-v2.png)
 
@@ -13,6 +15,7 @@ As a user, I can...
 * Manually enter my location or another specified location
 * View the ten closest restaurants to the entered location
 * Repopulate the carousel with more nearby restaurants
+* Swipe through the different restaurant options
 * Filter restaurants by category
 * Visit the restaurant's Yelp page
 * Get directions to the restaurant through Google Maps
