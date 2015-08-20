@@ -4,6 +4,7 @@ var MoreRestaurantsFilter = require('./MoreRestaurantsFilter')
 
 var Menu = React.createClass({
 
+
 	showDropdown: function(){
 	  $('.dropdown')
 	    .dropdown({
@@ -17,7 +18,9 @@ var Menu = React.createClass({
 				<div className="ui red inverted menu">
 				  <div className="header item">Mealette</div>
 				  <div className="right menu">
-
+				  	<div className="header item city">
+				  		{this.props.city}
+				  	</div>
 				  	<div onClick={this.showDropdown} className="ui dropdown" tabIndex="0">
 				  	  <div className="item header">
 				  	  	<i className="sidebar icon"></i>

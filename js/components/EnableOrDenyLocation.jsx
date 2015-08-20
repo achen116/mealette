@@ -116,7 +116,7 @@ var EnableOrDenyLocation = React.createClass({
 
     return (
       <div>
-        <Menu />
+        <Menu city={this.state.restaurant_location} />
         {content}
       </div>
     );
