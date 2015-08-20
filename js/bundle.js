@@ -58,7 +58,6 @@
 				return React.createElement(
 					'div',
 					{ className: '' },
-					React.createElement(Menu, null),
 					React.createElement(EnableOrDenyLocation, null)
 				);
 			}
@@ -103,7 +102,12 @@
 						{ className: 'right menu' },
 						React.createElement(
 							'div',
-							{ onClick: this.showDropdown, className: 'ui dropdown' },
+							{ className: 'header item city' },
+							this.props.city
+						),
+						React.createElement(
+							'div',
+							{ onClick: this.showDropdown, className: 'ui dropdown', tabIndex: '0' },
 							React.createElement(
 								'div',
 								{ className: 'item header' },
@@ -325,6 +329,7 @@
 	var MainCarousel = __webpack_require__(8);
 	var ChangeLocationFilter = __webpack_require__(15);
 	var FilterOptions = __webpack_require__(16);
+	var Menu = __webpack_require__(1);
 
 	var EnableOrDenyLocation = React.createClass({
 	  displayName: 'EnableOrDenyLocation',
@@ -332,6 +337,7 @@
 	  getInitialState: function getInitialState() {
 	    return {
 	      restaurant_objects: null,
+	      restaurant_location: null,
 	      user_location: null,
 	      category: null,
 	      repopulate: null,
@@ -390,7 +396,7 @@
 	    });
 
 	    request.done(function (response) {
-	      component.setState({ restaurant_objects: response });
+	      component.setState({ restaurant_objects: response, restaurant_location: response[0].hash.location.city });
 	      $('.image img').each(function () {
 	        if (this.src === '') {
 	          this.src = 'https://mealette-backend.herokuapp.com/placeholder-image.png';
@@ -454,6 +460,7 @@
 	    return React.createElement(
 	      'div',
 	      null,
+	      React.createElement(Menu, { city: this.state.restaurant_location }),
 	      content
 	    );
 	  }
@@ -569,7 +576,7 @@
 	                   ), 
 	                   React.createElement("span", {className: "card-category"}, d.card.hash.categories[0][0]), 
 	                   React.createElement("span", {className: "right floated"}, 
-	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.display_address[0] + " " + d.card.hash.location.display_address[1], target: "_blank"}, React.createElement("i", {className: "red map icon"}), d.card.hash.location.display_address[0])
+	                     React.createElement("a", {href: "https://maps.google.com/maps?q="+d.card.hash.location.address[0] + " " + d.card.hash.location.city, target: "_blank"}, React.createElement("i", {className: "red map icon"}), d.card.hash.location.display_address[0])
 	                   )
 	                 )
 	               )
