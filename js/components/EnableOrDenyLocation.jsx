@@ -1,12 +1,14 @@
 var MainCarousel = require('../carousel/MainCarousel.jsx');
 var ChangeLocationFilter = require('./ChangeLocationFilter.jsx');
 var FilterOptions = require('../FilterOptions.js');
+var Menu = require('./Menu.jsx');
 
 var EnableOrDenyLocation = React.createClass({
 
   getInitialState: function() {
     return {
       restaurant_objects: null,
+      restaurant_location: null,
       user_location: null,
       category: null,
       repopulate: null,
@@ -65,7 +67,7 @@ var EnableOrDenyLocation = React.createClass({
     });
 
     request.done(function(response) {
-      component.setState({restaurant_objects: response});
+      component.setState({restaurant_objects: response, restaurant_location: response[0].hash.location.city});
       $(".image img").each(function() {
         if (this.src === "") {
           this.src = "https://mealette-backend.herokuapp.com/placeholder-image.png"
@@ -114,6 +116,7 @@ var EnableOrDenyLocation = React.createClass({
 
     return (
       <div>
+        <Menu city={this.state.restaurant_location} />
         {content}
       </div>
     );

@@ -7,7 +7,6 @@
 	render: function(){
 		return(
 			<div className="">
-  				<Menu />
   			  <EnableOrDenyLocation />
 			</div>
 		);
