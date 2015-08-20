@@ -3,13 +3,11 @@ var CategoryFilter = require('./CategoryFilter')
 var MoreRestaurantsFilter = require('./MoreRestaurantsFilter')
 
 var Menu = React.createClass({
-
-
-	showDropdown: function(){
-	  $('.dropdown')
-	    .dropdown({
-	      transition: 'drop'
-	    });
+	componentDidMount: function(){
+		$('.dropdown')
+		  .dropdown({
+		    transition: 'drop'
+	  });
 	},
 
 	render: function(){
@@ -21,7 +19,7 @@ var Menu = React.createClass({
 				  	<div className="header item city">
 				  		{this.props.city}
 				  	</div>
-				  	<div onClick={this.showDropdown} className="ui dropdown" tabIndex="0">
+				  	<div className="ui dropdown" tabIndex="0">
 				  	  <div className="item header">
 				  	  	<i className="sidebar icon"></i>
 				  	  </div>
