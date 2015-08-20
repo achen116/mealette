@@ -79,7 +79,7 @@
 	var Menu = React.createClass({
 		displayName: 'Menu',
 
-		showDropdown: function showDropdown() {
+		componentDidMount: function componentDidMount() {
 			$('.dropdown').dropdown({
 				transition: 'drop'
 			});
@@ -107,7 +107,7 @@
 						),
 						React.createElement(
 							'div',
-							{ onClick: this.showDropdown, className: 'ui dropdown', tabIndex: '0' },
+							{ className: 'ui dropdown', tabIndex: '0' },
 							React.createElement(
 								'div',
 								{ className: 'item header' },
